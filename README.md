@@ -6,6 +6,23 @@
 
 Uncharted Stars Saga is reimagined as **NAOS (Narrative & Audio Operating System)** - a solo-author, audiobook-first platform for creating and publishing living story universes. This is not a writing app. It is a **story simulation engine** with institutional memory, multi-model AI orchestration, and premium audiobook delivery.
 
+### What This System Is
+
+NAOS is designed as an **all-inclusive storytelling business platform** that combines:
+- A **marketing website** and audience funnel for driving discovery and viewership
+- A **ChatKit-enabled frontend** for interactive engagement
+- An **Agent SDK-driven backend** for AI-assisted authoring and production workflows
+- **Ebook + audiobook publishing** with clean streaming and reading experiences
+- **Single-tier paid access** for published content via Stripe
+
+### Why It Exists
+
+This system exists to unify everything a solo creator needs to **launch, grow, and sustain** a long-running story universe:
+- Reduce tool sprawl by consolidating marketing, publishing, and AI workflows
+- Keep **ownership and control** over distribution, payments, and data
+- Support **audiobook-first delivery** while maintaining readable ebook formats
+- Enable **collaborative creation** without losing canon integrity or security
+
 ## The NAOS Vision
 
 **Traditional platforms treat stories as documents. NAOS treats stories as state.**
@@ -60,6 +77,16 @@ Transform narrative state into **performance-ready audio artifacts**:
 - **Institutional Memory**: AI as long-term creative assistant
 - **Scoped Permissions**: Fine-grained access control
 
+### 🧠 Agentic Backend (Authoring + Operations)
+
+The backend orchestrates AI and workflow services with fine-grained access control:
+- **Agent SDK orchestration** for multi-step authoring, editing, and publishing flows
+- **Multi-point MCP usage** to connect third-party services and internal tools
+- **Remote MCP server** for writing and committing story content into the system
+- **Generated auth keys** for scoped access (series, book, chapter, scene)
+- **Future multi-tenant support** for editors or co-authors with custom permissions
+- **Admin dashboard** for monitoring operations, usage, and publishing status
+
 ### 🎧 Listener Platform (Public)
 
 **Premium audiobook delivery** for paid community:
@@ -69,6 +96,20 @@ Transform narrative state into **performance-ready audio artifacts**:
 - **Library Interface**: Access to all published chapters
 - **Clean Experience**: No ads, tracking, or distractions
 - **Mobile-Friendly**: Responsive web design (native apps future consideration)
+
+### 🔐 Access, Payments, and Content Delivery
+
+- **Middleware for auth** to protect paid content and personalize access
+- **Stripe payments** for a single-tier membership or lifetime access
+- **Streaming audiobook delivery** with a frictionless player experience
+- **Readable ebook views** with simple formatting for web consumption
+- **Customer database** for member access, entitlements, and engagement tracking
+## Storage & Data Strategy
+
+The system needs **both high-level and granular storage** to support authoring and delivery:
+- **High-level storage** for published books, audio masters, and public metadata
+- **Granular storage** for scenes, beats, edits, and AI-generated artifacts
+- **Customer data storage** for access control, payments, and communications
 
 ### 💳 Business Model
 
