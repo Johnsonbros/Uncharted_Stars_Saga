@@ -1,7 +1,7 @@
 # CLAUDE.md - AI Assistant Guide for Uncharted Stars Saga
 
 > **Last Updated:** 2026-01-20
-> **Repository Status:** Early initialization phase
+> **Repository Status:** Phase 1 - Foundation (NAOS Architecture Defined)
 
 This document provides comprehensive guidance for AI assistants (like Claude) working on the Uncharted Stars Saga repository. It documents the codebase structure, development workflows, conventions, and best practices.
 
@@ -24,50 +24,50 @@ This document provides comprehensive guidance for AI assistants (like Claude) wo
 
 **Project Name:** Uncharted Stars Saga
 **Repository:** Johnsonbros/Uncharted_Stars_Saga
-**Purpose:** An AI-Powered Content Publishing and Collaborative Writing Platform
+**Purpose:** Narrative & Audio Operating System (NAOS) - A story simulation engine for long-running audiobook universes
 
 ### Project Goals
 
-This platform provides a comprehensive ecosystem for authors and content creators to publish, monetize, and collaboratively create written content. Key objectives:
+NAOS is a solo-author, audiobook-first platform for creating and publishing living story universes. This is not a writing app - it's a story simulation engine with institutional memory.
 
-1. **Streamline Content Monetization**: Enable direct-to-audience publishing with integrated payment processing
-2. **Enable AI-Assisted Collaboration**: Leverage AI agents and collaborative tools for co-writing with humans or AI
-3. **Provide Flexible Access Control**: Implement granular permissions for co-authors, editors, and beta readers
-4. **Deliver Multiple Content Formats**: Support eBook and audiobook distribution with optimized streaming
-5. **Offer Marketing Integration**: Provide built-in funnels and marketing website to grow audience
+Key objectives:
+
+1. **State-Based Storytelling**: Treat stories as state (events, dependencies, knowledge) not documents
+2. **Audio-First Production**: Create audiobook-native content optimized for listening
+3. **Canon Integrity**: AI-enforced canon management with explicit validation gates
+4. **Institutional Memory**: Multi-model AI orchestration for long-term continuity assistance
+5. **Direct Community**: $49 Founders Lifetime membership for dedicated listeners
+6. **Long-Horizon Design**: Built for one creator over years or decades
 
 ### Key Stakeholders
-- **Owner:** Nate Johnson
+- **Owner/Creator:** Nate Johnson
 - **Primary AI Assistant:** Claude (via Claude Code CLI)
+- **Platform:** Replit (hosting and development)
 
-### Platform Overview
+### NAOS Architecture Overview
 
-The platform integrates several key systems:
+The system consists of three decoupled layers:
 
-**Frontend Components:**
-- Marketing website with ChatKit-enabled interface
-- Responsive eBook content viewer
-- Audiobook streaming interface
-- Admin dashboard for content and user management
+**1. Creator Operating System (Private):**
+- **Narrative Engine**: Events, knowledge states, canon management, dependency graphs
+- **Audio Engine**: Audio scene objects, beat markers, voice profiles, recording packets
+- **MCP Spine**: Controlled AI model access via Resources, Tools, and Prompts
 
-**Backend Services:**
-- Auth middleware for authentication and authorization
-- Stripe integration for subscription-based payments
-- Content delivery system (eBooks and audiobooks)
-- Agentic system powered by Anthropic's Agent SDK
-- Multi-point MCP servers for third-party services and content management
+**2. Listener Platform (Public):**
+- Marketing website with audio trailer
+- Founders membership checkout ($49 lifetime)
+- Audiobook player with streaming and resume
+- Clean, premium listening experience (no ads/tracking)
 
-**Data Layer:**
-- Content database (hierarchical, scene-level granularity)
-- Customer database (subscribers and access rights)
-- Auth keys and permissions for collaborative access control
+**3. Data Layer:**
+- Narrative PostgreSQL (events, canon, dependencies)
+- Audio Object Storage (master audio files)
+- Listener PostgreSQL (accounts, entitlements, playback)
+- Strictly separated: Creator OS and Listener Platform never share data
 
-**Collaborative Features:**
-- Custom auth key generation for role-specific access
-- Granular permissions at series/book/chapter/scene level
-- Co-author, editor, and beta reader workflows
+**Core Principle:** Stories are state, not documents. Canon is enforced, not implied. Audio is primary, text is supporting.
 
-See [README.md](README.md) for complete feature list and architecture diagrams.
+See [README.md](README.md) for overview and [ARCHITECTURE.md](ARCHITECTURE.md) for complete technical specification.
 
 ---
 
@@ -80,26 +80,37 @@ As of 2026-01-20, the repository contains foundational documentation:
 ```
 Uncharted_Stars_Saga/
 ├── .git/                    # Git version control
-├── README.md               # Comprehensive platform overview and architecture
+├── ARCHITECTURE.md          # Complete NAOS system architecture (NEW)
+├── README.md               # NAOS overview and project vision
 ├── CLAUDE.md              # This file - AI assistant guide
 └── TESTING_STRATEGY.md    # Testing strategy and best practices
 ```
 
 ### Technology Stack
-**Status:** Architecture in planning phase
+**Status:** ✅ Architecture defined, stack selected
 
-Expected technology stack based on project requirements:
+**Platform:** Replit (all-in-one hosting and development)
 
-- **Frontend**: Modern web framework (React/Next.js consideration) with ChatKit integration
-- **Backend**: Node.js or Python with Anthropic Agent SDK integration
+**Technology Choices:**
+- **Frontend**: Next.js 14+ (React) with Tailwind CSS
+- **Backend**: Node.js with Express/Fastify + Anthropic Agent SDK
 - **AI/ML**: Anthropic Claude via Agent SDK with custom MCP servers
-  - Third-Party Services MCP: External tool integration
-  - Writing & Editing MCP: Remote server for content creation and version control
-- **Payment**: Stripe API for subscription management
-- **Auth**: Custom middleware with JWT/OAuth support
-- **Database**: TBD (consideration for both relational and document storage)
-- **Storage**: Cloud storage for media files (eBooks, audiobooks)
-- **Testing**: Framework TBD (see TESTING_STRATEGY.md for recommendations)
+  - MCP Resources: Read-only narrative state access
+  - MCP Tools: Proposal-based canon modifications
+  - Multi-model support: Opus (deep reasoning), Sonnet (balance), Haiku (speed)
+- **Database**: Replit PostgreSQL (separate DBs for Creator OS and Listener Platform)
+- **Storage**: Replit Object Storage (audio files with CDN)
+- **Auth**: Replit Auth or Supabase Auth (email-first)
+- **Payment**: Stripe Checkout and webhooks ($49 Founders Lifetime)
+- **Testing**: Jest (JavaScript), pytest (if Python components added)
+
+**Why Replit:**
+- Zero infrastructure configuration
+- Built-in database, storage, and CDN
+- Automatic deployments with HTTPS
+- Secrets management built-in
+- Cost-effective for Phase 1
+- Clear upgrade path to external services if scale demands
 
 ### Dependencies & Configuration
 **Status:** No configuration files present yet
@@ -584,61 +595,108 @@ As this repository grows, the following should be established:
 
 ## Project-Specific Considerations
 
-### Platform-Specific Best Practices
+### NAOS-Specific Development Guidelines
 
-When working on Uncharted Stars Saga:
+**Project Type:** Narrative & Audio Operating System (NAOS)
+**Architecture:** Solo-author, audiobook-first, state-based story simulation
+**Platform:** Replit (primary hosting and development)
 
-1. **Security is Critical:**
-   - Handle payment data with extreme care (PCI compliance)
-   - Implement robust authentication and authorization
-   - Validate all content access permissions
-   - Prevent unauthorized access to premium content
-   - Sanitize user-generated content
+See [ARCHITECTURE.md](./ARCHITECTURE.md) for complete system design.
 
-2. **AI Integration:**
-   - Follow Anthropic Agent SDK best practices
-   - Design MCP servers for reliability and performance
-   - Implement proper error handling for AI operations
-   - Consider rate limiting and cost management
-   - Test AI-generated content workflows thoroughly
+When working on NAOS:
 
-3. **Content Management:**
-   - Maintain content versioning and history
-   - Implement atomic operations for content updates
-   - Design for hierarchical content structures (series → book → chapter → scene)
-   - Plan for large media file handling (audiobooks)
-   - Consider CDN integration for content delivery
+1. **Understand the Core Philosophy:**
+   - **Stories are state, not documents** - Events and dependencies are primary
+   - **Audio-first** - Everything designed for listening, text is a supporting view
+   - **Canon is enforced** - No silent overwrites, all changes go through validation gates
+   - **Solo-author, long-horizon** - Optimized for one creator over many years
+   - **AI as institutional memory** - Assists continuity, not ghostwriting
 
-4. **Collaborative Workflows:**
-   - Design for concurrent editing scenarios
-   - Implement conflict resolution strategies
-   - Track attribution for collaborative content
-   - Provide granular access control testing
+2. **Narrative Engine Development:**
+   - Work with **events** as atomic units of story truth
+   - Maintain the **dependency graph** (directed acyclic graph)
+   - Respect **canon vs. draft separation** - canon is immutable once published
+   - Track **knowledge states** (who knows what, when)
+   - Monitor **promises** to listeners that must be fulfilled
+   - Never allow modifications that break causal consistency
 
-5. **Payment Integration:**
-   - Test Stripe webhooks thoroughly
-   - Handle subscription lifecycle events
-   - Implement idempotent payment processing
-   - Plan for subscription upgrades/downgrades
-   - Consider tax and international payments
+3. **Audio Engine Development:**
+   - Produce **Audio Scene Objects**, not raw text
+   - Include **beat markers** (pauses, emphasis, timing)
+   - Apply **voice profiles** consistently
+   - Generate **recording packets** with complete context
+   - Run **listener confusion audits** before allowing publication
+   - Optimize for **audio cognition** (clear attribution, no visual tricks)
 
-6. **Performance:**
-   - Optimize audiobook streaming
-   - Implement efficient content queries
-   - Consider caching strategies
-   - Plan for scalability from the start
+4. **MCP Integration:**
+   - Follow **proposal-based workflow** for all canon changes
+   - Expose **Resources** (read-only) and **Tools** (proposal creators)
+   - Implement **canon gates** that validate before allowing changes
+   - Support **multiple AI models** via scoped permissions
+   - Log all proposals and validations for auditability
+   - Never bypass validation gates
+
+5. **Listener Platform Development:**
+   - **Strictly separate** from Creator OS (no shared components)
+   - Focus on **premium listening experience** (no ads, tracking)
+   - Implement **$49 Founders Lifetime** membership model
+   - Use **Replit services first** (Object Storage, PostgreSQL, Auth)
+   - Stream audio via **signed URLs** (time-limited)
+   - Track **playback position** for resume functionality
+   - Monitor **bandwidth costs** and plan upgrade path if needed
+
+6. **Security & Privacy:**
+   - **PCI compliance** for Stripe integration
+   - **Separate databases** for Creator OS and Listener Platform
+   - **Validate entitlements** on every audio access
+   - **Verify Stripe webhooks** with signatures
+   - **Never expose** creator tools to public
+   - **Minimal data collection** (email, playback position only)
+
+7. **Replit-Specific Considerations:**
+   - Leverage **Replit native services** before external tools
+   - Use **Replit PostgreSQL** for narrative and listener data
+   - Use **Replit Object Storage** for audio files initially
+   - Utilize **built-in secrets management** for API keys
+   - Monitor **storage and bandwidth limits**
+   - Plan **upgrade path** to external CDN if scale demands
+   - Take advantage of **automatic HTTPS** and **always-on deployments**
+
+8. **Development Priorities:**
+   - **Phase 1**: Narrative Engine core (events, canon, dependencies)
+   - **Phase 2**: Audio Engine (scene objects, voice profiles, packets)
+   - **Phase 3**: Listener Platform (website, auth, player)
+   - **Phase 4**: Integration and polish
+   - **Phase 5**: Founders launch
+   - See [ARCHITECTURE.md](./ARCHITECTURE.md#12-implementation-roadmap) for details
+
+9. **Testing Strategy:**
+   - **Narrative Engine**: Test event dependencies, canon gates, knowledge propagation
+   - **Audio Engine**: Test listener confusion detection, beat marker application
+   - **MCP Tools**: Test proposal validation, continuity checks
+   - **Listener Platform**: Test auth, payments, audio streaming
+   - See [TESTING_STRATEGY.md](./TESTING_STRATEGY.md) for comprehensive approach
+
+10. **AI Assistant Behavior for NAOS:**
+    - Always **read ARCHITECTURE.md** before making significant changes
+    - Respect **separation of concerns** (Narrative Engine vs Audio Engine vs Platform)
+    - Never modify **canon** without going through proposal workflow
+    - When suggesting changes, **explain impact** on narrative consistency
+    - Prioritize **long-term sustainability** over short-term convenience
+    - Think in terms of **years of operation**, not just current sprint
 
 ## Questions or Issues?
 
 If you encounter issues or have questions while working on this repository:
 
-1. Check existing documentation (README.md, TESTING_STRATEGY.md, docs/)
+1. Check existing documentation:
+   - [ARCHITECTURE.md](ARCHITECTURE.md) for complete NAOS system design
+   - [README.md](README.md) for project overview
+   - [TESTING_STRATEGY.md](TESTING_STRATEGY.md) for testing approach
 2. Review git history for context: `git log --oneline`
 3. Search for similar patterns in codebase
-4. Consult README.md for platform architecture details
-5. Reference TESTING_STRATEGY.md for testing approach
-6. Ask the user for clarification using AskUserQuestion tool
-7. Document your findings to help future AI assistants
+4. Ask the user for clarification using AskUserQuestion tool
+5. Document your findings to help future AI assistants
 
 ---
 
