@@ -1,214 +1,251 @@
 # Uncharted Stars Saga
 
-> **An AI-Powered Content Publishing and Collaborative Writing Platform**
+> **A Narrative & Audio Operating System for Long-Running Story Universes**
 
 ## Overview
 
-Uncharted Stars Saga is a comprehensive platform designed to empower authors and content creators with an integrated ecosystem for publishing, monetizing, and collaboratively creating written content. The system combines modern web technologies, AI-powered writing tools, and flexible payment infrastructure to provide a complete solution from content creation to audience engagement.
+Uncharted Stars Saga is reimagined as **NAOS (Narrative & Audio Operating System)** - a solo-author, audiobook-first platform for creating and publishing living story universes. This is not a writing app. It is a **story simulation engine** with institutional memory, multi-model AI orchestration, and premium audiobook delivery.
 
-## Why This Platform?
+## The NAOS Vision
 
-Traditional publishing platforms often separate the tools authors need: writing happens in one place, publishing in another, payment processing somewhere else, and collaboration requires yet another tool. Uncharted Stars Saga brings all of these capabilities into a unified system that:
+**Traditional platforms treat stories as documents. NAOS treats stories as state.**
 
-- **Streamlines Content Monetization**: Direct-to-audience publishing with integrated payment processing
-- **Enables AI-Assisted Collaboration**: Leverage AI agents and collaborative tools to co-write with humans or AI
-- **Provides Flexible Access Control**: Granular permissions for co-authors, editors, and beta readers
-- **Delivers Multiple Content Formats**: eBook and audiobook distribution with optimized streaming
-- **Offers Marketing Integration**: Built-in funnel and marketing website to grow your audience
+NAOS enables a single creator to:
+- Build **long-running story universes** that span years or decades
+- Create **audiobook-native content** optimized for listening (not text-to-audio adaptation)
+- Maintain **narrative consistency** through AI-enforced canon management
+- Publish directly to a **dedicated listener community** via a $49 Founders Lifetime membership
+- Leverage **multiple AI models** for different creative tasks via MCP integration
 
-## Key Features
+## Why NAOS is Different
 
-### 🎨 Frontend & User Experience
+| Traditional Platform | NAOS Approach |
+|---------------------|---------------|
+| Text-first, audio adapted | Audio-first, text as supporting view |
+| Document-based writing | State-based story simulation (events, dependencies) |
+| Manual continuity tracking | AI-enforced canon gates |
+| Multi-author SaaS | Solo-author, long-horizon |
+| Subscription tiers | Single $49 Founders Lifetime membership |
+| Tools for writing | Operating system for narrative |
 
-- **Marketing Website**: All-inclusive landing pages and content funnels designed to convert visitors into subscribers
-- **ChatKit-Enabled Interface**: Interactive, conversational UI for seamless user engagement
-- **Responsive Content Viewer**: Optimized reading experience for eBooks with easy-to-use formatting
-- **Audiobook Streaming**: Efficient streaming infrastructure for audio content delivery
+## Core Components
 
-### 💳 Monetization & Access Control
+### 📖 Narrative Engine (Private)
 
-- **Stripe Integration**: Single-tier payment system for subscription-based content access
-- **Auth Middleware**: Secure authentication and authorization system
-- **Access Management**: Control who can view published content (eBooks, audiobooks)
-- **Customer Database**: Comprehensive user and subscription management
+The **authoritative source of truth** for story state:
+- **Events**: Atomic units of "what happened" forming a directed acyclic graph
+- **Knowledge States**: Track who knows what information, when
+- **Promises**: Explicit commitments to listeners that must be fulfilled
+- **Canon Management**: Immutable published truth vs. mutable exploration space
+- **Dependency Graph**: Causal relationships between story events
+- **Continuity Validation**: AI-assisted detection of contradictions
 
-### 📚 Content Delivery
+### 🎙️ Audio Engine (Private)
 
-- **eBook Publishing**: Web-based eBook viewer with professional formatting
-- **Audiobook Hosting**: Streaming-optimized audio content delivery
-- **Multi-Format Support**: Serve content in various formats based on user preference
-- **Content Management**: Easy-to-use system for organizing chapters, scenes, and series
+Transform narrative state into **performance-ready audio artifacts**:
+- **Audio Scene Objects**: Performance-ready text with narration annotations
+- **Beat Markers**: Pacing cues, pauses, emphasis for narration
+- **Voice Profiles**: Consistent narrator characteristics across content
+- **Recording Packets**: Complete packages for recording sessions
+- **Listener Cognition Safeguards**: Prevent confusion in audio-only medium
+- **Emotional Envelopes**: Guide emotional arc of performance
 
-### 🤖 AI-Powered Backend
+### 🔌 MCP Spine (Integration Layer)
 
-- **Agent SDK Integration**: Leverage Anthropic's Agent SDK for intelligent writing assistance
-- **Multi-Point MCP Servers**:
-  - **Third-Party Services MCP**: Connect external tools and services to enhance functionality
-  - **Writing & Editing MCP**: Custom remote MCP server for internal content creation and version control
-- **Agentic Workflows**: AI agents that can write, edit, and commit content systematically
-- **Automated Processing**: Intelligent data processing and storage at multiple granularity levels
+**Controlled AI model access** via Model Context Protocol:
+- **Resources**: Read-only views of narrative state
+- **Tools**: Proposal-based modifications with validation gates
+- **Canon Gates**: All changes must pass explicit validation before canonization
+- **Multi-Model Support**: Different AI models for different tasks
+- **Institutional Memory**: AI as long-term creative assistant
+- **Scoped Permissions**: Fine-grained access control
 
-### 👥 Collaborative Writing
+### 🎧 Listener Platform (Public)
 
-- **Custom Auth Keys**: Generate role-specific access tokens for collaborators
-- **Granular Permissions**: Control access at series, book, chapter, or scene level
-- **Co-Writing Features**:
-  - Invite co-authors to contribute to specific sections
-  - Editor access with review and approval workflows
-  - Beta reader access for feedback collection
-- **Multi-Tenant Architecture**: (Planned) Separate dashboard configurations for different collaboration models
+**Premium audiobook delivery** for paid community:
+- **Marketing Website**: Landing pages with audio trailer
+- **Founders Membership**: $49 one-time lifetime access
+- **Audiobook Player**: Web-based streaming with resume functionality
+- **Library Interface**: Access to all published chapters
+- **Clean Experience**: No ads, tracking, or distractions
+- **Mobile-Friendly**: Responsive web design (native apps future consideration)
 
-### 📊 Admin & Management
+### 💳 Business Model
 
-- **Admin Dashboard**: Comprehensive view of content, users, and analytics
-- **Content Analytics**: Track viewership, engagement, and revenue metrics
-- **User Management**: Administer subscriber access and permissions
-- **Collaboration Dashboard**: (Planned) Separate config dashboard for managing editors and custom authorization templates
-
-### 🗄️ Data Architecture
-
-- **High-Level Storage**: Manage series, books, and major content structures
-- **Granular Storage**: Scene-level and paragraph-level content versioning
-- **Customer Database**: Secure storage of user data, subscriptions, and access rights
-- **Content Processing Pipeline**: Efficient data transformation for different content formats
+- **Single Tier**: $49 Founders Lifetime Membership
+- **Permanent Access**: All current and future content in universe
+- **Direct Relationship**: Creator-to-listener, no middlemen
+- **Long-Term Alignment**: One-time payment aligns incentives
+- **Community Building**: Committed listeners vs. transient subscribers
 
 ## Technology Stack
 
-> **Status**: Architecture in planning phase
+> **Status**: Architecture defined - See [ARCHITECTURE.md](./ARCHITECTURE.md) for details
 
-Expected technologies:
-- **Frontend**: Modern web framework (React/Next.js consideration) with ChatKit integration
-- **Backend**: Node.js/Python with Agent SDK integration
-- **AI/ML**: Anthropic Claude via Agent SDK with custom MCP servers
-- **Payment**: Stripe API for subscription management
-- **Auth**: Custom middleware with JWT/OAuth support
-- **Database**: TBD (consideration for both relational and document storage)
-- **Storage**: Cloud storage for media files (eBooks, audiobooks)
+**Platform:** Replit (all-in-one hosting and development)
+
+**Core Technologies:**
+- **Frontend**: Next.js 14+ (React) with Tailwind CSS
+- **Backend**: Node.js with Express/Fastify
+- **AI/ML**: Anthropic Claude via Agent SDK with MCP servers
+- **Database**: Replit PostgreSQL (separate DBs for Creator OS and Listener Platform)
+- **Storage**: Replit Object Storage (audio files with CDN delivery)
+- **Auth**: Replit Auth or Supabase Auth
+- **Payments**: Stripe Checkout and webhooks
+
+**Why Replit:**
+- Zero infrastructure configuration
+- Built-in database and object storage
+- Automatic deployments and HTTPS
+- Secrets management
+- Cost-effective for early stage
+- Clear upgrade path to external services as scale demands
 
 ## System Architecture
 
+> **Full details in [ARCHITECTURE.md](./ARCHITECTURE.md)**
+
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    Marketing Website                         │
-│                  (ChatKit-enabled Frontend)                  │
-└──────────────────────────┬──────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────────┐
-│                   Auth Middleware                            │
-│              (Authentication & Authorization)                │
-└──────────────────────────┬──────────────────────────────────┘
-                           │
-         ┌─────────────────┼─────────────────┐
-         ▼                 ▼                 ▼
-┌────────────────┐ ┌──────────────┐ ┌──────────────────┐
-│   Content      │ │   Payment    │ │   Admin          │
-│   Delivery     │ │   System     │ │   Dashboard      │
-│   (eBook/Audio)│ │   (Stripe)   │ │                  │
-└────────────────┘ └──────────────┘ └──────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    Backend Services                          │
-│  ┌────────────────────────────────────────────────────┐    │
-│  │           Agentic System (Agent SDK)               │    │
-│  │                                                      │    │
-│  │  ┌──────────────────┐    ┌──────────────────────┐ │    │
-│  │  │  MCP Server      │    │  MCP Server          │ │    │
-│  │  │  (Third-Party    │    │  (Writing & Editing) │ │    │
-│  │  │   Services)      │    │  (Content Management)│ │    │
-│  │  └──────────────────┘    └──────────────────────┘ │    │
-│  └────────────────────────────────────────────────────┘    │
-└──────────────────────────┬──────────────────────────────────┘
-                           │
-                           ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    Data Layer                                │
-│  ┌──────────────┐ ┌────────────────┐ ┌──────────────────┐  │
-│  │   Content    │ │    Customer    │ │   Auth Keys &    │  │
-│  │   Database   │ │    Database    │ │   Permissions    │  │
-│  │ (Hierarchical│ │  (Subscribers) │ │   (Collab Mgmt)  │  │
-│  │  Granular)   │ │                │ │                  │  │
-│  └──────────────┘ └────────────────┘ └──────────────────┘  │
-└─────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│                    LISTENER PLATFORM                        │
+│                  (Public - Next.js on Replit)              │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐    │
+│  │   Marketing  │  │   Auth &     │  │   Audiobook  │    │
+│  │   Website    │  │   Payments   │  │   Player     │    │
+│  │   + Trailer  │  │   (Stripe)   │  │  (Streaming) │    │
+│  └──────────────┘  └──────────────┘  └──────────────┘    │
+└────────────────────────────┬───────────────────────────────┘
+                             │
+                             │ Content Publish API
+                             │
+┌────────────────────────────┴───────────────────────────────┐
+│                CREATOR OPERATING SYSTEM                     │
+│                   (Private - Replit)                        │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │                   MCP SPINE                          │  │
+│  │  ┌────────────┐  ┌────────────┐  ┌────────────┐   │  │
+│  │  │ Resources  │  │   Tools    │  │  Prompts   │   │  │
+│  │  │ (Read API) │  │(Proposals) │  │(Workflows) │   │  │
+│  │  └────────────┘  └────────────┘  └────────────┘   │  │
+│  └─────────────┬────────────────────────────┬──────────┘  │
+│                │                            │              │
+│  ┌─────────────┴──────────┐   ┌────────────┴──────────┐  │
+│  │   NARRATIVE ENGINE      │   │    AUDIO ENGINE       │  │
+│  │  - Events & Dependencies│   │  - Audio Scenes       │  │
+│  │  - Knowledge States     │   │  - Voice Profiles     │  │
+│  │  - Canon Management     │   │  - Beat Markers       │  │
+│  │  - Promises Tracking    │   │  - Recording Packets  │  │
+│  └────────────────────────┘   └───────────────────────┘  │
+└─────────────────────────┬──────────────────────────────────┘
+                          │
+┌─────────────────────────┴──────────────────────────────────┐
+│                  REPLIT DATA LAYER                          │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐    │
+│  │   Narrative  │  │    Audio     │  │   Listener   │    │
+│  │   PostgreSQL │  │   Object     │  │  PostgreSQL  │    │
+│  │  (Events,    │  │   Storage    │  │ (Accounts,   │    │
+│  │   Canon)     │  │  (Masters)   │  │ Entitlements)│    │
+│  └──────────────┘  └──────────────┘  └──────────────┘    │
+└────────────────────────────────────────────────────────────┘
 ```
 
-## Use Cases
+**Key Separation:** Creator tools and listener platform are completely decoupled. Content flows one-way from Creator OS to Listener Platform.
 
-### For Independent Authors
-- Publish serialized content directly to subscribers
-- Generate audiobook versions with AI assistance
-- Build an audience through integrated marketing tools
-- Monetize content without platform middlemen
+## Who Is NAOS For?
 
-### For Collaborative Writing Teams
-- Co-write series with multiple authors using granular access controls
-- Assign editors with specific review permissions
-- Use AI agents to maintain consistency across collaborative works
-- Manage different authorization levels for various contributors
+### The Solo Author Building a Universe
 
-### For Content Creators
-- Transform written content into multiple formats (eBook, audiobook)
-- Leverage AI for drafting, editing, and content enhancement
-- Stream audio content efficiently to subscribers
-- Analyze audience engagement and optimize content strategy
+NAOS is optimized for a single creator who:
+- Is writing **serialized fiction** over years or decades
+- Wants **audiobook-first** production (not text adapted to audio)
+- Needs **AI assistance** for continuity and memory, not ghostwriting
+- Values **direct relationship** with a dedicated listener community
+- Is building a **living story universe** that evolves over time
+- Wants to **own the platform** and relationship with audience
 
-## Roadmap
+### Not For
+- Multi-author collaborative teams (by design - solo-first)
+- Quick one-off book projects (built for long-horizon)
+- Traditional ebook-only publishing
+- Mass-market SaaS platform needs
 
-### Phase 1: Foundation (Current)
-- [ ] Technology stack selection
-- [ ] Core architecture design
-- [ ] Database schema design
-- [ ] Auth system implementation
+## Implementation Roadmap
 
-### Phase 2: Core Features
-- [ ] Marketing website and landing pages
-- [ ] User authentication and authorization
-- [ ] Stripe payment integration
-- [ ] Basic content delivery (eBook viewer)
+> **Detailed roadmap in [ARCHITECTURE.md](./ARCHITECTURE.md#12-implementation-roadmap)**
 
-### Phase 3: AI Integration
-- [ ] Agent SDK backend implementation
-- [ ] MCP server for third-party services
-- [ ] MCP server for writing and editing
-- [ ] Basic agentic content creation workflows
+### Phase 1: Foundation (Months 1-2) - Current
+- [x] Architecture definition (NAOS specification)
+- [x] Technology stack selection (Replit + Next.js)
+- [ ] Narrative Engine core (events, canon, dependencies)
+- [ ] MCP Spine setup (resources, basic tools)
+- [ ] Database schemas (narrative, audio, listener)
 
-### Phase 4: Collaboration
-- [ ] Custom auth key generation system
-- [ ] Granular permission controls
-- [ ] Collaborative writing interface
-- [ ] Editor and co-author workflows
+### Phase 2: Audio Engine (Months 2-3)
+- [ ] Audio Scene Objects model
+- [ ] Beat markers and voice profiles
+- [ ] Recording packet generation
+- [ ] MCP audio tools
+- [ ] Listener confusion audits
 
-### Phase 5: Advanced Features
-- [ ] Audiobook streaming infrastructure
-- [ ] Admin analytics dashboard
-- [ ] Multi-tenant support
-- [ ] Advanced AI-powered content tools
+### Phase 3: Listener Platform (Months 3-4)
+- [ ] Public website (landing, trailer, story pages)
+- [ ] Authentication (Replit Auth / Supabase)
+- [ ] Stripe integration (checkout + webhooks)
+- [ ] Audiobook player (streaming, resume)
+- [ ] Library interface
 
-### Phase 6: Scale & Polish
+### Phase 4: Integration & Polish (Months 4-5)
+- [ ] Content publishing pipeline
+- [ ] End-to-end testing
+- [ ] Security audit
+- [ ] Documentation (user guides, API docs)
 - [ ] Performance optimization
-- [ ] Enhanced analytics
-- [ ] Additional payment tiers
-- [ ] Mobile app considerations
+
+### Phase 5: Founders Launch (Month 5-6)
+- [ ] Beta testing with small group
+- [ ] Bug fixes and refinements
+- [ ] First chapters prepared and published
+- [ ] Public launch of Founders membership
+- [ ] Post-launch monitoring and iteration
+
+### Long-Term Vision (Years 1-5+)
+- Accumulate years of story state and institutional memory
+- Multi-model creative control room
+- Platform for living story universes across decades
+- Mobile native apps (iOS, Android)
+- Enhanced AI features (scenario exploration, visualization)
+- Community features (optional discussions, bonus content)
 
 ## Getting Started
 
-> **Note**: This project is in early planning/development phase. Setup instructions will be added as the technology stack is finalized.
+> **Note**: NAOS is in Phase 1 (Foundation). Setup instructions will be added as components are implemented.
+
+**For Developers:**
+1. Read [ARCHITECTURE.md](./ARCHITECTURE.md) for complete system design
+2. Review [CLAUDE.md](./CLAUDE.md) for development guidelines
+3. Check [TESTING_STRATEGY.md](./TESTING_STRATEGY.md) for testing approach
+
+**Development Environment:**
+- Primary: Replit (all-in-one development and hosting)
+- Version Control: GitHub
+- AI Development: Claude Code CLI with MCP integration
 
 ## Contributing
 
-This repository follows a feature-branch workflow. See [CLAUDE.md](./CLAUDE.md) for detailed contribution guidelines and development practices.
+This is a solo-author project. The repository follows a feature-branch workflow managed primarily via Claude Code. See [CLAUDE.md](./CLAUDE.md) for detailed AI assistant guidelines.
 
 ## Documentation
 
-- **[CLAUDE.md](./CLAUDE.md)**: Comprehensive guide for AI assistants working on this codebase
-- **[TESTING_STRATEGY.md](./TESTING_STRATEGY.md)**: Testing approach and guidelines
+- **[ARCHITECTURE.md](./ARCHITECTURE.md)**: Complete NAOS system architecture and design
+- **[CLAUDE.md](./CLAUDE.md)**: AI assistant guide for development
+- **[TESTING_STRATEGY.md](./TESTING_STRATEGY.md)**: Testing approach and best practices
 
 ## Project Status
 
-**Current Phase**: Architecture & Planning
+**Current Phase**: Phase 1 - Foundation (Architecture Definition)
 **Last Updated**: 2026-01-20
-**Active Branch**: `claude/update-readme-overview-0QITh`
+**Status**: ✅ NAOS architecture defined, ready for implementation
+**Next Milestone**: Narrative Engine core implementation
 
 ## License
 
@@ -221,4 +258,4 @@ This repository follows a feature-branch workflow. See [CLAUDE.md](./CLAUDE.md) 
 
 ---
 
-*Building the future of collaborative, AI-powered content creation.*
+*A story simulation engine designed to outlive tools, models, and trends.*
