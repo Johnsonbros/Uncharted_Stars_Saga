@@ -222,8 +222,9 @@ NAOS is optimized for a single creator who:
 
 **For Developers:**
 1. Read [ARCHITECTURE.md](./ARCHITECTURE.md) for complete system design
-2. Review [CLAUDE.md](./CLAUDE.md) for development guidelines
-3. Check [TESTING_STRATEGY.md](./TESTING_STRATEGY.md) for testing approach
+2. Review [SYSTEM_TODO.md](./SYSTEM_TODO.md) for the system-wide build/test/diagram checklist
+3. Review [CLAUDE.md](./CLAUDE.md) for development guidelines
+4. Check [TESTING_STRATEGY.md](./TESTING_STRATEGY.md) for testing approach
 
 **Development Environment:**
 - Primary: Replit (all-in-one development and hosting)
@@ -237,6 +238,7 @@ This is a solo-author project. The repository follows a feature-branch workflow 
 ## Documentation
 
 - **[ARCHITECTURE.md](./ARCHITECTURE.md)**: Complete NAOS system architecture and design
+- **[SYSTEM_TODO.md](./SYSTEM_TODO.md)**: System-wide TODOs, tests, diagrams, and traceability checklists
 - **[CLAUDE.md](./CLAUDE.md)**: AI assistant guide for development
 - **[TESTING_STRATEGY.md](./TESTING_STRATEGY.md)**: Testing approach and best practices
 

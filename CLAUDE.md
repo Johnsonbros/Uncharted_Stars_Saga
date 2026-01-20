@@ -81,6 +81,7 @@ As of 2026-01-20, the repository contains foundational documentation:
 Uncharted_Stars_Saga/
 ├── .git/                    # Git version control
 ├── ARCHITECTURE.md          # Complete NAOS system architecture (NEW)
+├── SYSTEM_TODO.md           # System-wide build/test/diagram checklists
 ├── README.md               # NAOS overview and project vision
 ├── CLAUDE.md              # This file - AI assistant guide
 └── TESTING_STRATEGY.md    # Testing strategy and best practices
@@ -282,8 +283,9 @@ For network operations (push, fetch, pull):
 **Documentation Files:**
 - README.md - Project overview, setup, usage, architecture
 - CLAUDE.md - AI assistant guide (this file)
+- SYSTEM_TODO.md - System-wide TODOs, tests, diagrams, and traceability
 - TESTING_STRATEGY.md - Testing approach and best practices
-- ARCHITECTURE.md - Detailed system design (to be created)
+- ARCHITECTURE.md - Detailed system design and roadmap
 - CONTRIBUTING.md - Contribution guidelines (to be created)
 - CHANGELOG.md - Version history (to be created)
 - API.md - API documentation (to be created when applicable)
@@ -318,6 +320,11 @@ When working on this codebase, AI assistants should:
    - Provide file references with line numbers (file.ts:123)
    - Ask questions when uncertain
    - Never use bash echo for communication - output text directly
+
+5. **Use the System-Wide TODO Hub:**
+   - Start with [SYSTEM_TODO.md](SYSTEM_TODO.md) to locate subsystem checklists
+   - Keep checklists/tests/diagrams in sync when changes are made
+   - Add new items for newly discovered error paths or missing coverage
 
 ### Task Management
 

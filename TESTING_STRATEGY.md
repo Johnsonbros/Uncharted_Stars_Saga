@@ -8,6 +8,7 @@ This document outlines the testing strategy for the Uncharted Stars Saga project
 
 **Status**: Repository initialized with no source code or tests
 **Opportunity**: Establish testing best practices from day one
+**System TODO Hub**: Use [SYSTEM_TODO.md](./SYSTEM_TODO.md) to align test backlog with subsystem checklists.
 
 ## Coverage Goals
 
