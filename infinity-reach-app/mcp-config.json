@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "infinity-reach-writer": {
+      "command": "node",
+      "args": [
+        "/home/runner/work/Uncharted_Stars_Saga/Uncharted_Stars_Saga/infinity-reach-app/bin/mcp-server.ts"
+      ],
+      "env": {},
+      "disabled": false,
+      "alwaysAllow": []
+    }
+  }
+}

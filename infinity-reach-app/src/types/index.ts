@@ -121,4 +121,6 @@ export type NavigationSection =
   | 'locations'
   | 'timeline'
   | 'notes'
-  | 'agent';
+  | 'agent'
+  | 'version-control'
+  | 'writing-assistant';
