@@ -1148,6 +1148,8 @@ Streaming playback
 
 ### Phase 1: Foundation (Months 1-2)
 
+**Tracking Note:** System-wide build/test/diagram checklists live in [SYSTEM_TODO.md](SYSTEM_TODO.md).
+
 **Narrative Engine Core**
 - [ ] Event model implementation
 - [ ] Dependency graph system

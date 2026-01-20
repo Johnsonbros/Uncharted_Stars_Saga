@@ -6,16 +6,9 @@ This document defines the testing strategy for **NAOS (Narrative & Audio Operati
 
 ## Current State
 
-**Status**: Repository initialized with documentation only (no source code or automated tests yet).  
-**Priority**: Establish shared testing expectations now so all future components align with the architecture in [ARCHITECTURE.md](./ARCHITECTURE.md).
-
-## System Alignment Principles
-
-1. **Single Source of Truth**: Narrative state (events, canon, dependencies) drives all downstream outputs.  
-2. **Contract-First Integration**: Interfaces between systems are tested with explicit contracts (schemas, invariants, validation gates).  
-3. **Canon Integrity**: Any change to canon must pass the same validation gates in tests as in production.  
-4. **Audio-First Guarantees**: Tests must confirm listener cognition safeguards and narration clarity rules.  
-5. **Separation of Concerns**: Creator OS and Listener Platform must never share databases or credentials.
+**Status**: Repository initialized with no source code or tests
+**Opportunity**: Establish testing best practices from day one
+**System TODO Hub**: Use [SYSTEM_TODO.md](./SYSTEM_TODO.md) to align test backlog with subsystem checklists.
 
 ## Coverage Goals
 
