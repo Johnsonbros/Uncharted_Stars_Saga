@@ -27,7 +27,7 @@ export default function Sidebar() {
   return (
     <aside className="w-64 bg-slate-900 text-white min-h-screen p-6 fixed left-0 top-0">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold mb-2">Infinity&apos;s Reach</h1>
+        <h1 className="text-2xl font-bold mb-2">Infinity's Reach</h1>
         <p className="text-sm text-slate-400">Story Management System</p>
       </div>
 

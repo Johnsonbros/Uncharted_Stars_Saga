@@ -48,7 +48,7 @@ export default function AgentPage() {
       <div>
         <h1 className="text-3xl font-bold text-slate-900">Ask the Story Agent</h1>
         <p className="text-slate-600 mt-1">
-          Ask questions about Infinity&apos;s Reach and get intelligent answers based on the story content
+          Ask questions about Infinity's Reach and get intelligent answers based on the story content
         </p>
       </div>
 
@@ -154,7 +154,7 @@ export default function AgentPage() {
           <div className="text-6xl mb-4">🤖</div>
           <h3 className="text-lg font-semibold text-slate-900 mb-2">No questions yet</h3>
           <p className="text-slate-600">
-            Ask a question above to start exploring Infinity&apos;s Reach with the Story Agent
+            Ask a question above to start exploring Infinity's Reach with the Story Agent
           </p>
         </div>
       )}
