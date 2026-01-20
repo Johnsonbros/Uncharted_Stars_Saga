@@ -19,6 +19,7 @@ const navItems: NavItem[] = [
   { id: 'timeline', label: 'Timeline', icon: '⏱️', href: '/timeline' },
   { id: 'notes', label: 'Notes', icon: '📝', href: '/notes' },
   { id: 'agent', label: 'Ask Agent', icon: '🤖', href: '/agent' },
+  { id: 'audio-production', label: 'Audio Production', icon: '🎙️', href: '/audio-production' },
   { id: 'version-control', label: 'Version Control', icon: '🌿', href: '/version-control' },
   { id: 'writing-assistant', label: 'Writing Assistant', icon: '✍️', href: '/writing-assistant' },
 ];

@@ -123,4 +123,5 @@ export type NavigationSection =
   | 'notes'
   | 'agent'
   | 'version-control'
-  | 'writing-assistant';
+  | 'writing-assistant'
+  | 'audio-production';
