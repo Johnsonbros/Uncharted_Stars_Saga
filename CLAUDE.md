@@ -24,15 +24,50 @@ This document provides comprehensive guidance for AI assistants (like Claude) wo
 
 **Project Name:** Uncharted Stars Saga
 **Repository:** Johnsonbros/Uncharted_Stars_Saga
-**Purpose:** [To be defined as project develops]
+**Purpose:** An AI-Powered Content Publishing and Collaborative Writing Platform
 
 ### Project Goals
-- TBD: This section will be updated as project goals are established
-- The project name suggests a space/sci-fi narrative or game project
+
+This platform provides a comprehensive ecosystem for authors and content creators to publish, monetize, and collaboratively create written content. Key objectives:
+
+1. **Streamline Content Monetization**: Enable direct-to-audience publishing with integrated payment processing
+2. **Enable AI-Assisted Collaboration**: Leverage AI agents and collaborative tools for co-writing with humans or AI
+3. **Provide Flexible Access Control**: Implement granular permissions for co-authors, editors, and beta readers
+4. **Deliver Multiple Content Formats**: Support eBook and audiobook distribution with optimized streaming
+5. **Offer Marketing Integration**: Provide built-in funnels and marketing website to grow audience
 
 ### Key Stakeholders
 - **Owner:** Nate Johnson
 - **Primary AI Assistant:** Claude (via Claude Code CLI)
+
+### Platform Overview
+
+The platform integrates several key systems:
+
+**Frontend Components:**
+- Marketing website with ChatKit-enabled interface
+- Responsive eBook content viewer
+- Audiobook streaming interface
+- Admin dashboard for content and user management
+
+**Backend Services:**
+- Auth middleware for authentication and authorization
+- Stripe integration for subscription-based payments
+- Content delivery system (eBooks and audiobooks)
+- Agentic system powered by Anthropic's Agent SDK
+- Multi-point MCP servers for third-party services and content management
+
+**Data Layer:**
+- Content database (hierarchical, scene-level granularity)
+- Customer database (subscribers and access rights)
+- Auth keys and permissions for collaborative access control
+
+**Collaborative Features:**
+- Custom auth key generation for role-specific access
+- Granular permissions at series/book/chapter/scene level
+- Co-author, editor, and beta reader workflows
+
+See [README.md](README.md) for complete feature list and architecture diagrams.
 
 ---
 
@@ -40,23 +75,31 @@ This document provides comprehensive guidance for AI assistants (like Claude) wo
 
 ### Repository Structure
 
-As of 2026-01-20, the repository is in its initial setup phase:
+As of 2026-01-20, the repository contains foundational documentation:
 
 ```
 Uncharted_Stars_Saga/
 ├── .git/                    # Git version control
-├── README.md               # Project title and basic info
-└── CLAUDE.md              # This file - AI assistant guide
+├── README.md               # Comprehensive platform overview and architecture
+├── CLAUDE.md              # This file - AI assistant guide
+└── TESTING_STRATEGY.md    # Testing strategy and best practices
 ```
 
 ### Technology Stack
-**Status:** Not yet determined
+**Status:** Architecture in planning phase
 
-The technology stack will be established during initial development. Common options to consider:
-- **Game Development:** Unity (C#), Unreal (C++), Godot (GDScript/C#), custom engine
-- **Web Application:** React/Vue/Angular (TypeScript), Node.js, Python (Django/Flask)
-- **Narrative/Interactive Fiction:** Twine, Ink, Ren'Py, custom solution
-- **Mobile:** React Native, Flutter, native iOS/Android
+Expected technology stack based on project requirements:
+
+- **Frontend**: Modern web framework (React/Next.js consideration) with ChatKit integration
+- **Backend**: Node.js or Python with Anthropic Agent SDK integration
+- **AI/ML**: Anthropic Claude via Agent SDK with custom MCP servers
+  - Third-Party Services MCP: External tool integration
+  - Writing & Editing MCP: Remote server for content creation and version control
+- **Payment**: Stripe API for subscription management
+- **Auth**: Custom middleware with JWT/OAuth support
+- **Database**: TBD (consideration for both relational and document storage)
+- **Storage**: Cloud storage for media files (eBooks, audiobooks)
+- **Testing**: Framework TBD (see TESTING_STRATEGY.md for recommendations)
 
 ### Dependencies & Configuration
 **Status:** No configuration files present yet
@@ -86,8 +129,9 @@ This repository follows a feature-branch workflow:
    - Naming convention: `claude/<description>-<session-id>` for AI-generated branches
    - Example: `claude/add-claude-documentation-iKzfC`
 
-3. **Current Working Branch:** `claude/add-claude-documentation-iKzfC`
-   - All current development happens here
+3. **Current Working Branch:** Branch varies by session
+   - Check git status to see current branch
+   - All development happens on feature branches
    - Will be merged to main via Pull Request
 
 ### Development Process
@@ -225,11 +269,13 @@ For network operations (push, fetch, pull):
 - Explain the "why," not the "what"
 
 **Documentation Files:**
-- README.md - Project overview, setup, usage
-- ARCHITECTURE.md - System design and structure
-- CONTRIBUTING.md - Contribution guidelines
-- CHANGELOG.md - Version history
-- API.md - API documentation (if applicable)
+- README.md - Project overview, setup, usage, architecture
+- CLAUDE.md - AI assistant guide (this file)
+- TESTING_STRATEGY.md - Testing approach and best practices
+- ARCHITECTURE.md - Detailed system design (to be created)
+- CONTRIBUTING.md - Contribution guidelines (to be created)
+- CHANGELOG.md - Version history (to be created)
+- API.md - API documentation (to be created when applicable)
 
 ---
 
@@ -438,37 +484,86 @@ cargo add <package>
 
 ## Future Development
 
+### Development Roadmap
+
+The project follows a phased approach (see README.md for complete roadmap):
+
+**Phase 1: Foundation (Current Phase)**
+- Technology stack selection
+- Core architecture design
+- Database schema design
+- Auth system implementation
+
+**Phase 2: Core Features**
+- Marketing website and landing pages
+- User authentication and authorization
+- Stripe payment integration
+- Basic content delivery (eBook viewer)
+
+**Phase 3: AI Integration**
+- Agent SDK backend implementation
+- MCP server for third-party services
+- MCP server for writing and editing
+- Basic agentic content creation workflows
+
+**Phase 4: Collaboration**
+- Custom auth key generation system
+- Granular permission controls
+- Collaborative writing interface
+- Editor and co-author workflows
+
+**Phase 5: Advanced Features**
+- Audiobook streaming infrastructure
+- Admin analytics dashboard
+- Multi-tenant support
+- Advanced AI-powered content tools
+
+**Phase 6: Scale & Polish**
+- Performance optimization
+- Enhanced analytics
+- Additional payment tiers
+- Mobile app considerations
+
 ### Next Steps
 
 As this repository grows, the following should be established:
 
-1. **Technology Stack Selection**
-   - Choose primary languages and frameworks
-   - Set up build system
-   - Configure development environment
+1. **Technology Stack Finalization** ✅ Partially Complete
+   - ✅ Planned architecture documented in README.md
+   - ⏳ Choose specific framework versions
+   - ⏳ Set up build system
+   - ⏳ Configure development environment
 
 2. **Project Structure**
-   - Define directory organization
-   - Establish module boundaries
-   - Create initial scaffolding
+   - ⏳ Define directory organization
+   - ⏳ Establish module boundaries
+   - ⏳ Create initial scaffolding for:
+     - Frontend (marketing website, content viewer)
+     - Backend (API, auth middleware)
+     - AI services (Agent SDK, MCP servers)
+     - Database schemas
 
 3. **Development Infrastructure**
-   - Set up testing framework
-   - Configure linters and formatters
-   - Add CI/CD pipeline
-   - Create development documentation
+   - ✅ Testing strategy documented (TESTING_STRATEGY.md)
+   - ⏳ Set up testing framework based on chosen stack
+   - ⏳ Configure linters and formatters
+   - ⏳ Add CI/CD pipeline (GitHub Actions recommended)
+   - ⏳ Create development documentation
 
 4. **Code Standards**
-   - Define style guide
-   - Set up automated formatting
-   - Establish review process
-   - Create templates for common tasks
+   - ⏳ Define style guide based on chosen languages
+   - ⏳ Set up automated formatting (Prettier, Black, etc.)
+   - ⏳ Establish review process
+   - ⏳ Create templates for common tasks
 
-5. **Documentation**
-   - Expand README.md
-   - Create ARCHITECTURE.md
-   - Add CONTRIBUTING.md
-   - Write setup instructions
+5. **Documentation** ✅ Partially Complete
+   - ✅ README.md with comprehensive overview
+   - ✅ CLAUDE.md AI assistant guide
+   - ✅ TESTING_STRATEGY.md
+   - ⏳ Create detailed ARCHITECTURE.md
+   - ⏳ Add CONTRIBUTING.md
+   - ⏳ Write setup instructions
+   - ⏳ Document API endpoints when implemented
 
 ### Updating This Document
 
@@ -487,15 +582,63 @@ As this repository grows, the following should be established:
 
 ---
 
+## Project-Specific Considerations
+
+### Platform-Specific Best Practices
+
+When working on Uncharted Stars Saga:
+
+1. **Security is Critical:**
+   - Handle payment data with extreme care (PCI compliance)
+   - Implement robust authentication and authorization
+   - Validate all content access permissions
+   - Prevent unauthorized access to premium content
+   - Sanitize user-generated content
+
+2. **AI Integration:**
+   - Follow Anthropic Agent SDK best practices
+   - Design MCP servers for reliability and performance
+   - Implement proper error handling for AI operations
+   - Consider rate limiting and cost management
+   - Test AI-generated content workflows thoroughly
+
+3. **Content Management:**
+   - Maintain content versioning and history
+   - Implement atomic operations for content updates
+   - Design for hierarchical content structures (series → book → chapter → scene)
+   - Plan for large media file handling (audiobooks)
+   - Consider CDN integration for content delivery
+
+4. **Collaborative Workflows:**
+   - Design for concurrent editing scenarios
+   - Implement conflict resolution strategies
+   - Track attribution for collaborative content
+   - Provide granular access control testing
+
+5. **Payment Integration:**
+   - Test Stripe webhooks thoroughly
+   - Handle subscription lifecycle events
+   - Implement idempotent payment processing
+   - Plan for subscription upgrades/downgrades
+   - Consider tax and international payments
+
+6. **Performance:**
+   - Optimize audiobook streaming
+   - Implement efficient content queries
+   - Consider caching strategies
+   - Plan for scalability from the start
+
 ## Questions or Issues?
 
 If you encounter issues or have questions while working on this repository:
 
-1. Check existing documentation (README.md, docs/)
+1. Check existing documentation (README.md, TESTING_STRATEGY.md, docs/)
 2. Review git history for context: `git log --oneline`
 3. Search for similar patterns in codebase
-4. Ask the user for clarification using AskUserQuestion tool
-5. Document your findings to help future AI assistants
+4. Consult README.md for platform architecture details
+5. Reference TESTING_STRATEGY.md for testing approach
+6. Ask the user for clarification using AskUserQuestion tool
+7. Document your findings to help future AI assistants
 
 ---
 
