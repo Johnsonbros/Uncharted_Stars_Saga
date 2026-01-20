@@ -1,0 +1,2 @@
+# Requirements for Uncharted Stars Saga
+# TODO: Add dependencies as the project grows
