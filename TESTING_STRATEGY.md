@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-This document outlines the testing strategy for the Uncharted Stars Saga project. Since the codebase is in its initial stage, this strategy provides a foundation for building comprehensive test coverage from the beginning.
+This document defines the testing strategy for **NAOS (Narrative & Audio Operating System)**. It ensures that **Narrative Engine**, **Audio Engine**, **MCP Spine**, **Listener Platform**, and **Data Layer** behave as a single, cohesive system. Tests must validate component correctness **and** the contracts that connect them.
 
 ## Current State
 
@@ -14,16 +14,17 @@ This document outlines the testing strategy for the Uncharted Stars Saga project
 
 ### Target Metrics
 - **Overall Code Coverage**: 80-90%
-- **Critical Business Logic**: 100%
+- **Critical Business Logic (Canon, Dependencies, Payments)**: 100%
 - **Service Layer**: 85%+
 - **Utilities & Helpers**: 90%+
-- **Configuration**: 50-60%
+- **Configuration & Infrastructure**: 50-60% (validate via smoke tests and contract checks)
 
 ### Coverage Types to Track
 1. **Line Coverage**: Percentage of code statements executed
 2. **Branch Coverage**: Percentage of conditional paths tested
 3. **Function Coverage**: Percentage of functions called
 4. **Integration Coverage**: Percentage of component interactions tested
+5. **Contract Coverage**: Percentage of API/schema contracts validated (new)
 
 ## Testing Pyramid
 
@@ -42,53 +43,52 @@ This document outlines the testing strategy for the Uncharted Stars Saga project
 ## Priority Testing Areas
 
 ### High Priority (Test First)
-1. **Core Game Mechanics**
-   - State management and transitions
-   - Player actions and outcomes
-   - Game rules and validation
-   - Score/progress calculations
+1. **Narrative Engine (Canon + Dependencies)**
+   - Event graph integrity (DAG validation)
+   - Canon gating (draft → proposed → canon)
+   - Knowledge state propagation
+   - Promise tracking and fulfillment rules
 
-2. **Data Models**
-   - Entity validation
-   - Serialization/deserialization
-   - Business rules enforcement
-   - Data integrity checks
+2. **MCP Spine (Proposal + Validation Gates)**
+   - Resource read-only guarantees
+   - Tool proposal schemas
+   - Validation failures surface clear errors
+   - Audit logging for changes
 
-3. **Authentication & Authorization**
-   - User login/logout flows
-   - Permission checks
-   - Session management
-   - Security boundaries
+3. **Audio Engine (Listener Cognition)**
+   - Beat marker placement rules
+   - Voice profile consistency
+   - Scene object output validation
+   - Listener confusion audits
 
-4. **API Layer**
-   - Request validation
-   - Response formatting
-   - Error handling
-   - Status codes
+4. **Listener Platform (Access + Playback)**
+   - Auth and entitlement checks
+   - Stripe webhook verification
+   - Streaming access via signed URLs
+   - Playback resume integrity
 
-5. **Data Persistence**
-   - CRUD operations
-   - Transaction handling
-   - Data migrations
-   - Query correctness
+5. **Data Persistence (Separation)**
+   - Strict separation of Creator OS vs Listener Platform databases
+   - Canon data immutability guarantees
+   - Object storage access controls
 
 ### Medium Priority
 1. **Service Integration**
-   - Inter-service communication
-   - Event handling
-   - Message queues
-   - External API calls
+   - Narrative → Audio pipeline handoff
+   - Creator OS → Listener Platform publish flow
+   - MCP resource/tool latency and rate limits
+   - External API calls (Stripe, Auth)
 
 2. **Error Handling**
-   - Edge cases
-   - Failure scenarios
-   - Recovery mechanisms
+   - Canon gate failure scenarios
+   - Payment edge cases and replay protection
+   - Storage access failures
    - User-facing error messages
 
 3. **Configuration Management**
    - Environment-specific configs
    - Feature flags
-   - Dynamic settings
+   - Secrets isolation between environments
 
 ### Lower Priority
 1. **Static Configurations**
@@ -106,10 +106,11 @@ This document outlines the testing strategy for the Uncharted Stars Saga project
 
 ```javascript
 // Example test structure
-describe('GameEngine', () => {
-  it('should initialize with default state', () => {
-    const engine = new GameEngine();
-    expect(engine.state).toBe('idle');
+describe('NarrativeEngine', () => {
+  it('should reject canonization when dependencies are missing', () => {
+    const engine = new NarrativeEngine();
+    const proposal = { eventId: 'evt-1', dependencies: ['evt-0'] };
+    expect(() => engine.canonize(proposal)).toThrow(/missing dependency/);
   });
 });
 ```
@@ -122,9 +123,11 @@ describe('GameEngine', () => {
 
 ```python
 # Example test structure
-def test_game_engine_initialization():
-    engine = GameEngine()
-    assert engine.state == 'idle'
+def test_canon_gate_rejects_missing_dependency():
+    engine = NarrativeEngine()
+    proposal = {"event_id": "evt-1", "dependencies": ["evt-0"]}
+    with pytest.raises(ValueError, match="missing dependency"):
+        engine.canonize(proposal)
 ```
 
 ### Go
@@ -134,10 +137,11 @@ def test_game_engine_initialization():
 
 ```go
 // Example test structure
-func TestGameEngineInitialization(t *testing.T) {
-    engine := NewGameEngine()
-    if engine.State != "idle" {
-        t.Errorf("Expected idle, got %s", engine.State)
+func TestCanonGateRejectsMissingDependency(t *testing.T) {
+    engine := NewNarrativeEngine()
+    err := engine.Canonize(Proposal{EventID: "evt-1", Dependencies: []string{"evt-0"}})
+    if err == nil {
+        t.Errorf("Expected missing dependency error, got nil")
     }
 }
 ```
@@ -150,9 +154,10 @@ func TestGameEngineInitialization(t *testing.T) {
 ```rust
 // Example test structure
 #[test]
-fn test_game_engine_initialization() {
-    let engine = GameEngine::new();
-    assert_eq!(engine.state, "idle");
+fn test_canon_gate_rejects_missing_dependency() {
+    let engine = NarrativeEngine::new();
+    let result = engine.canonize(Proposal::new("evt-1", vec!["evt-0"]));
+    assert!(result.is_err());
 }
 ```
 
@@ -163,33 +168,22 @@ fn test_game_engine_initialization() {
 ```
 project-root/
 ├── src/                    # Source code
-│   ├── core/
-│   │   ├── engine.js
-│   │   └── state.js
-│   ├── services/
-│   │   ├── auth.js
-│   │   └── database.js
-│   └── utils/
-│       └── helpers.js
+│   ├── creator-os/
+│   │   ├── narrative/
+│   │   ├── audio/
+│   │   └── mcp/
+│   ├── listener-platform/
+│   │   ├── web/
+│   │   └── api/
+│   └── shared/
+│       └── contracts/
 ├── tests/                  # Test files
-│   ├── unit/              # Unit tests (mirror src structure)
-│   │   ├── core/
-│   │   │   ├── engine.test.js
-│   │   │   └── state.test.js
-│   │   ├── services/
-│   │   │   ├── auth.test.js
-│   │   │   └── database.test.js
-│   │   └── utils/
-│   │       └── helpers.test.js
-│   ├── integration/       # Integration tests
-│   │   ├── api/
-│   │   └── services/
-│   ├── e2e/              # End-to-end tests
-│   │   └── user-flows/
-│   └── fixtures/         # Test data and helpers
-│       ├── factories.js
-│       └── mocks.js
-└── coverage/             # Coverage reports (gitignored)
+│   ├── unit/               # Unit tests (mirror src structure)
+│   ├── integration/        # Integration tests
+│   ├── contract/           # Contract tests for APIs/schemas
+│   ├── e2e/                # End-to-end tests
+│   └── fixtures/           # Test data and helpers
+└── coverage/               # Coverage reports (gitignored)
 ```
 
 ## Testing Best Practices
@@ -202,16 +196,16 @@ project-root/
 ### 2. Test Behavior, Not Implementation
 ```javascript
 // Good: Tests behavior
-it('should authenticate user with valid credentials', () => {
-  const result = auth.login('user', 'pass');
-  expect(result.authenticated).toBe(true);
+it('should grant access when entitlement is valid', () => {
+  const result = entitlement.checkAccess('listener-1', 'chapter-9');
+  expect(result.allowed).toBe(true);
 });
 
 // Bad: Tests implementation details
-it('should call validatePassword and checkDatabase', () => {
-  auth.login('user', 'pass');
-  expect(validatePassword).toHaveBeenCalled();
-  expect(checkDatabase).toHaveBeenCalled();
+it('should call verifyStripeSignature and loadEntitlements', () => {
+  webhook.handle(request);
+  expect(verifyStripeSignature).toHaveBeenCalled();
+  expect(loadEntitlements).toHaveBeenCalled();
 });
 ```
 
@@ -224,17 +218,15 @@ it('should call validatePassword and checkDatabase', () => {
 
 ### 4. Follow AAA Pattern
 ```javascript
-it('should calculate total score correctly', () => {
+it('should preserve canon immutability after publication', () => {
   // Arrange
-  const player = new Player();
-  player.addPoints(10);
-  player.addPoints(5);
+  const event = createCanonEvent();
 
   // Act
-  const total = player.getTotalScore();
+  const result = canonStore.update(event.id, { description: 'rewrite' });
 
   // Assert
-  expect(total).toBe(15);
+  expect(result.error).toMatch(/immutable/);
 });
 ```
 
