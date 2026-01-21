@@ -27,6 +27,7 @@
 
 **Documentation**
 - [x] Narrative engine API surface documented (events, knowledge, promises)
+- [x] Narrative engine endpoint map aligned with API.md
 - [x] Canon vs. draft data rules documented (validation + persistence constraints)
 
 **Coding (MVP)**
@@ -81,6 +82,7 @@
 **Documentation**
 - [ ] MCP service boundaries and contract docs (resources/tools/permissions)
 - [ ] Proposal schema v1 documented (fields, validation, lifecycle)
+- [x] Publish API contract documented (one-way COS → Listener) → [API.md](./API.md)
 
 **Coding (MVP)**
 - [x] Define MCP spine service boundary + repo folder structure
@@ -160,6 +162,7 @@
 **Documentation**
 - [ ] Payment and entitlement rules documented (tiers, access windows)
 - [ ] Webhook event matrix documented (Stripe event → handler action)
+- [x] Entitlement and webhook API endpoints documented → [API.md](./API.md)
 
 **Coding (MVP)**
 - [ ] Stripe Checkout integration
@@ -181,6 +184,7 @@
 **Documentation**
 - [ ] Player UX flows documented (library → player → resume)
 - [ ] Signed URL access rules documented (expiry, scopes)
+- [x] Library and playback API endpoints documented → [API.md](./API.md)
 
 **Coding (MVP)**
 - [x] Library page lists available chapters
