@@ -86,7 +86,7 @@
 
 **Coding (MVP)**
 - [x] Define MCP spine service boundary + repo folder structure
-- [ ] Establish MCP server runtime (Node/TS) + basic bootstrap
+- [~] Establish MCP server runtime (Node/TS) + basic bootstrap
 - [ ] Implement MCP server handshake and version negotiation
 - [ ] Register core resource catalog (read-only narrative/audio/listener summaries)
 - [ ] Implement resource resolver layer with access guards
@@ -103,7 +103,7 @@
 - [ ] Access token strategy (service-to-service auth, short-lived tokens)
 - [ ] Rate limiting + abuse safeguards per model and scope
 - [x] Error taxonomy mapping for MCP responses (codes, severity, owner) → [docs/error_taxonomy.md](./docs/error_taxonomy.md)
-- [ ] Observability hooks (structured logs, trace IDs, audit events)
+- [~] Observability hooks (structured logs, trace IDs, audit events)
 - [ ] Local dev harness (mock resources + test proposals)
 - [ ] MCP Inspector configuration for debugging
 - [ ] Deployment config for MCP service (env vars, secrets, health checks)
