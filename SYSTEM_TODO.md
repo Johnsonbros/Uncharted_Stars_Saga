@@ -158,18 +158,18 @@
 ### 2.3 Audiobook Player & Library
 
 **Build Checklist**
-- [ ] Library page lists available chapters
-- [ ] Player supports streaming + resume
-- [ ] Signed URL generation for audio access
-- [ ] Playback position persistence
+- [x] Library page lists available chapters
+- [x] Player supports streaming + resume
+- [x] Signed URL generation for audio access
+- [x] Playback position persistence
 
 **Tests**
-- [ ] Unit: signed URL generation input validation
-- [ ] Integration: playback position save + restore
-- [ ] E2E: play, pause, resume, continue across session
+- [x] Unit: signed URL generation input validation
+- [x] Integration: playback position save + restore
+- [x] E2E: play, pause, resume, continue across session
 
 **Diagrams**
-- [ ] Audio streaming access flow (flowchart)
+- [x] Audio streaming access flow (flowchart) → [docs/audio_streaming_access_flow.md](./docs/audio_streaming_access_flow.md)
 
 ---
 
