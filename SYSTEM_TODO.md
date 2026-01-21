@@ -83,7 +83,7 @@
 - [ ] Proposal schema v1 documented (fields, validation, lifecycle)
 
 **Coding (MVP)**
-- [ ] Define MCP spine service boundary + repo folder structure
+- [x] Define MCP spine service boundary + repo folder structure
 - [ ] Establish MCP server runtime (Node/TS) + basic bootstrap
 - [ ] Implement MCP server handshake and version negotiation
 - [ ] Register core resource catalog (read-only narrative/audio/listener summaries)
@@ -124,7 +124,7 @@
 - [ ] MCP spine architecture block diagram (diagram)
 
 **Initial Setup Steps (Start Here)**
-1. [ ] Confirm MCP server runtime choice and initialize service scaffold
+1. [x] Confirm MCP server runtime choice and initialize service scaffold
 2. [ ] Define resource catalog MVP (events, canon, knowledge snapshots)
 3. [ ] Draft proposal JSON schema v1 + validation rules
 4. [ ] Implement scope map v1 (roles → resources/tools)
