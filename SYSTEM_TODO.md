@@ -155,9 +155,39 @@ Task Card:
 - [ ] Integration: rate limit enforcement and error response mapping
 
 **Diagrams**
-- [~] Proposal-based modification flow (flowchart) → [docs/proposal_modification_flow.md](./docs/proposal_modification_flow.md)
-- [~] MCP permissions scope map (diagram) → [docs/mcp_permissions_scope_map.md](./docs/mcp_permissions_scope_map.md)
-- [~] MCP request lifecycle sequence (diagram) → [docs/mcp_request_lifecycle_sequence.md](./docs/mcp_request_lifecycle_sequence.md)
+- [x] Proposal-based modification flow (flowchart) → [docs/proposal_modification_flow.md](./docs/proposal_modification_flow.md)
+  Task Card:
+  - Status: [x]
+  - Why not done / Blocker:
+  - What needs to be completed: Document proposal flow with canon gate outcomes and audit logging.
+  - Done looks like (acceptance criteria): Flow includes schema validation, canon gate pass/fail, and audit log.
+  - Files involved: docs/proposal_modification_flow.md
+  - Resources (docs/links/specs): docs/mcp_service_contracts.md, docs/proposal_schema_v1.md
+  - Tests required: None (documentation diagram only).
+  - Docs updates required: docs/proposal_modification_flow.md updated from draft.
+  - Subtasks (optional):
+- [x] MCP permissions scope map (diagram) → [docs/mcp_permissions_scope_map.md](./docs/mcp_permissions_scope_map.md)
+  Task Card:
+  - Status: [x]
+  - Why not done / Blocker:
+  - What needs to be completed: Define scopes, access matrix, and model scope mapping.
+  - Done looks like (acceptance criteria): Matrix and diagram show role-to-scope relationships and model scopes.
+  - Files involved: docs/mcp_permissions_scope_map.md
+  - Resources (docs/links/specs): docs/mcp_service_contracts.md, docs/proposal_schema_v1.md
+  - Tests required: None (documentation diagram only).
+  - Docs updates required: docs/mcp_permissions_scope_map.md updated from draft.
+  - Subtasks (optional):
+- [x] MCP request lifecycle sequence (diagram) → [docs/mcp_request_lifecycle_sequence.md](./docs/mcp_request_lifecycle_sequence.md)
+  Task Card:
+  - Status: [x]
+  - Why not done / Blocker:
+  - What needs to be completed: Document request flow including routing, metadata, and audit logging.
+  - Done looks like (acceptance criteria): Sequence includes routing step and explicit response metadata list.
+  - Files involved: docs/mcp_request_lifecycle_sequence.md
+  - Resources (docs/links/specs): docs/mcp_service_contracts.md, docs/error_taxonomy.md
+  - Tests required: None (documentation diagram only).
+  - Docs updates required: docs/mcp_request_lifecycle_sequence.md updated from draft.
+  - Subtasks (optional):
 - [~] MCP spine architecture block diagram (diagram) → [docs/mcp_spine_architecture_block_diagram.md](./docs/mcp_spine_architecture_block_diagram.md)
 
 **Initial Setup Steps (Start Here)**
@@ -344,9 +374,9 @@ Reference diagram: [docs/incident_response_flow.md](./docs/incident_response_flo
 - [x] Canon gate decision flow → [docs/narrative_engine_diagrams.md](./docs/narrative_engine_diagrams.md)
 - [x] Audio scene generation pipeline → [docs/auto_scene_generation_pipeline.md](./docs/auto_scene_generation_pipeline.md)
 - [x] Listener confusion audit decision tree → [docs/listener_confusion_audit_decision_tree.md](./docs/listener_confusion_audit_decision_tree.md)
-- [~] Proposal-based modification flow → [docs/proposal_modification_flow.md](./docs/proposal_modification_flow.md)
-- [~] MCP permissions scope map → [docs/mcp_permissions_scope_map.md](./docs/mcp_permissions_scope_map.md)
-- [~] MCP request lifecycle sequence → [docs/mcp_request_lifecycle_sequence.md](./docs/mcp_request_lifecycle_sequence.md)
+- [x] Proposal-based modification flow → [docs/proposal_modification_flow.md](./docs/proposal_modification_flow.md)
+- [x] MCP permissions scope map → [docs/mcp_permissions_scope_map.md](./docs/mcp_permissions_scope_map.md)
+- [x] MCP request lifecycle sequence → [docs/mcp_request_lifecycle_sequence.md](./docs/mcp_request_lifecycle_sequence.md)
 - [~] MCP spine architecture block diagram → [docs/mcp_spine_architecture_block_diagram.md](./docs/mcp_spine_architecture_block_diagram.md)
 - [~] Visitor conversion funnel → [docs/visitor_conversion_funnel.md](./docs/visitor_conversion_funnel.md)
 - [~] Payment → entitlement flow → [docs/payment_entitlement_flow.md](./docs/payment_entitlement_flow.md)

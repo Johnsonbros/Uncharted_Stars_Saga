@@ -1,4 +1,4 @@
-# Proposal-Based Modification Flow (Draft)
+# Proposal-Based Modification Flow
 
 ## Purpose
 Describe the end-to-end proposal workflow for canon-affecting changes, from draft creation through validation and apply.
@@ -15,15 +15,20 @@ Describe the end-to-end proposal workflow for canon-affecting changes, from draf
 
 ## Flow Outline
 1. **Draft Proposal**
-   - Creator submits intent and context.
-2. **Validate Proposal**
-   - Continuity checks, dependency DAG validation.
-3. **Canon Gate Review**
-   - Conflicts, promises, and timeline ordering.
-4. **Apply Proposal**
+   - Creator (or tool) submits intent, scope, and changes.
+2. **Schema Validation**
+   - Validate proposal shape, required fields, and version.
+3. **Validation Pipeline**
+   - Continuity checks, dependency DAG validation, listener cognition checks.
+4. **Canon Gate Review**
+   - Promise impact, timeline ordering, canon conflicts.
+5. **Decision**
+   - Pass → proposal can be applied.
+   - Fail → return issues and block apply.
+6. **Apply Proposal**
    - Canonization and state updates.
-5. **Audit Log**
-   - Record proposal and validation reports.
+7. **Audit Log**
+   - Record proposal, validation reports, and decision outcome.
 
 ## Required Inputs
 - Proposed changes (event payloads).
@@ -35,19 +40,26 @@ Describe the end-to-end proposal workflow for canon-affecting changes, from draf
 - Validation report.
 - Proposal audit entry.
 
-## Flowchart (Placeholder)
+## Flowchart
 ```mermaid
 flowchart TD
-  A[Draft Proposal] --> B[Validation Pipeline]
-  B --> C{Canon Gate}
-  C -- Pass --> D[Apply Changes]
-  C -- Fail --> E[Return Issues]
-  D --> F[Audit Log]
+  A[Draft Proposal] --> B[Schema Validation]
+  B --> C[Validation Pipeline]
+  C --> D{Canon Gate}
+  D -- Pass --> E[Apply Changes]
+  D -- Fail --> F[Return Issues + Block Apply]
+  E --> G[Audit Log]
+  F --> G
 ```
 
-## Open Questions
-- What is the minimal proposal schema for Phase 1?
-- Which validation rules are blocking vs advisory?
+## Validation Gates (Phase 1)
+- **Blocking:** schema errors, continuity breaks, missing dependencies, canon conflicts.
+- **Advisory:** listener cognition warnings, minor clarity issues.
+
+## Acceptance Criteria
+- Proposal lifecycle states are explicit in the flow.
+- Canon gate pass/fail outcomes are shown.
+- Audit logging is shown for both pass/fail outcomes.
 
 ## Update Triggers
 - Proposal schema changes.
