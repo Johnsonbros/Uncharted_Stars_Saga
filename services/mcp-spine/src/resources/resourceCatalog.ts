@@ -31,4 +31,20 @@ export const RESOURCE_CATALOG_V1: McpResourceDefinition[] = [
     scopes: ["narrative:read"],
     version: "v1",
   },
+  {
+    id: "audio.scene_index",
+    name: "Audio Scene Index",
+    description:
+      "Read-only index of audio scenes and recording packets for production tooling.",
+    scopes: ["audio:read"],
+    version: "v1",
+  },
+  {
+    id: "listener.summary",
+    name: "Listener Summary Snapshot",
+    description:
+      "Aggregated listener platform summary data for support and reporting workflows.",
+    scopes: ["listener:summary:read"],
+    version: "v1",
+  },
 ];
