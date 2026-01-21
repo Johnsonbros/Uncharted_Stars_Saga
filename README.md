@@ -284,6 +284,7 @@ This is a solo-author project. The repository follows a feature-branch workflow 
 - **[CLAUDE.md](./CLAUDE.md)**: AI assistant guide for development
 - **[TESTING_STRATEGY.md](./TESTING_STRATEGY.md)**: Testing approach and best practices
 - **[docs/audio_storage_conventions.md](./docs/audio_storage_conventions.md)**: Audio storage paths, metadata, and CDN delivery contract
+- **[docs/error_taxonomy.md](./docs/error_taxonomy.md)**: Unified error taxonomy, severity table, and ownership rules
 
 ## Project Status
 
