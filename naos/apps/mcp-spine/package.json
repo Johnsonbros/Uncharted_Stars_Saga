@@ -1,0 +1,14 @@
+{
+  "name": "@naos/mcp-spine",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NAOS MCP spine service (foundation scaffold)",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED"
+}
