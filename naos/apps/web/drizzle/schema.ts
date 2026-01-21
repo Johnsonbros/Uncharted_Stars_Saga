@@ -47,7 +47,9 @@ export const proposals = pgTable("proposals", {
 
 export const approvals = pgTable("approvals", {
   id: uuid("id").defaultRandom().primaryKey(),
-  proposalId: uuid("proposal_id").notNull(),
+  proposalId: uuid("proposal_id")
+    .notNull()
+    .references(() => proposals.id, { onDelete: "cascade", onUpdate: "cascade" }),
   approver: text("approver").notNull().default("creator"),
   note: text("note").default(""),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
