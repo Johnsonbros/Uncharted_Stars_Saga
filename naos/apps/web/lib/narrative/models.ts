@@ -20,6 +20,20 @@ export const ImpactSchema = z.object({
 });
 export type Impact = z.infer<typeof ImpactSchema>;
 
+export const KnowledgeCertaintySchema = z.enum(["known", "suspected", "rumored", "false"]);
+export type KnowledgeCertainty = z.infer<typeof KnowledgeCertaintySchema>;
+
+export const KnowledgeSourceSchema = z.enum(["witnessed", "told", "inferred"]);
+export type KnowledgeSource = z.infer<typeof KnowledgeSourceSchema>;
+
+export const KnowledgeEffectSchema = z.object({
+  characterId: z.string(),
+  learnedAt: z.coerce.date().optional(),
+  certainty: KnowledgeCertaintySchema.default("known"),
+  source: KnowledgeSourceSchema.default("witnessed")
+});
+export type KnowledgeEffect = z.infer<typeof KnowledgeEffectSchema>;
+
 export const EventSchema = z.object({
   id: z.string().uuid(),
   timestamp: z.coerce.date(),
@@ -29,6 +43,7 @@ export const EventSchema = z.object({
   description: z.string().min(1),
   dependencies: z.array(z.string().uuid()).default([]),
   impacts: z.array(ImpactSchema).default([]),
+  knowledgeEffects: z.array(KnowledgeEffectSchema).default([]),
   canonStatus: CanonStatusSchema
 });
 export type Event = z.infer<typeof EventSchema>;
@@ -43,8 +58,8 @@ export const KnowledgeStateSchema = z.object({
   characterId: z.string(),
   eventId: z.string().uuid(),
   learnedAt: z.coerce.date(),
-  certainty: z.enum(["known", "suspected", "rumored", "false"]),
-  source: z.enum(["witnessed", "told", "inferred"])
+  certainty: KnowledgeCertaintySchema,
+  source: KnowledgeSourceSchema
 });
 export type KnowledgeState = z.infer<typeof KnowledgeStateSchema>;
 
@@ -68,3 +83,26 @@ export const PromiseRecordSchema = z.object({
   fulfilledIn: z.string().uuid().optional()
 });
 export type PromiseRecord = z.infer<typeof PromiseRecordSchema>;
+
+export const PromiseIssueSchema = z.object({
+  promiseId: z.string().uuid(),
+  message: z.string().min(1)
+});
+export type PromiseIssue = z.infer<typeof PromiseIssueSchema>;
+
+export const ListenerCognitionReportSchema = z.object({
+  issues: z.array(z.string()).default([])
+});
+export type ListenerCognitionReport = z.infer<typeof ListenerCognitionReportSchema>;
+
+export const CanonValidationReportSchema = z.object({
+  passed: z.boolean(),
+  continuity: z.object({
+    dependencyIssues: z.array(z.object({ eventId: z.string(), missingDependencies: z.array(z.string()) })),
+    cycleIssues: z.array(z.object({ cycle: z.array(z.string()) })),
+    timestampIssues: z.array(z.string())
+  }),
+  promiseIssues: z.array(PromiseIssueSchema).default([]),
+  listenerCognition: ListenerCognitionReportSchema
+});
+export type CanonValidationReport = z.infer<typeof CanonValidationReportSchema>;
