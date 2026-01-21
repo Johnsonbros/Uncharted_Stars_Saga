@@ -7,12 +7,15 @@ export type ServiceConfig = {
   port: number;
   environment: ServiceEnvironment;
   logLevel: LogLevel;
+  accessToken?: string;
+  rateLimitPerMinute: number;
   startupWarnings: string[];
 };
 
 const DEFAULT_PORT = 7000;
 const DEFAULT_ENVIRONMENT: ServiceEnvironment = "development";
 const DEFAULT_LOG_LEVEL: LogLevel = "info";
+const DEFAULT_RATE_LIMIT = 60;
 
 const LOG_LEVELS: LogLevel[] = ["debug", "info", "warn", "error"];
 const ENVIRONMENTS: ServiceEnvironment[] = [
@@ -79,6 +82,24 @@ const parseLogLevel = (value: string | undefined, warnings: string[]): LogLevel 
   return normalized as LogLevel;
 };
 
+const parseRateLimit = (value: string | undefined, warnings: string[]) => {
+  if (!value) {
+    return DEFAULT_RATE_LIMIT;
+  }
+
+  const parsed = Number.parseInt(value, 10);
+  if (Number.isNaN(parsed) || parsed < 1) {
+    warnings.push(
+      `MCP_RATE_LIMIT_PER_MINUTE must be a positive integer. Received "${value}". Using default ${DEFAULT_RATE_LIMIT}.`,
+    );
+    return DEFAULT_RATE_LIMIT;
+  }
+
+  return parsed;
+};
+
+const parseAccessToken = (value: string | undefined) => normalizeString(value);
+
 export const loadConfig = (serviceName = "mcp-spine"): ServiceConfig => {
   const warnings: string[] = [];
   const port = parsePort(normalizeString(process.env.MCP_SPINE_PORT), warnings);
@@ -87,12 +108,21 @@ export const loadConfig = (serviceName = "mcp-spine"): ServiceConfig => {
     warnings,
   );
   const logLevel = parseLogLevel(normalizeString(process.env.LOG_LEVEL), warnings);
+  const accessToken = parseAccessToken(
+    normalizeString(process.env.MCP_SPINE_ACCESS_TOKEN),
+  );
+  const rateLimitPerMinute = parseRateLimit(
+    normalizeString(process.env.MCP_RATE_LIMIT_PER_MINUTE),
+    warnings,
+  );
 
   return {
     serviceName,
     port,
     environment,
     logLevel,
+    accessToken: accessToken || undefined,
+    rateLimitPerMinute,
     startupWarnings: warnings,
   };
 };
