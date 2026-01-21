@@ -97,3 +97,17 @@ The Audio Engine must output the following for each audio asset upload:
 - Masters are immutable once published.
 - Derived assets (`stream`, `preview`) may be regenerated but must advance `scene_version`.
 - Metadata is mandatory and treated as a contract for downstream systems.
+
+## Storage → CDN Delivery Flow
+```mermaid
+flowchart LR
+  A[Audio Engine Export] --> B[Object Storage Upload]
+  B --> C{Path Type}
+  C -- Versioned /v{scene_version}/ --> D[Immutable Asset]
+  C -- Mutable /latest/ --> E[Alias Asset]
+  D --> F[CDN Cache Long TTL]
+  E --> G[CDN Cache Short TTL]
+  F --> H[Signed URL Delivery]
+  G --> H
+  H --> I[Listener Platform Playback]
+```

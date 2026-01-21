@@ -202,7 +202,7 @@
 - [x] Integration: signed URL expiry enforcement
 
 **Diagrams**
-- [ ] Storage → CDN delivery flow
+- [x] Storage → CDN delivery flow
 
 ---
 
@@ -270,6 +270,7 @@ flowchart TD
 - [ ] Listener confusion audit decision tree
 - [ ] Payment → entitlement flow
 - [ ] Audio streaming access flow
+- [x] Storage → CDN delivery flow
 - [ ] Incident response flow (see above)
 
 ---
@@ -277,10 +278,10 @@ flowchart TD
 ## 6) Documentation Sync Checklist
 
 When updating this system-wide list, update references in:
-- [ ] README.md (Documentation section)
-- [ ] CLAUDE.md (AI assistant entry points)
-- [ ] ARCHITECTURE.md (roadmap + cross-links)
-- [ ] TESTING_STRATEGY.md (test backlog alignment)
+- [x] README.md (Documentation section)
+- [x] CLAUDE.md (AI assistant entry points)
+- [x] ARCHITECTURE.md (roadmap + cross-links)
+- [x] TESTING_STRATEGY.md (test backlog alignment)
 
 ---
 
