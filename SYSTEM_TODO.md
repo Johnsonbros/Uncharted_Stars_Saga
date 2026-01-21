@@ -55,8 +55,8 @@
 ### 1.2 Audio Engine
 
 **Documentation**
-- [ ] Audio scene schema spec and validation rules documented
-- [ ] Voice profile constraints and audio safety guidelines documented
+- [x] Audio scene schema spec and validation rules documented → [docs/audio_engine_schema.md](./docs/audio_engine_schema.md)
+- [x] Voice profile constraints and audio safety guidelines documented → [docs/audio_engine_schema.md](./docs/audio_engine_schema.md)
 
 **Coding (MVP)**
 - [ ] Audio Scene Object schema defined and validated
@@ -140,8 +140,8 @@
 ### 2.1 Marketing & Onboarding
 
 **Documentation**
-- [ ] Marketing funnel steps documented (landing → signup → checkout)
-- [ ] Onboarding content checklist documented (email copy + FAQ)
+- [x] Marketing funnel steps documented (landing → signup → checkout) → [docs/marketing_onboarding.md](./docs/marketing_onboarding.md)
+- [x] Onboarding content checklist documented (email copy + FAQ) → [docs/marketing_onboarding.md](./docs/marketing_onboarding.md)
 
 **Coding (MVP)**
 - [ ] Landing page with audio trailer
@@ -160,9 +160,8 @@
 ### 2.2 Payments & Entitlements
 
 **Documentation**
-- [ ] Payment and entitlement rules documented (tiers, access windows)
-- [ ] Webhook event matrix documented (Stripe event → handler action)
-- [x] Entitlement and webhook API endpoints documented → [API.md](./API.md)
+- [x] Payment and entitlement rules documented (tiers, access windows) → [docs/payments_entitlements.md](./docs/payments_entitlements.md)
+- [x] Webhook event matrix documented (Stripe event → handler action) → [docs/payments_entitlements.md](./docs/payments_entitlements.md)
 
 **Coding (MVP)**
 - [ ] Stripe Checkout integration
@@ -207,8 +206,8 @@
 ### 3.1 Narrative DB
 
 **Documentation**
-- [ ] Narrative DB schema documented (events, knowledge, promises)
-- [ ] Canon/draft enforcement rules documented (constraints + triggers)
+- [x] Narrative DB schema documented (events, knowledge, promises) → [docs/narrative_db_documentation.md](./docs/narrative_db_documentation.md)
+- [x] Canon/draft enforcement rules documented (constraints + triggers) → [docs/canon_draft_enforcement.md](./docs/canon_draft_enforcement.md)
 
 **Coding (MVP)**
 - [ ] Schema migrations for events, knowledge states, promises
@@ -227,8 +226,8 @@
 ### 3.2 Audio Storage
 
 **Documentation**
-- [ ] Storage paths and metadata conventions documented
-- [ ] CDN cache strategy documented (TTL, purge rules)
+- [x] Storage paths and metadata conventions documented → [docs/audio_storage_conventions.md](./docs/audio_storage_conventions.md)
+- [x] CDN cache strategy documented (TTL, purge rules) → [docs/audio_storage_conventions.md](./docs/audio_storage_conventions.md)
 
 **Coding (MVP)**
 - [x] Object storage paths and metadata conventions
@@ -246,8 +245,8 @@
 ### 3.3 Listener DB
 
 **Documentation**
-- [ ] Listener schema documented (users, entitlements, playback)
-- [ ] Data retention and deletion policy documented
+- [x] Listener schema documented (users, entitlements, playback) → [docs/listener_db_documentation.md](./docs/listener_db_documentation.md)
+- [x] Data retention and deletion policy documented → [docs/listener_db_documentation.md](./docs/listener_db_documentation.md)
 
 **Coding (MVP)**
 - [ ] User accounts, entitlements, playback positions schema
@@ -270,7 +269,7 @@
 - [ ] Log correlation IDs across services
 - [ ] Structured logging format (JSON)
 - [ ] Alerting rules for critical failures
-- [ ] Error playbooks for each subsystem
+- [x] Error playbooks for each subsystem → [docs/error_playbooks.md](./docs/error_playbooks.md)
 
 ### 4.2 Incident Flowchart
 
