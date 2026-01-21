@@ -202,9 +202,9 @@ Task Card:
 
 **Initial Setup Steps (Start Here)**
 1. [x] Confirm MCP server runtime choice and initialize service scaffold
-2. [ ] Define resource catalog MVP (events, canon, knowledge snapshots)
-3. [ ] Draft proposal JSON schema v1 + validation rules
-4. [ ] Implement scope map v1 (roles → resources/tools)
+2. [x] Define resource catalog MVP (events, canon, knowledge snapshots)
+3. [x] Draft proposal JSON schema v1 + validation rules
+4. [x] Implement scope map v1 (roles → resources/tools)
 5. [ ] Wire basic proposal tool endpoint returning proposal_id
 6. [ ] Stub validation pipeline with placeholder checks + audit log
 
