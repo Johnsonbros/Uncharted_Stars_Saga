@@ -301,9 +301,9 @@ Task Card:
 ### 4.1 Global Error Trace Checklist
 
 - [x] Unified error taxonomy (codes, severity, owner) → [docs/error_taxonomy.md](./docs/error_taxonomy.md)
-- [ ] Log correlation IDs across services
-- [ ] Structured logging format (JSON)
-- [ ] Alerting rules for critical failures
+- [x] Log correlation IDs across services → [docs/observability_logging_alerting.md](./docs/observability_logging_alerting.md)
+- [x] Structured logging format (JSON) → [docs/observability_logging_alerting.md](./docs/observability_logging_alerting.md)
+- [x] Alerting rules for critical failures → [docs/observability_logging_alerting.md](./docs/observability_logging_alerting.md)
 - [x] Error playbooks for each subsystem → [docs/error_playbooks.md](./docs/error_playbooks.md)
 
 ### 4.2 Incident Flowchart
