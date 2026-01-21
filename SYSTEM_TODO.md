@@ -188,7 +188,17 @@ Task Card:
   - Tests required: None (documentation diagram only).
   - Docs updates required: docs/mcp_request_lifecycle_sequence.md updated from draft.
   - Subtasks (optional):
-- [~] MCP spine architecture block diagram (diagram) → [docs/mcp_spine_architecture_block_diagram.md](./docs/mcp_spine_architecture_block_diagram.md)
+- [x] MCP spine architecture block diagram (diagram) → [docs/mcp_spine_architecture_block_diagram.md](./docs/mcp_spine_architecture_block_diagram.md)
+  Task Card:
+  - Status: [x]
+  - Why not done / Blocker:
+  - What needs to be completed: Document MCP spine components, trust boundaries, and proposal flow at a block level.
+  - Done looks like (acceptance criteria): Diagram shows gateway, auth, scope guard, resource/tool paths, proposal store, validation, and audit log.
+  - Files involved: docs/mcp_spine_architecture_block_diagram.md
+  - Resources (docs/links/specs): docs/mcp_service_contracts.md, docs/proposal_schema_v1.md
+  - Tests required: None (documentation diagram only).
+  - Docs updates required: docs/mcp_spine_architecture_block_diagram.md updated from draft.
+  - Subtasks (optional):
 
 **Initial Setup Steps (Start Here)**
 1. [x] Confirm MCP server runtime choice and initialize service scaffold
@@ -218,7 +228,17 @@ Task Card:
 - [ ] Accessibility checks (contrast, focus, keyboard nav)
 
 **Diagrams**
-- [~] Visitor conversion funnel (flowchart) → [docs/visitor_conversion_funnel.md](./docs/visitor_conversion_funnel.md)
+- [x] Visitor conversion funnel (flowchart) → [docs/visitor_conversion_funnel.md](./docs/visitor_conversion_funnel.md)
+  Task Card:
+  - Status: [x]
+  - Why not done / Blocker:
+  - What needs to be completed: Define stages, recovery paths, and analytics events for the marketing funnel.
+  - Done looks like (acceptance criteria): Flowchart includes auth, checkout, success/failure paths, and CTA loops.
+  - Files involved: docs/visitor_conversion_funnel.md
+  - Resources (docs/links/specs): docs/marketing_onboarding.md, docs/payments_entitlements.md
+  - Tests required: None (documentation diagram only).
+  - Docs updates required: docs/visitor_conversion_funnel.md updated from draft.
+  - Subtasks (optional):
 
 ---
 
@@ -239,7 +259,17 @@ Task Card:
 - [ ] E2E: successful payment unlocks library access
 
 **Diagrams**
-- [~] Payment → entitlement flow (flowchart) → [docs/payment_entitlement_flow.md](./docs/payment_entitlement_flow.md)
+- [x] Payment → entitlement flow (flowchart) → [docs/payment_entitlement_flow.md](./docs/payment_entitlement_flow.md)
+  Task Card:
+  - Status: [x]
+  - Why not done / Blocker:
+  - What needs to be completed: Document payment events, webhook verification, and entitlement persistence with failure handling.
+  - Done looks like (acceptance criteria): Flowchart includes verification branch, retries, and entitlement state transitions.
+  - Files involved: docs/payment_entitlement_flow.md
+  - Resources (docs/links/specs): docs/payments_entitlements.md, docs/marketing_onboarding.md
+  - Tests required: None (documentation diagram only).
+  - Docs updates required: docs/payment_entitlement_flow.md updated from draft.
+  - Subtasks (optional):
 
 ---
 
@@ -377,9 +407,9 @@ Reference diagram: [docs/incident_response_flow.md](./docs/incident_response_flo
 - [x] Proposal-based modification flow → [docs/proposal_modification_flow.md](./docs/proposal_modification_flow.md)
 - [x] MCP permissions scope map → [docs/mcp_permissions_scope_map.md](./docs/mcp_permissions_scope_map.md)
 - [x] MCP request lifecycle sequence → [docs/mcp_request_lifecycle_sequence.md](./docs/mcp_request_lifecycle_sequence.md)
-- [~] MCP spine architecture block diagram → [docs/mcp_spine_architecture_block_diagram.md](./docs/mcp_spine_architecture_block_diagram.md)
-- [~] Visitor conversion funnel → [docs/visitor_conversion_funnel.md](./docs/visitor_conversion_funnel.md)
-- [~] Payment → entitlement flow → [docs/payment_entitlement_flow.md](./docs/payment_entitlement_flow.md)
+- [x] MCP spine architecture block diagram → [docs/mcp_spine_architecture_block_diagram.md](./docs/mcp_spine_architecture_block_diagram.md)
+- [x] Visitor conversion funnel → [docs/visitor_conversion_funnel.md](./docs/visitor_conversion_funnel.md)
+- [x] Payment → entitlement flow → [docs/payment_entitlement_flow.md](./docs/payment_entitlement_flow.md)
 - [x] Audio streaming access flow → [docs/audio_streaming_access_flow.md](./docs/audio_streaming_access_flow.md)
 - [x] Storage → CDN delivery flow
 - [x] Incident response flow (see above) → [docs/incident_response_flow.md](./docs/incident_response_flow.md)
