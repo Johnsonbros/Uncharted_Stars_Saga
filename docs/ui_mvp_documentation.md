@@ -118,8 +118,8 @@ Derived from the documented website structure and MVP page list.
 - Signed URL streaming access integrated.
 
 ## Open Items / TBD (Not Yet Specified)
-- Visual design system details (typography, color palette, spacing).
-- Component library and patterns.
-- Error states and empty states for each page.
-- Responsive breakpoints and accessibility checklists.
-- Analytics events for funnel and playback.
+- Visual design system details (typography, color palette, spacing). → [docs/ui_design_system_draft.md](./ui_design_system_draft.md)
+- Component library and patterns. → [docs/ui_component_library_draft.md](./ui_component_library_draft.md)
+- Error states and empty states for each page. → [docs/ui_error_empty_states_draft.md](./ui_error_empty_states_draft.md)
+- Responsive breakpoints and accessibility checklists. → [docs/ui_responsive_accessibility_draft.md](./ui_responsive_accessibility_draft.md)
+- Analytics events for funnel and playback. → [docs/ui_analytics_events_draft.md](./ui_analytics_events_draft.md)
