@@ -13,6 +13,40 @@
   2. The related test plan
   3. Any impacted diagram/flowchart
 
+### Task Card Template (Required for Each Checklist Item)
+
+Use this template under every checklist item to ensure the TODO list is the
+authoritative source of truth for what is done, what is blocked, and what is
+required to finish.
+
+```
+Task Card:
+- Status: [ ] / [~] / [x]
+- Why not done / Blocker:
+- What needs to be completed:
+- Done looks like (acceptance criteria):
+- Files involved:
+- Resources (docs/links/specs):
+- Tests required:
+- Docs updates required:
+- Subtasks (optional):
+```
+
+### Next-Task Selection Rules (Agent Priority)
+
+1. **Respect phase order**: pick the earliest phase with open items (Docs → Code → Tests → Diagrams).
+2. **Pick smallest actionable** item first: choose tasks with clear acceptance criteria and no blockers.
+3. **If blocked**, select a task in the same subsystem that unblocks it (e.g., missing spec → write spec).
+4. **After coding**, immediately queue tests and doc updates required by the update rule above.
+
+### Agent Execution Loop (Design → Document → Code → Test → Update)
+
+1. Read `SYSTEM_TODO.md` and identify the subsystem with open items.
+2. Pick the next task using the **Next-Task Selection Rules**.
+3. Execute the task using the repo workflow (pre-flight → scope → plan → implement → validate → summarize).
+4. Update the Task Card with status, blockers, files, resources, tests, and doc updates.
+5. Repeat from step 1 until all items in the current phase are complete.
+
 ## Global Status Legend
 
 - **[ ]** Not started
