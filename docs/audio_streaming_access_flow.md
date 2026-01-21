@@ -7,25 +7,25 @@ This flow documents how a signed URL is issued, how playback resumes, and how li
 
 ```mermaid
 flowchart TD
-  A[Listener opens Library] --> B[Library API returns available chapters]
+  A[Listener opens Library] --> B[GET /api/library returns available chapters]
   B --> C[Listener selects chapter]
-  C --> D[Client requests playback session]
+  C --> D[GET /api/library/{chapterId}/stream-url]
   D --> E{Auth + entitlement valid?}
   E -- No --> F[Return 401/403 and block playback]
   E -- Yes --> G[Issue signed URL + resume position]
   G --> H[Client starts streaming via HTML5 audio]
   H --> I[Playback progress events emitted]
-  I --> J[Client persists position to Playback API]
+  I --> J[POST /api/playback/position]
   J --> K[Playback API stores position]
   K --> L[Listener resumes later]
-  L --> G
+  L --> D
 ```
 
 ## Playback Session Contract
 
 **Inputs**
-- `chapter_id`
-- `listener_id` (from session)
+- `chapterId`
+- `listenerId` (from session)
 
 **Outputs**
 - `signed_url` (time-limited, chapter-scoped)

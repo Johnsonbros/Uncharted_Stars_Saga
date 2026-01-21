@@ -1,10 +1,31 @@
 # Narrative Engine Documentation
 
-This document completes the Narrative Engine documentation by describing the **API surface** and the **canon vs. draft data rules** referenced in `SYSTEM_TODO.md`. It is the authoritative narrative-engine doc alongside the system architecture overview in `ARCHITECTURE.md`.
+This document completes the Narrative Engine documentation by describing the **API surface** and the **canon vs. draft data rules** referenced in `SYSTEM_TODO.md`. It is the authoritative narrative-engine doc alongside the system architecture overview in `ARCHITECTURE.md` and the system-wide API contract in `API.md`.
 
 ## 1) API Surface (Events, Knowledge, Promises)
 
-> Scope: This API surface is conceptual and describes the required data operations and validation behaviors. Concrete endpoints may vary by service implementation, but must provide equivalent capabilities.
+> Scope: This API surface describes the required data operations and validation behaviors. The canonical endpoint list lives in `API.md` and must remain in sync.
+
+### 1.0 Narrative Engine Endpoint Map (Authoritative Routes)
+
+**Events**
+- `POST /api/narrative/events` → Create draft event.
+- `GET /api/narrative/events` → Read events (filter by `eventId`, `characterId`, `timeline`, `canonStatus`, `dependency`).
+- `PATCH /api/narrative/events/{eventId}` → Update draft event (draft-only).
+- `POST /api/narrative/events/{eventId}/propose` → Propose canonization.
+
+**Proposals**
+- `POST /api/narrative/proposals/{proposalId}/reject` → Reject/Archive proposal with reason.
+
+**Knowledge States**
+- `POST /api/narrative/knowledge` → Record knowledge acquisition.
+- `GET /api/narrative/knowledge` → Query knowledge by `characterId`, `eventId`, time window.
+- `POST /api/narrative/knowledge/invalidate` → Invalidate knowledge entries after causal edits.
+
+**Promises**
+- `POST /api/narrative/promises` → Create promise.
+- `PATCH /api/narrative/promises/{promiseId}` → Transition status.
+- `GET /api/narrative/promises` → Query promises by `status`, `type`, `character`, `timeline`.
 
 ### 1.1 Events API
 
