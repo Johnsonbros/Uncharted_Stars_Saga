@@ -1253,9 +1253,9 @@ Streaming playback
 - [ ] Security audit
 
 **Documentation**
-- [ ] Creator OS user guide
-- [ ] API documentation
-- [ ] Deployment runbooks
+- [x] Creator OS user guide → [docs/creator_os_user_guide.md](./docs/creator_os_user_guide.md)
+- [x] API documentation → [API.md](./API.md)
+- [x] Deployment runbooks → [docs/deployment_runbooks.md](./docs/deployment_runbooks.md)
 
 ### Phase 5: Founders Launch (Month 5-6)
 
