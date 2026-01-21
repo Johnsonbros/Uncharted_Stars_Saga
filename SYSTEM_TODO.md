@@ -7,6 +7,7 @@
 - **All agentic systems** should start here to locate the relevant checklist for a component or workflow.
 - **Each checklist item** is written as a testable, verifiable outcome.
 - **Traceability** is maintained by linking tests, diagrams, and flowcharts to the system or subsystem.
+- **Structure:** Documentation → Coding (MVP) → Tests → Diagrams, to keep specs ahead of implementation.
 - **Update rule:** When a feature is added or a workflow changes, update:
   1. The checklist for that subsystem
   2. The related test plan
@@ -24,7 +25,11 @@
 
 ### 1.1 Narrative Engine
 
-**Build Checklist**
+**Documentation**
+- [ ] Narrative engine API surface documented (events, knowledge, promises)
+- [ ] Canon vs. draft data rules documented (validation + persistence constraints)
+
+**Coding (MVP)**
 - [x] Event model implemented with immutable canon transitions
 - [x] Dependency DAG validation implemented (acyclic + referential integrity)
 - [x] Knowledge state tracking with temporal constraints
@@ -48,7 +53,11 @@
 
 ### 1.2 Audio Engine
 
-**Build Checklist**
+**Documentation**
+- [ ] Audio scene schema spec and validation rules documented
+- [ ] Voice profile constraints and audio safety guidelines documented
+
+**Coding (MVP)**
 - [ ] Audio Scene Object schema defined and validated
 - [ ] Beat marker authoring and validation
 - [ ] Voice profile definition + enforcement
@@ -69,7 +78,11 @@
 
 ### 1.3 MCP Spine
 
-**Build Checklist**
+**Documentation**
+- [ ] MCP service boundaries and contract docs (resources/tools/permissions)
+- [ ] Proposal schema v1 documented (fields, validation, lifecycle)
+
+**Coding (MVP)**
 - [ ] Define MCP spine service boundary + repo folder structure
 - [ ] Establish MCP server runtime (Node/TS) + basic bootstrap
 - [ ] Implement MCP server handshake and version negotiation
@@ -124,7 +137,11 @@
 
 ### 2.1 Marketing & Onboarding
 
-**Build Checklist**
+**Documentation**
+- [ ] Marketing funnel steps documented (landing → signup → checkout)
+- [ ] Onboarding content checklist documented (email copy + FAQ)
+
+**Coding (MVP)**
 - [ ] Landing page with audio trailer
 - [ ] Founders pricing and CTA flow
 - [ ] Email auth onboarding (Replit or Supabase)
@@ -140,7 +157,11 @@
 
 ### 2.2 Payments & Entitlements
 
-**Build Checklist**
+**Documentation**
+- [ ] Payment and entitlement rules documented (tiers, access windows)
+- [ ] Webhook event matrix documented (Stripe event → handler action)
+
+**Coding (MVP)**
 - [ ] Stripe Checkout integration
 - [ ] Webhook verification + idempotency
 - [ ] Entitlement grant + verification API
@@ -157,7 +178,11 @@
 
 ### 2.3 Audiobook Player & Library
 
-**Build Checklist**
+**Documentation**
+- [ ] Player UX flows documented (library → player → resume)
+- [ ] Signed URL access rules documented (expiry, scopes)
+
+**Coding (MVP)**
 - [x] Library page lists available chapters
 - [x] Player supports streaming + resume
 - [x] Signed URL generation for audio access
@@ -177,7 +202,11 @@
 
 ### 3.1 Narrative DB
 
-**Build Checklist**
+**Documentation**
+- [ ] Narrative DB schema documented (events, knowledge, promises)
+- [ ] Canon/draft enforcement rules documented (constraints + triggers)
+
+**Coding (MVP)**
 - [ ] Schema migrations for events, knowledge states, promises
 - [ ] Referential integrity constraints
 - [ ] Canon/draft separation enforcement
@@ -193,7 +222,11 @@
 
 ### 3.2 Audio Storage
 
-**Build Checklist**
+**Documentation**
+- [ ] Storage paths and metadata conventions documented
+- [ ] CDN cache strategy documented (TTL, purge rules)
+
+**Coding (MVP)**
 - [x] Object storage paths and metadata conventions
 - [x] CDN distribution and cache strategy
 
@@ -208,7 +241,11 @@
 
 ### 3.3 Listener DB
 
-**Build Checklist**
+**Documentation**
+- [ ] Listener schema documented (users, entitlements, playback)
+- [ ] Data retention and deletion policy documented
+
+**Coding (MVP)**
 - [ ] User accounts, entitlements, playback positions schema
 - [ ] Data retention and deletion workflow
 
@@ -293,3 +330,4 @@ When updating this system-wide list, update references in:
 3. [ ] Draft subsystem playbooks for Narrative, Audio, MCP, Listener Platform
 4. [ ] Align tests with build checklists for Phase 1 deliverables
 5. [ ] Add instrumentation standards (log fields, trace IDs)
+6. [ ] Begin MVP coding passes for each subsystem (Narrative, Audio, MCP, Listener, Data Layer)
