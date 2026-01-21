@@ -12,6 +12,7 @@
   1. The checklist for that subsystem
   2. The related test plan
   3. Any impacted diagram/flowchart
+  4. The corresponding documentation draft so it reflects the coded behavior
 
 ### Task Card Template (Required for Each Checklist Item)
 
@@ -154,10 +155,10 @@ Task Card:
 - [ ] Integration: rate limit enforcement and error response mapping
 
 **Diagrams**
-- [ ] Proposal-based modification flow (flowchart)
-- [ ] MCP permissions scope map (diagram)
-- [ ] MCP request lifecycle sequence (diagram)
-- [ ] MCP spine architecture block diagram (diagram)
+- [~] Proposal-based modification flow (flowchart) → [docs/proposal_modification_flow.md](./docs/proposal_modification_flow.md)
+- [~] MCP permissions scope map (diagram) → [docs/mcp_permissions_scope_map.md](./docs/mcp_permissions_scope_map.md)
+- [~] MCP request lifecycle sequence (diagram) → [docs/mcp_request_lifecycle_sequence.md](./docs/mcp_request_lifecycle_sequence.md)
+- [~] MCP spine architecture block diagram (diagram) → [docs/mcp_spine_architecture_block_diagram.md](./docs/mcp_spine_architecture_block_diagram.md)
 
 **Initial Setup Steps (Start Here)**
 1. [x] Confirm MCP server runtime choice and initialize service scaffold
@@ -187,7 +188,7 @@ Task Card:
 - [ ] Accessibility checks (contrast, focus, keyboard nav)
 
 **Diagrams**
-- [ ] Visitor conversion funnel (flowchart)
+- [~] Visitor conversion funnel (flowchart) → [docs/visitor_conversion_funnel.md](./docs/visitor_conversion_funnel.md)
 
 ---
 
@@ -208,7 +209,7 @@ Task Card:
 - [ ] E2E: successful payment unlocks library access
 
 **Diagrams**
-- [ ] Payment → entitlement flow (flowchart)
+- [~] Payment → entitlement flow (flowchart) → [docs/payment_entitlement_flow.md](./docs/payment_entitlement_flow.md)
 
 ---
 
@@ -253,7 +254,7 @@ Task Card:
 - [ ] Data integrity checks (foreign keys, enums)
 
 **Diagrams**
-- [ ] Narrative schema ERD
+- [~] Narrative schema ERD → [docs/narrative_schema_erd.md](./docs/narrative_schema_erd.md)
 
 ---
 
@@ -291,7 +292,7 @@ Task Card:
 - [ ] Integration: playback position updates and retrieval
 
 **Diagrams**
-- [ ] Listener schema ERD
+- [~] Listener schema ERD → [docs/listener_schema_erd.md](./docs/listener_schema_erd.md)
 
 ---
 
@@ -343,10 +344,17 @@ Reference diagram: [docs/incident_response_flow.md](./docs/incident_response_flo
 - [x] Canon gate decision flow → [docs/narrative_engine_diagrams.md](./docs/narrative_engine_diagrams.md)
 - [x] Audio scene generation pipeline → [docs/auto_scene_generation_pipeline.md](./docs/auto_scene_generation_pipeline.md)
 - [x] Listener confusion audit decision tree → [docs/listener_confusion_audit_decision_tree.md](./docs/listener_confusion_audit_decision_tree.md)
-- [ ] Payment → entitlement flow
+- [~] Proposal-based modification flow → [docs/proposal_modification_flow.md](./docs/proposal_modification_flow.md)
+- [~] MCP permissions scope map → [docs/mcp_permissions_scope_map.md](./docs/mcp_permissions_scope_map.md)
+- [~] MCP request lifecycle sequence → [docs/mcp_request_lifecycle_sequence.md](./docs/mcp_request_lifecycle_sequence.md)
+- [~] MCP spine architecture block diagram → [docs/mcp_spine_architecture_block_diagram.md](./docs/mcp_spine_architecture_block_diagram.md)
+- [~] Visitor conversion funnel → [docs/visitor_conversion_funnel.md](./docs/visitor_conversion_funnel.md)
+- [~] Payment → entitlement flow → [docs/payment_entitlement_flow.md](./docs/payment_entitlement_flow.md)
 - [x] Audio streaming access flow → [docs/audio_streaming_access_flow.md](./docs/audio_streaming_access_flow.md)
 - [x] Storage → CDN delivery flow
 - [x] Incident response flow (see above) → [docs/incident_response_flow.md](./docs/incident_response_flow.md)
+- [~] Narrative schema ERD → [docs/narrative_schema_erd.md](./docs/narrative_schema_erd.md)
+- [~] Listener schema ERD → [docs/listener_schema_erd.md](./docs/listener_schema_erd.md)
 
 ---
 
