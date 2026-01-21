@@ -312,6 +312,264 @@ section {
   color: var(--muted);
 }
 
+.studio-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  gap: 32px;
+  padding-bottom: 64px;
+}
+
+.studio-header {
+  width: min(100%, var(--max-width));
+  margin: 0 auto;
+  padding: 32px 24px 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.studio-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.studio-brand strong {
+  display: block;
+  font-size: 1.2rem;
+}
+
+.studio-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.studio-main {
+  width: min(100%, var(--max-width));
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.studio-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.studio-grid {
+  display: grid;
+  gap: 24px;
+}
+
+.studio-grid.two {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.studio-grid.three {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.studio-card {
+  padding: 24px;
+  border-radius: 20px;
+  background: rgba(15, 17, 24, 0.85);
+  border: 1px solid var(--border);
+  display: grid;
+  gap: 16px;
+}
+
+.studio-card.highlight {
+  background: linear-gradient(150deg, rgba(124, 92, 255, 0.18), rgba(8, 10, 18, 0.9));
+}
+
+.studio-card.soft {
+  background: rgba(124, 92, 255, 0.12);
+  align-content: start;
+}
+
+.studio-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.studio-pill {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(124, 92, 255, 0.18);
+  color: #d6ceff;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.studio-form {
+  display: grid;
+  gap: 16px;
+}
+
+.studio-form label,
+.studio-field {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+input,
+textarea,
+select {
+  background: rgba(6, 8, 16, 0.8);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.studio-summary {
+  display: grid;
+  gap: 8px;
+}
+
+.studio-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.studio-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.studio-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(8, 10, 18, 0.7);
+}
+
+.studio-link {
+  border: none;
+  background: transparent;
+  color: #c9bbff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.studio-status {
+  display: grid;
+  gap: 12px;
+}
+
+.studio-status div {
+  display: grid;
+  gap: 4px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.studio-status div:last-child {
+  border-bottom: none;
+}
+
+.studio-status-banner {
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: rgba(124, 92, 255, 0.12);
+  color: #e6e0ff;
+  font-size: 0.95rem;
+}
+
+.studio-table-wrapper {
+  overflow-x: auto;
+}
+
+.studio-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.studio-table th,
+.studio-table td {
+  text-align: left;
+  padding: 12px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.studio-table th {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.studio-meta-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.studio-meta-row div {
+  display: grid;
+  gap: 6px;
+}
+
+.studio-textarea {
+  width: 100%;
+  min-height: 520px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85rem;
+}
+
+.studio-actions {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (max-width: 720px) {
+  .studio-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .studio-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 @media (max-width: 900px) {
   .nav {
     position: static;

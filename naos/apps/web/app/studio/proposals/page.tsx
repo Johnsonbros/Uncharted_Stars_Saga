@@ -16,6 +16,7 @@ export default function ProposalsPage() {
   const projectId = "uncharted-stars";
   const [rows, setRows] = useState<Proposal[]>([]);
   const [status, setStatus] = useState("");
+  const [lastSync, setLastSync] = useState("just now");
 
   async function refresh() {
     const res = await fetch(`/api/proposals?projectId=${projectId}`);
@@ -25,6 +26,7 @@ export default function ProposalsPage() {
       return;
     }
     setRows(data.proposals);
+    setLastSync(new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
   }
 
   useEffect(() => {
@@ -48,64 +50,61 @@ export default function ProposalsPage() {
   }
 
   return (
-    <div style={{ padding: 16, fontFamily: "system-ui" }}>
-      <h2>Studio · Proposals</h2>
-      <div style={{ marginBottom: 12, opacity: 0.85 }}>{status}</div>
+    <section className="studio-section">
+      <div className="studio-card">
+        <div className="studio-card-header">
+          <div>
+            <h2>AI proposals</h2>
+            <p className="muted">
+              Review AI-suggested edits before they touch your canon. Approving applies the update
+              instantly.
+            </p>
+          </div>
+          <span className="studio-pill">Last synced • {lastSync}</span>
+        </div>
 
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
-        <thead>
-          <tr style={{ textAlign: "left" }}>
-            <th style={{ borderBottom: "1px solid #ddd", padding: 8 }}>ID</th>
-            <th style={{ borderBottom: "1px solid #ddd", padding: 8 }}>Scene</th>
-            <th style={{ borderBottom: "1px solid #ddd", padding: 8 }}>
-              Approved
-            </th>
-            <th style={{ borderBottom: "1px solid #ddd", padding: 8 }}>
-              Applied
-            </th>
-            <th style={{ borderBottom: "1px solid #ddd", padding: 8 }}>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((p) => (
-            <tr key={p.id}>
-              <td
-                style={{
-                  borderBottom: "1px solid #eee",
-                  padding: 8,
-                  fontFamily: "ui-monospace"
-                }}
-              >
-                {p.id.slice(0, 8)}…
-              </td>
-              <td style={{ borderBottom: "1px solid #eee", padding: 8 }}>
-                {p.sceneId}
-              </td>
-              <td style={{ borderBottom: "1px solid #eee", padding: 8 }}>
-                {String(p.isApproved)}
-              </td>
-              <td style={{ borderBottom: "1px solid #eee", padding: 8 }}>
-                {String(p.isApplied)}
-              </td>
-              <td style={{ borderBottom: "1px solid #eee", padding: 8 }}>
-                <button
-                  disabled={p.isApplied}
-                  onClick={() => approve(p.id)}
-                  style={{ padding: "6px 10px" }}
-                >
-                  Approve + Apply
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        <div className="studio-status-banner">{status || "Ready to review."}</div>
 
-      <div style={{ marginTop: 12 }}>
-        <a href="/studio/scenes/act_01_discovery%2Fch_01_elara_scene_01.md">
-          Back to sample scene
-        </a>
+        <div className="studio-table-wrapper">
+          <table className="studio-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Scene</th>
+                <th>Approved</th>
+                <th>Applied</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((proposal) => (
+                <tr key={proposal.id}>
+                  <td className="mono">{proposal.id.slice(0, 8)}…</td>
+                  <td>{proposal.sceneId}</td>
+                  <td>{proposal.isApproved ? "Yes" : "No"}</td>
+                  <td>{proposal.isApplied ? "Yes" : "No"}</td>
+                  <td>
+                    <button
+                      className="button secondary"
+                      disabled={proposal.isApplied}
+                      onClick={() => approve(proposal.id)}
+                    >
+                      Approve & apply
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              {rows.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="muted">
+                    No proposals yet. Create one from a scene draft.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
