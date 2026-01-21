@@ -27,6 +27,7 @@
 
 **Documentation**
 - [x] Narrative engine API surface documented (events, knowledge, promises)
+- [x] Narrative engine endpoint map aligned with API.md
 - [x] Canon vs. draft data rules documented (validation + persistence constraints)
 
 **Coding (MVP)**
@@ -79,8 +80,9 @@
 ### 1.3 MCP Spine
 
 **Documentation**
-- [x] MCP service boundaries and contract docs (resources/tools/permissions) → [docs/mcp_service_contracts.md](./docs/mcp_service_contracts.md)
-- [x] Proposal schema v1 documented (fields, validation, lifecycle) → [docs/proposal_schema_v1.md](./docs/proposal_schema_v1.md)
+- [ ] MCP service boundaries and contract docs (resources/tools/permissions)
+- [ ] Proposal schema v1 documented (fields, validation, lifecycle)
+- [x] Publish API contract documented (one-way COS → Listener) → [API.md](./API.md)
 
 **Coding (MVP)**
 - [x] Define MCP spine service boundary + repo folder structure
@@ -179,8 +181,9 @@
 ### 2.3 Audiobook Player & Library
 
 **Documentation**
-- [x] Player UX flows documented (library → player → resume) → [docs/player_ux_flows.md](./docs/player_ux_flows.md)
-- [x] Signed URL access rules documented (expiry, scopes) → [docs/signed_url_access_rules.md](./docs/signed_url_access_rules.md)
+- [ ] Player UX flows documented (library → player → resume)
+- [ ] Signed URL access rules documented (expiry, scopes)
+- [x] Library and playback API endpoints documented → [API.md](./API.md)
 
 **Coding (MVP)**
 - [x] Library page lists available chapters
