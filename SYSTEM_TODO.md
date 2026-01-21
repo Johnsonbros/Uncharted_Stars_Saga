@@ -263,7 +263,7 @@ flowchart TD
 ## 5) Diagrams & Flowcharts Inventory
 
 **Required Diagrams (index)**
-- [ ] System architecture overview (high-level)
+- [x] System architecture overview (high-level)
 - [ ] Narrative event DAG example
 - [ ] Canon gate decision flow
 - [ ] Audio scene generation pipeline

@@ -129,6 +129,30 @@ This state-based approach enables:
 
 ### 4.1 Three-Layer Architecture
 
+```mermaid
+flowchart TB
+  subgraph LP[Listener Platform (Public Web)]
+    LP_Marketing[Marketing Website]
+    LP_Auth[Auth & Payments]
+    LP_Player[Audiobook Player]
+  end
+
+  subgraph COS[Creator Operating System (Private)]
+    COS_MCP[MCP Spine]
+    COS_Narrative[Narrative Engine]
+    COS_Audio[Audio Engine]
+  end
+
+  subgraph DL[Data Layer]
+    DL_Narrative[Narrative Database]
+    DL_Audio[Audio Storage]
+    DL_Listener[Listener Database]
+  end
+
+  LP -->|Content Publish API| COS
+  COS --> DL
+```
+
 ```
 ┌────────────────────────────────────────────────────────────┐
 │                    LISTENER PLATFORM                        │
