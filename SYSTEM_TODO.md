@@ -247,6 +247,7 @@ flowchart TD
   H --> J[Postmortem + update checklist/tests]
   I --> J
 ```
+Reference diagram: [docs/incident_response_flow.md](./docs/incident_response_flow.md)
 
 ### 4.3 Error Traceability Matrix
 
@@ -271,7 +272,7 @@ flowchart TD
 - [ ] Payment → entitlement flow
 - [ ] Audio streaming access flow
 - [x] Storage → CDN delivery flow
-- [ ] Incident response flow (see above)
+- [x] Incident response flow (see above) → [docs/incident_response_flow.md](./docs/incident_response_flow.md)
 
 ---
 

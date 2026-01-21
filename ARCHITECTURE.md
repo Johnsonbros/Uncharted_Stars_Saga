@@ -991,6 +991,7 @@ Streaming playback
 - Replit's built-in logs and monitoring
 - Sentry (optional, for advanced error tracking)
 - Unified error taxonomy and severity table (see [docs/error_taxonomy.md](./docs/error_taxonomy.md))
+- Incident response flowchart (see [docs/incident_response_flow.md](./docs/incident_response_flow.md))
 
 **CI/CD:**
 - Replit's automatic deployments from GitHub

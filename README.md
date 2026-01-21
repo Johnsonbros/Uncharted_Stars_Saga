@@ -281,6 +281,7 @@ This is a solo-author project. The repository follows a feature-branch workflow 
 
 - **[ARCHITECTURE.md](./ARCHITECTURE.md)**: Complete NAOS system architecture and design
 - **[SYSTEM_TODO.md](./SYSTEM_TODO.md)**: System-wide TODOs, tests, diagrams, and traceability checklists
+- **[docs/incident_response_flow.md](./docs/incident_response_flow.md)**: Incident response flowchart for tracing and resolving errors
 - **[CLAUDE.md](./CLAUDE.md)**: AI assistant guide for development
 - **[TESTING_STRATEGY.md](./TESTING_STRATEGY.md)**: Testing approach and best practices
 - **[docs/audio_storage_conventions.md](./docs/audio_storage_conventions.md)**: Audio storage paths, metadata, and CDN delivery contract
