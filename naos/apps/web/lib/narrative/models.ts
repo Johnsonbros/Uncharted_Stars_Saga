@@ -84,6 +84,17 @@ export const PromiseRecordSchema = z.object({
 });
 export type PromiseRecord = z.infer<typeof PromiseRecordSchema>;
 
+export const PromiseInputSchema = PromiseRecordSchema.omit({ id: true }).extend({
+  status: PromiseStatusSchema.optional(),
+  fulfilledIn: z.string().uuid().optional()
+});
+export type PromiseInput = z.infer<typeof PromiseInputSchema>;
+
+export const KnowledgeStateInputSchema = KnowledgeStateSchema.extend({
+  learnedAt: z.coerce.date().optional()
+}).omit({ eventId: true });
+export type KnowledgeStateInput = z.infer<typeof KnowledgeStateInputSchema>;
+
 export const PromiseIssueSchema = z.object({
   promiseId: z.string().uuid(),
   message: z.string().min(1)
