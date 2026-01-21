@@ -39,7 +39,7 @@ export const EventSchema = z.object({
   timestamp: z.coerce.date(),
   type: EventTypeSchema,
   participants: z.array(z.string()).default([]),
-  location: z.string(),
+  location: z.string().optional(),
   description: z.string().min(1),
   dependencies: z.array(z.string().uuid()).default([]),
   impacts: z.array(ImpactSchema).default([]),
