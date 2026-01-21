@@ -270,7 +270,7 @@ Reference diagram: [docs/incident_response_flow.md](./docs/incident_response_flo
 - [x] Audio scene generation pipeline → [docs/auto_scene_generation_pipeline.md](./docs/auto_scene_generation_pipeline.md)
 - [x] Listener confusion audit decision tree → [docs/listener_confusion_audit_decision_tree.md](./docs/listener_confusion_audit_decision_tree.md)
 - [ ] Payment → entitlement flow
-- [ ] Audio streaming access flow
+- [x] Audio streaming access flow → [docs/audio_streaming_access_flow.md](./docs/audio_streaming_access_flow.md)
 - [x] Storage → CDN delivery flow
 - [x] Incident response flow (see above) → [docs/incident_response_flow.md](./docs/incident_response_flow.md)
 
