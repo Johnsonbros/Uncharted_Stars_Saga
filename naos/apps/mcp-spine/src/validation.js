@@ -10,7 +10,7 @@ function validateProposal({ toolName, payload }) {
   }
 
   if (toolName === "scene.propose_patch") {
-    if (!payload.sceneId) {
+    if (!payload.sceneId || typeof payload.sceneId !== "string") {
       issues.push("sceneId is required for scene.propose_patch");
     }
     if (!Array.isArray(payload.changes)) {
@@ -19,7 +19,7 @@ function validateProposal({ toolName, payload }) {
   }
 
   if (toolName === "event.propose_add") {
-    if (!payload.event) {
+    if (!payload.event || typeof payload.event !== "object") {
       issues.push("event is required for event.propose_add");
     }
     if (!Array.isArray(payload.dependencies)) {

@@ -4,7 +4,7 @@ This service is a **foundation scaffold** for the NAOS MCP Spine. It exposes a m
 
 - MCP initialization handshake
 - Resource listing and reading (read-only)
-- Tool listing and proposal-based tool calls
+- Tool listing (with input schemas) and proposal-based tool calls
 - Proposal lifecycle transitions and audit log
 - Prompt templates for common workflows
 
@@ -61,6 +61,8 @@ node src/index.js
   "params": { "role": "opus" }
 }
 ```
+
+Tool definitions include input schema + required scopes so MCP clients can validate inputs before calling.
 
 ### Call Tool (Proposal)
 
