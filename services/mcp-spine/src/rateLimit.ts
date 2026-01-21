@@ -11,11 +11,16 @@ type RateLimitEntry = {
 
 export class RateLimiter {
   private entries = new Map<string, RateLimitEntry>();
+  private lastSweepAt = 0;
+  private sweepIntervalMs: number;
 
-  constructor(private limit: number, private windowMs: number) {}
+  constructor(private limit: number, private windowMs: number) {
+    this.sweepIntervalMs = windowMs;
+  }
 
   check(key: string): RateLimitResult {
     const now = Date.now();
+    this.sweepExpiredEntries(now);
     const entry = this.entries.get(key);
     if (!entry || now > entry.resetAt) {
       const resetAt = now + this.windowMs;
@@ -41,5 +46,19 @@ export class RateLimiter {
       remaining: Math.max(this.limit - entry.count, 0),
       resetAt: new Date(entry.resetAt).toISOString(),
     };
+  }
+
+  private sweepExpiredEntries(now: number) {
+    if (now - this.lastSweepAt < this.sweepIntervalMs) {
+      return;
+    }
+
+    for (const [entryKey, entry] of this.entries.entries()) {
+      if (now > entry.resetAt) {
+        this.entries.delete(entryKey);
+      }
+    }
+
+    this.lastSweepAt = now;
   }
 }
