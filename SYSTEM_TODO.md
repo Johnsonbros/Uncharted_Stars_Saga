@@ -62,7 +62,7 @@
 - [ ] Integration: listener confusion audit scoring
 
 **Diagrams**
-- [ ] Audio scene generation pipeline (flowchart)
+- [x] Audio scene generation pipeline (flowchart) → [docs/auto_scene_generation_pipeline.md](./docs/auto_scene_generation_pipeline.md)
 - [ ] Listener confusion audit decision tree (flowchart)
 
 ---
@@ -267,7 +267,7 @@ Reference diagram: [docs/incident_response_flow.md](./docs/incident_response_flo
 - [x] System architecture overview (high-level)
 - [x] Narrative event DAG example → [docs/narrative_engine_diagrams.md](./docs/narrative_engine_diagrams.md)
 - [x] Canon gate decision flow → [docs/narrative_engine_diagrams.md](./docs/narrative_engine_diagrams.md)
-- [ ] Audio scene generation pipeline
+- [x] Audio scene generation pipeline → [docs/auto_scene_generation_pipeline.md](./docs/auto_scene_generation_pipeline.md)
 - [ ] Listener confusion audit decision tree
 - [ ] Payment → entitlement flow
 - [ ] Audio streaming access flow
