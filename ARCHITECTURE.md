@@ -992,6 +992,7 @@ Streaming playback
 - Sentry (optional, for advanced error tracking)
 - Unified error taxonomy and severity table (see [docs/error_taxonomy.md](./docs/error_taxonomy.md))
 - Incident response flowchart (see [docs/incident_response_flow.md](./docs/incident_response_flow.md))
+- Narrative engine diagrams (event DAG + canon gate) in [docs/narrative_engine_diagrams.md](./docs/narrative_engine_diagrams.md)
 
 **CI/CD:**
 - Replit's automatic deployments from GitHub

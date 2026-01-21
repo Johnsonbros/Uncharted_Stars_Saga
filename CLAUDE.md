@@ -289,6 +289,7 @@ For network operations (push, fetch, pull):
 - docs/audio_storage_conventions.md - Audio storage paths, metadata, and CDN delivery contract
 - docs/error_taxonomy.md - Unified error taxonomy, severity table, and ownership rules
 - docs/incident_response_flow.md - Incident response flowchart for tracing and resolving errors
+- docs/narrative_engine_diagrams.md - Narrative event DAG and canon gate flow diagrams
 - CONTRIBUTING.md - Contribution guidelines (to be created)
 - CHANGELOG.md - Version history (to be created)
 - API.md - API documentation (to be created when applicable)

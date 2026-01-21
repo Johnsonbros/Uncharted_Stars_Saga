@@ -265,8 +265,8 @@ Reference diagram: [docs/incident_response_flow.md](./docs/incident_response_flo
 
 **Required Diagrams (index)**
 - [x] System architecture overview (high-level)
-- [ ] Narrative event DAG example
-- [ ] Canon gate decision flow
+- [x] Narrative event DAG example → [docs/narrative_engine_diagrams.md](./docs/narrative_engine_diagrams.md)
+- [x] Canon gate decision flow → [docs/narrative_engine_diagrams.md](./docs/narrative_engine_diagrams.md)
 - [ ] Audio scene generation pipeline
 - [ ] Listener confusion audit decision tree
 - [ ] Payment → entitlement flow

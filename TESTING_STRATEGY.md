@@ -11,6 +11,7 @@ This document defines the testing strategy for **NAOS (Narrative & Audio Operati
 **System TODO Hub**: Use [SYSTEM_TODO.md](./SYSTEM_TODO.md) to align test backlog with subsystem checklists and the incident response flowchart in [docs/incident_response_flow.md](./docs/incident_response_flow.md).
 **Audio Storage Contract**: Reference [docs/audio_storage_conventions.md](./docs/audio_storage_conventions.md) for CDN and storage behavior that tests must validate.
 **Error Taxonomy**: Reference [docs/error_taxonomy.md](./docs/error_taxonomy.md) for severity levels and expected error codes in tests.
+**Narrative Diagrams**: Reference [docs/narrative_engine_diagrams.md](./docs/narrative_engine_diagrams.md) for event DAG and canon gate flows.
 
 ## Coverage Goals
 
