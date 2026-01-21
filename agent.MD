@@ -2,19 +2,16 @@
 
 > **Last Updated:** 2026-01-20
 
-This file provides a concise, repo-specific reference for AI agents working in **Uncharted Stars Saga**.
+This file provides a concise, repo-specific reference for AI agents working in **Uncharted Stars Saga**, optimized for fast onboarding and task execution.
 
-## Project Context
-- **Project:** Uncharted Stars Saga (NAOS: Narrative & Audio Operating System)
-- **Phase:** Phase 1 - Foundation (architecture defined)
-- **Primary Docs:**
-  - `README.md` for project vision and roadmap
-  - `ARCHITECTURE.md` for system design
-  - `CLAUDE.md` for detailed AI assistant guidance
-  - `TESTING_STRATEGY.md` for testing practices
+## Project Context (Read Order)
+1. `README.md` — vision, roadmap, and current priorities.
+2. `ARCHITECTURE.md` — system design and boundaries.
+3. `CLAUDE.md` — agent workflow, commit conventions, and PR expectations.
+4. `TESTING_STRATEGY.md` — what to run and when.
 
-## Key Principles
-- **Stories are state, not documents.** Treat events, dependencies, and canon as first-class.
+## Key Principles (Non-Negotiable)
+- **Stories are state, not documents.** Treat events, dependencies, and canon as first-class data.
 - **Audio-first.** Anything intended for listeners should prioritize audio cognition.
 - **Canon is enforced.** Changes to canon require explicit validation gates.
 - **Separation of concerns.** Creator OS, Listener Platform, and Data Layer are decoupled.
@@ -24,8 +21,20 @@ This file provides a concise, repo-specific reference for AI agents working in *
 - **Platform:** Replit (primary hosting).
 - **Git:** Use feature branches; commit messages follow conventional commits (see `CLAUDE.md`).
 
-## Quick Start for Agents
-1. Read `README.md` and `ARCHITECTURE.md` before significant changes.
-2. Follow conventions in `CLAUDE.md` for commit messages and workflows.
-3. Run tests according to `TESTING_STRATEGY.md` when applicable.
+## Task Workflow (Default)
+1. **Clarify scope:** Identify which subsystem(s) you are changing (Creator OS, Listener Platform, Data Layer).
+2. **Scan relevant docs:** Use the read order above; stop early if the change is trivial.
+3. **Plan:** Outline steps if the change is non-trivial or touches canon.
+4. **Implement:** Keep changes minimal and aligned with the principles.
+5. **Validate:** Run tests per `TESTING_STRATEGY.md` (or explain why not).
+6. **Summarize:** Provide a short, actionable summary and cite files changed.
 
+## Efficiency Checklist
+- Prefer small, focused diffs.
+- Avoid reformatting unrelated code.
+- Document any canon-impacting changes explicitly.
+- If blocked, leave a clear next-step recommendation.
+
+## PR/Commit Reminder
+- Use conventional commit messages.
+- Provide a concise PR summary and testing notes.
