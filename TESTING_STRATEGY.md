@@ -70,6 +70,12 @@ This document defines the testing strategy for **NAOS (Narrative & Audio Operati
    - Streaming access via signed URLs
    - Playback resume integrity
 
+#### Listener Platform Playback Test Plan
+
+- **Unit:** validate signed URL inputs (chapter ID, entitlement, expiry) and ensure rejected requests fail fast.
+- **Integration:** save playback position on cadence + on pause, then restore on new session.
+- **E2E:** play → pause → resume → reload session and continue from saved position.
+
 5. **Data Persistence (Separation)**
    - Strict separation of Creator OS vs Listener Platform databases
    - Canon data immutability guarantees
