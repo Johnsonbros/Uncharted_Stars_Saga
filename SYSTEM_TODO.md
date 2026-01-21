@@ -194,12 +194,12 @@
 ### 3.2 Audio Storage
 
 **Build Checklist**
-- [ ] Object storage paths and metadata conventions
-- [ ] CDN distribution and cache strategy
+- [x] Object storage paths and metadata conventions
+- [x] CDN distribution and cache strategy
 
 **Tests**
-- [ ] Integration: audio upload + retrieval
-- [ ] Integration: signed URL expiry enforcement
+- [x] Integration: audio upload + retrieval
+- [x] Integration: signed URL expiry enforcement
 
 **Diagrams**
 - [ ] Storage → CDN delivery flow
