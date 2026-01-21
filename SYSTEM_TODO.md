@@ -121,19 +121,19 @@ Task Card:
 
 **Coding (MVP)**
 - [x] Define MCP spine service boundary + repo folder structure
-- [~] Establish MCP server runtime (Node/TS) + basic bootstrap
-- [ ] Implement MCP server handshake and version negotiation
-- [ ] Register core resource catalog (read-only narrative/audio/listener summaries)
-- [ ] Implement resource resolver layer with access guards
-- [ ] Define proposal schema (canonical JSON schema + versioning strategy)
-- [ ] Build proposal lifecycle store (draft → submitted → validated → applied → archived)
-- [ ] Tool endpoints for proposals only (no direct canon writes)
-- [ ] Proposal validation pipeline (continuity, dependency DAG, canon gates)
+- [x] Establish MCP server runtime (Node/TS) + basic bootstrap
+- [x] Implement MCP server handshake and version negotiation
+- [x] Register core resource catalog (read-only narrative/audio/listener summaries)
+- [x] Implement resource resolver layer with access guards
+- [x] Define proposal schema (canonical JSON schema + versioning strategy)
+- [x] Build proposal lifecycle store (draft → submitted → validated → applied → archived)
+- [x] Tool endpoints for proposals only (no direct canon writes)
+- [x] Proposal validation pipeline (continuity, dependency DAG, canon gates)
 - [x] Scoped permissions enforcement (resource/tool scopes + model roles)
-- [ ] Model registry with scoped capabilities (Opus/Sonnet/Haiku)
-- [ ] Proposal audit log + validation report
+- [x] Model registry with scoped capabilities (Opus/Sonnet/Haiku)
+- [x] Proposal audit log + validation report
 - [ ] Canon gate integration hook (block apply on failed validation)
-- [ ] Tool response templates with deterministic metadata (proposal_id, scope, status)
+- [x] Tool response templates with deterministic metadata (proposal_id, scope, status)
 - [ ] MCP prompt templates for common workflows (continuity check, outline, recap)
 - [ ] Access token strategy (service-to-service auth, short-lived tokens)
 - [ ] Rate limiting + abuse safeguards per model and scope
@@ -142,6 +142,127 @@ Task Card:
 - [ ] Local dev harness (mock resources + test proposals)
 - [ ] MCP Inspector configuration for debugging
 - [ ] Deployment config for MCP service (env vars, secrets, health checks)
+
+Task Card: Establish MCP server runtime (Node/TS) + basic bootstrap
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Start an HTTP server with health check and MCP routing.
+- Done looks like (acceptance criteria): Server listens on configured port and serves MCP endpoints.
+- Files involved: services/mcp-spine/src/index.ts
+- Resources (docs/links/specs): docs/mcp_service_contracts.md
+- Tests required: None (runtime scaffold only).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Implement MCP server handshake and version negotiation
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Return protocol and catalog versions during handshake.
+- Done looks like (acceptance criteria): GET /mcp/handshake returns protocol_version and server_version.
+- Files involved: services/mcp-spine/src/index.ts
+- Resources (docs/links/specs): docs/mcp_service_contracts.md
+- Tests required: None (manual response verification).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Register core resource catalog (read-only narrative/audio/listener summaries)
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Add audio and listener summary resources to catalog.
+- Done looks like (acceptance criteria): Resource catalog includes narrative, audio, and listener summary entries.
+- Files involved: services/mcp-spine/src/resources/resourceCatalog.ts
+- Resources (docs/links/specs): docs/mcp_service_contracts.md
+- Tests required: None (manual response verification).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Implement resource resolver layer with access guards
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Resolve resources only when role/model scopes permit.
+- Done looks like (acceptance criteria): Resolver blocks unauthorized access and returns stub data for allowed scopes.
+- Files involved: services/mcp-spine/src/resources/resourceResolver.ts, services/mcp-spine/src/scopes/scopeUtils.ts, services/mcp-spine/src/models/modelRegistry.ts
+- Resources (docs/links/specs): docs/mcp_service_contracts.md
+- Tests required: None (manual response verification).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Define proposal schema (canonical JSON schema + versioning strategy)
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Add a schema registry to support version negotiation.
+- Done looks like (acceptance criteria): Schema registry exports v1 and documents the version key.
+- Files involved: services/mcp-spine/src/proposals/proposalSchemaV1.ts, services/mcp-spine/src/proposals/schemaRegistry.ts
+- Resources (docs/links/specs): docs/proposal_schema_v1.md
+- Tests required: None (schema registry only).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Build proposal lifecycle store (draft → submitted → validated → applied → archived)
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Create an in-memory store to track proposal state transitions.
+- Done looks like (acceptance criteria): Store creates proposals and updates status + validation payloads.
+- Files involved: services/mcp-spine/src/proposals/proposalStore.ts, services/mcp-spine/src/proposals/proposalTypes.ts
+- Resources (docs/links/specs): docs/proposal_schema_v1.md
+- Tests required: None (manual response verification).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Tool endpoints for proposals only (no direct canon writes)
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Add proposal tool endpoint with scope authorization.
+- Done looks like (acceptance criteria): POST /mcp/tools/proposals creates proposals and returns metadata.
+- Files involved: services/mcp-spine/src/index.ts, services/mcp-spine/src/tools/proposalTool.ts
+- Resources (docs/links/specs): docs/mcp_service_contracts.md
+- Tests required: None (manual response verification).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Proposal validation pipeline (continuity, dependency DAG, canon gates)
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Add placeholder validation rules for canon events and dependencies.
+- Done looks like (acceptance criteria): Pipeline returns passed/failed status with warnings and errors.
+- Files involved: services/mcp-spine/src/proposals/validationPipeline.ts
+- Resources (docs/links/specs): docs/proposal_schema_v1.md, docs/narrative_engine_diagrams.md
+- Tests required: None (manual response verification).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Model registry with scoped capabilities (Opus/Sonnet/Haiku)
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Add registry entries with scope mappings per model.
+- Done looks like (acceptance criteria): Model registry resolves scope sets for Opus/Sonnet/Haiku.
+- Files involved: services/mcp-spine/src/models/modelRegistry.ts, services/mcp-spine/src/scopes/scopeMap.ts
+- Resources (docs/links/specs): docs/mcp_permissions_scope_map.md
+- Tests required: None (manual response verification).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Proposal audit log + validation report
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Emit logs when proposals are created and validated.
+- Done looks like (acceptance criteria): Logger records proposal_id and validation status events.
+- Files involved: services/mcp-spine/src/tools/proposalTool.ts, services/mcp-spine/src/logger.ts
+- Resources (docs/links/specs): docs/error_taxonomy.md
+- Tests required: None (manual response verification).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Tool response templates with deterministic metadata (proposal_id, scope, status)
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Return deterministic metadata from proposal tool responses.
+- Done looks like (acceptance criteria): Proposal tool response includes proposal_id, scope, status, and timestamps.
+- Files involved: services/mcp-spine/src/tools/proposalTool.ts
+- Resources (docs/links/specs): docs/mcp_service_contracts.md
+- Tests required: None (manual response verification).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
 
 **Tests**
 - [ ] Unit: scope authorization checks
@@ -205,8 +326,8 @@ Task Card:
 2. [x] Define resource catalog MVP (events, canon, knowledge snapshots)
 3. [x] Draft proposal JSON schema v1 + validation rules
 4. [x] Implement scope map v1 (roles → resources/tools)
-5. [ ] Wire basic proposal tool endpoint returning proposal_id
-6. [ ] Stub validation pipeline with placeholder checks + audit log
+5. [x] Wire basic proposal tool endpoint returning proposal_id
+6. [x] Stub validation pipeline with placeholder checks + audit log
 
 ---
 
