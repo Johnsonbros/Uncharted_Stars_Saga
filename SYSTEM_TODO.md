@@ -188,7 +188,17 @@ Task Card:
   - Tests required: None (documentation diagram only).
   - Docs updates required: docs/mcp_request_lifecycle_sequence.md updated from draft.
   - Subtasks (optional):
-- [~] MCP spine architecture block diagram (diagram) → [docs/mcp_spine_architecture_block_diagram.md](./docs/mcp_spine_architecture_block_diagram.md)
+- [x] MCP spine architecture block diagram (diagram) → [docs/mcp_spine_architecture_block_diagram.md](./docs/mcp_spine_architecture_block_diagram.md)
+  Task Card:
+  - Status: [x]
+  - Why not done / Blocker:
+  - What needs to be completed: Finalize MCP spine block diagram with routing, auth, resource, and proposal flow.
+  - Done looks like (acceptance criteria): Diagram shows gateway, scope guard, model routing, resource resolver, proposal flow, and audit trail.
+  - Files involved: docs/mcp_spine_architecture_block_diagram.md
+  - Resources (docs/links/specs): docs/mcp_service_contracts.md, docs/proposal_schema_v1.md, docs/error_taxonomy.md
+  - Tests required: None (documentation diagram only).
+  - Docs updates required: docs/mcp_spine_architecture_block_diagram.md finalized.
+  - Subtasks (optional):
 
 **Initial Setup Steps (Start Here)**
 1. [x] Confirm MCP server runtime choice and initialize service scaffold
@@ -322,7 +332,17 @@ Task Card:
 - [ ] Integration: playback position updates and retrieval
 
 **Diagrams**
-- [~] Listener schema ERD → [docs/listener_schema_erd.md](./docs/listener_schema_erd.md)
+- [x] Listener schema ERD → [docs/listener_schema_erd.md](./docs/listener_schema_erd.md)
+  Task Card:
+  - Status: [x]
+  - Why not done / Blocker:
+  - What needs to be completed: Provide ERD for users, entitlements, and playback positions with field detail.
+  - Done looks like (acceptance criteria): Mermaid ERD reflects documented tables and relationships.
+  - Files involved: docs/listener_schema_erd.md
+  - Resources (docs/links/specs): docs/listener_db_documentation.md, docs/payments_entitlements.md
+  - Tests required: None (documentation diagram only).
+  - Docs updates required: docs/listener_schema_erd.md finalized.
+  - Subtasks (optional):
 
 ---
 
@@ -377,14 +397,14 @@ Reference diagram: [docs/incident_response_flow.md](./docs/incident_response_flo
 - [x] Proposal-based modification flow → [docs/proposal_modification_flow.md](./docs/proposal_modification_flow.md)
 - [x] MCP permissions scope map → [docs/mcp_permissions_scope_map.md](./docs/mcp_permissions_scope_map.md)
 - [x] MCP request lifecycle sequence → [docs/mcp_request_lifecycle_sequence.md](./docs/mcp_request_lifecycle_sequence.md)
-- [~] MCP spine architecture block diagram → [docs/mcp_spine_architecture_block_diagram.md](./docs/mcp_spine_architecture_block_diagram.md)
+- [x] MCP spine architecture block diagram → [docs/mcp_spine_architecture_block_diagram.md](./docs/mcp_spine_architecture_block_diagram.md)
 - [x] Visitor conversion funnel → [docs/visitor_conversion_funnel.md](./docs/visitor_conversion_funnel.md)
 - [x] Payment → entitlement flow → [docs/payment_entitlement_flow.md](./docs/payment_entitlement_flow.md)
 - [x] Audio streaming access flow → [docs/audio_streaming_access_flow.md](./docs/audio_streaming_access_flow.md)
 - [x] Storage → CDN delivery flow
 - [x] Incident response flow (see above) → [docs/incident_response_flow.md](./docs/incident_response_flow.md)
 - [x] Narrative schema ERD → [docs/narrative_schema_erd.md](./docs/narrative_schema_erd.md)
-- [~] Listener schema ERD → [docs/listener_schema_erd.md](./docs/listener_schema_erd.md)
+- [x] Listener schema ERD → [docs/listener_schema_erd.md](./docs/listener_schema_erd.md)
 
 ---
 
@@ -402,7 +422,7 @@ When updating this system-wide list, update references in:
 
 1. [ ] Create system diagrams listed in Section 5
 2. [x] Define unified error taxonomy + severity table → [docs/error_taxonomy.md](./docs/error_taxonomy.md)
-3. [ ] Draft subsystem playbooks for Narrative, Audio, MCP, Listener Platform
+3. [x] Draft subsystem playbooks for Narrative, Audio, MCP, Listener Platform
 4. [ ] Align tests with build checklists for Phase 1 deliverables
 5. [ ] Add instrumentation standards (log fields, trace IDs)
 6. [ ] Begin MVP coding passes for each subsystem (Narrative, Audio, MCP, Listener, Data Layer)
