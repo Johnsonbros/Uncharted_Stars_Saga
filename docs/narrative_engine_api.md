@@ -1,151 +1,141 @@
-# Narrative Engine API Surface & Canon/Draft Rules
+# Narrative Engine Documentation
 
-> **Scope:** Creator Operating System → Narrative Engine (private). This document defines the API surface for narrative state and the rules that enforce canon vs. draft integrity.
+This document completes the Narrative Engine documentation by describing the **API surface** and the **canon vs. draft data rules** referenced in `SYSTEM_TODO.md`. It is the authoritative narrative-engine doc alongside the system architecture overview in `ARCHITECTURE.md`.
 
-## Purpose
+## 1) API Surface (Events, Knowledge, Promises)
 
-The Narrative Engine is the authoritative source of truth for story state. It exposes a small set of stateful resources and actions for events, knowledge states, and promises, while enforcing canon immutability and proposal-based canon changes.【F:ARCHITECTURE.md†L213-L289】
+> Scope: This API surface is conceptual and describes the required data operations and validation behaviors. Concrete endpoints may vary by service implementation, but must provide equivalent capabilities.
 
----
+### 1.1 Events API
 
-## Core Resources (State)
+**Purpose:** Manage the event DAG that represents canonical story truth.
 
-### Events
+**Core Operations**
+- **Create Draft Event**
+  - Input: event payload with participants, timestamp, dependencies, impacts.
+  - Output: draft event with `canonStatus: draft` and stable `eventId`.
+- **Propose Canonization**
+  - Input: draft event ID(s) + optional justification and impacted promises.
+  - Output: proposal object queued for canon gate validation.
+- **Read Event(s)**
+  - Filters: by `eventId`, `characterId`, `timeline`, `canonStatus`, `dependency`.
+  - Output: full event record with dependency edges.
+- **Update Draft Event**
+  - Allowed only for `canonStatus: draft`.
+  - Changes must re-run DAG and knowledge validations.
+- **Reject/Archive Proposal**
+  - Input: proposal ID + reason.
+  - Output: proposal marked as rejected with audit trail.
 
-Events are the atomic units of story truth. They are timestamped, referenced by dependencies (DAG), and become immutable once canonized.【F:ARCHITECTURE.md†L219-L243】
+**Event Contract (summary)**
+- Required: `id`, `timestamp`, `type`, `participants`, `location`, `dependencies`, `impacts`, `canonStatus`.
+- Canon transitions are one-way: `draft` → `proposed` → `canon`.
 
-```ts
-interface Event {
-  id: string;
-  timestamp: DateTime;
-  type: EventType;
-  participants: CharacterId[];
-  location: LocationId;
-  description: string;
-  dependencies: EventId[];
-  impacts: Impact[];
-  canonStatus: 'draft' | 'proposed' | 'canon';
-}
-```
+### 1.2 Knowledge States API
 
-### Knowledge States
+**Purpose:** Track “who knows what, when” without violating causal order.
 
-Knowledge states track who knows what, when, and at what certainty level; they prevent illegal knowledge access in narrative timelines.【F:ARCHITECTURE.md†L245-L260】
+**Core Operations**
+- **Record Knowledge Acquisition**
+  - Input: `characterId`, `eventId`, `learnedAt`, `source`, `certainty`.
+  - Output: knowledge state entry.
+- **Query Knowledge State**
+  - Filters: `characterId`, `eventId`, time window.
+  - Output: time-ordered knowledge entries.
+- **Invalidate Knowledge States**
+  - Triggered by event edits that affect causality.
+  - Output: flagged knowledge entries requiring resolution.
 
-```ts
-interface KnowledgeState {
-  characterId: string;
-  eventId: string;
-  learnedAt: DateTime;
-  certainty: 'known' | 'suspected' | 'rumored' | 'false';
-  source: 'witnessed' | 'told' | 'inferred';
-}
-```
+**Knowledge Contract (summary)**
+- `learnedAt` must be >= the referenced event’s timestamp.
+- `source` must be one of: `witnessed`, `told`, `inferred`.
 
-### Promises (Listener Commitments)
+### 1.3 Promises API
 
-Promises represent explicit commitments to the audience and must be tracked through fulfillment states.【F:ARCHITECTURE.md†L262-L275】
+**Purpose:** Track listener commitments and ensure they are fulfilled or explicitly resolved.
 
-```ts
-interface Promise {
-  id: string;
-  type: 'plot_thread' | 'mystery' | 'character_arc' | 'prophecy';
-  establishedIn: SceneId;
-  description: string;
-  status: 'pending' | 'fulfilled' | 'broken' | 'transformed';
-  fulfilledIn?: SceneId;
-}
-```
+**Core Operations**
+- **Create Promise**
+  - Input: `type`, `description`, `establishedIn`, optional `owner`.
+  - Output: `status: pending` promise record.
+- **Transition Promise Status**
+  - Allowed transitions:
+    - `pending` → `fulfilled`
+    - `pending` → `broken`
+    - `pending` → `transformed`
+    - `transformed` → `fulfilled`
+  - Output: updated promise with audit trail.
+- **Query Promises**
+  - Filters: `status`, `type`, `character`, `timeline`.
 
----
-
-## API Surface (Resource-Oriented)
-
-The Narrative Engine is accessed via MCP resources (read-only) and tools (proposal-based writes). The following API surface is the minimal MVP contract for the subsystem.
-
-### Read Resources (MCP)
-
-- `story://project/{id}/canon`
-  - Canonized events, knowledge states, promises (immutable).
-- `story://project/{id}/drafts`
-  - Draft events and draft-only states (mutable).
-
-### Write/Action Tools (MCP)
-
-#### Draft Creation & Mutation
-
-- `events.createDraft`
-- `events.updateDraft`
-- `events.deleteDraft`
-- `knowledge.updateDraft`
-- `promises.updateDraft`
-
-**Rule:** Draft actions are allowed only against `canonStatus: 'draft'`.
-
-#### Proposal Workflow
-
-- `proposal.create`
-  - Creates a proposal object for canon-affecting changes.
-- `proposal.validate`
-  - Runs continuity checks, dependency DAG analysis, promise impact assessment, and listener confusion audit.
-- `proposal.apply`
-  - Applies validated proposals to canon (creator-only scope).
-
-**Rule:** Canon changes must go through proposals; direct canon writes are forbidden.【F:ARCHITECTURE.md†L490-L524】
+**Promise Contract (summary)**
+- `fulfilledIn` required for `fulfilled` status.
+- `broken` and `transformed` must include a reason field.
 
 ---
 
-## Canon vs. Draft Data Rules (Validation + Persistence)
+## 2) Canon vs. Draft Data Rules (Validation + Persistence)
 
-### Status Lifecycle
+### 2.1 Canonization Rules
 
-```
-draft → proposed → canon (immutable)
-```
+- **Canon is immutable.** Once an event is canonized, it may not be edited or deleted.
+- **Drafts are mutable.** Draft events can be edited or deleted freely until proposed.
+- **Proposals are gate-kept.** Any transition to canon must pass the canon gate pipeline:
+  1. DAG continuity checks (acyclic, referential integrity).
+  2. Knowledge timing checks (no pre-knowledge).
+  3. Promise lifecycle validation (no dangling commitments).
+  4. Listener cognition safeguards (clarity and cognitive load).
 
-### Canon Rules (Immutable)
+### 2.2 Validation Constraints
 
-- Canon events are immutable once applied.
-- Canon updates require a validated proposal and creator approval.
-- Canon data is the only source for publish/export pipelines.
+**Events**
+- All dependencies must exist.
+- Dependencies must be earlier in timeline (no backward causality).
+- The event graph must remain acyclic.
 
-### Draft Rules (Mutable)
+**Knowledge States**
+- Knowledge cannot precede the event it references.
+- If an event is rejected or replaced, dependent knowledge entries must be invalidated.
 
-- Drafts can be created, edited, and deleted freely.
-- Drafts must never be exposed to listener-facing outputs.
-- Draft updates must not alter canon state or derived artifacts.
+**Promises**
+- Promises must be resolved or explicitly broken/transformed before final arc closure.
+- Canonization of a promise resolution must reference the fulfilling event/scene.
 
-### Proposal Rules (Gatekeeping)
+### 2.3 Persistence Constraints
 
-- Proposals are the sole pathway to canon changes.
-- Validation must pass:
-  - Continuity checks
-  - Dependency DAG integrity
-  - Promise impact assessment
-  - Listener confusion audit
-- Failure blocks apply and returns structured validation results.
+- Canon and draft data are **physically separated** or **logically partitioned** to prevent leakage.
+- Canon entries are write-once and must be version-audited.
+- Draft edits must never mutate canon references; only proposals may reference canon.
+- All proposal and canonization steps must emit **audit records**.
+
+### 2.4 Required Audit Metadata
+
+Each canon-related change must record:
+- `proposalId`
+- `authorId`
+- `timestamp`
+- `validationReportId` (with pass/fail details)
+- `affectedEntities` (events, knowledge entries, promises)
 
 ---
 
-## Canon/Draft Persistence Constraints
+## 3) Canon Gate Inputs and Outputs
 
-**Minimum constraints enforced at persistence layer:**
+**Inputs**
+- Draft events or edits
+- Promise lifecycle transitions
+- Knowledge state changes
 
-- `canonStatus` is required for all narrative entities.
-- Canon entities are immutable (reject update/delete at DB layer or service guard).
-- Proposal apply transaction is atomic and audit-logged.
-- Draft data and canon data are stored in separate logical namespaces.
+**Outputs**
+- Canonized events (if all checks pass)
+- Rejected proposals with actionable error list
 
 ---
 
-## Responsibilities & Non-Responsibilities
+## 4) Non-Goals
 
-**Responsibilities**
-- Maintain event graph integrity.
-- Track knowledge propagation rules.
-- Enforce canon gates and proposal lifecycle.
+- Narrative text generation
+- Audio production
+- Listener-facing delivery
 
-**Non-Responsibilities**
-- Text generation.
-- Audio production.
-- Listener-facing delivery.【F:ARCHITECTURE.md†L276-L290】
+These are handled by other subsystems per `ARCHITECTURE.md`.
