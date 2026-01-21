@@ -373,7 +373,8 @@ export function validateAudioScene(
 
   issues.push(...validateProfilesShape(profiles));
 
-  const voiceProfileIssues = profiles.length > 0 ? validateVoiceProfilesForScene(scene, profiles) : [];
+  const voiceProfileIssues =
+    profiles.length > 0 && parsed.success ? validateVoiceProfilesForScene(parsed.data, profiles) : [];
   voiceProfileIssues.forEach((issue, index) => {
     issues.push(toIssue(issue.message, ["voiceProfiles", index].join(".")));
   });
