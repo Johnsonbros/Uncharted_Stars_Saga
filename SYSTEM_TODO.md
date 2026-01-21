@@ -26,8 +26,8 @@
 ### 1.1 Narrative Engine
 
 **Documentation**
-- [ ] Narrative engine API surface documented (events, knowledge, promises)
-- [ ] Canon vs. draft data rules documented (validation + persistence constraints)
+- [x] Narrative engine API surface documented (events, knowledge, promises) → [docs/narrative_engine_documentation.md](./docs/narrative_engine_documentation.md)
+- [x] Canon vs. draft data rules documented (validation + persistence constraints) → [docs/narrative_engine_documentation.md](./docs/narrative_engine_documentation.md)
 
 **Coding (MVP)**
 - [x] Event model implemented with immutable canon transitions
