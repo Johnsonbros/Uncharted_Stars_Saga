@@ -80,8 +80,8 @@
 ### 1.3 MCP Spine
 
 **Documentation**
-- [ ] MCP service boundaries and contract docs (resources/tools/permissions)
-- [ ] Proposal schema v1 documented (fields, validation, lifecycle)
+- [x] MCP service boundaries and contract docs (resources/tools/permissions) → [docs/mcp_service_contracts.md](./docs/mcp_service_contracts.md)
+- [x] Proposal schema v1 documented (fields, validation, lifecycle) → [docs/proposal_schema_v1.md](./docs/proposal_schema_v1.md)
 - [x] Publish API contract documented (one-way COS → Listener) → [API.md](./API.md)
 
 **Coding (MVP)**
@@ -181,8 +181,8 @@
 ### 2.3 Audiobook Player & Library
 
 **Documentation**
-- [ ] Player UX flows documented (library → player → resume)
-- [ ] Signed URL access rules documented (expiry, scopes)
+- [x] Player UX flows documented (library → player → resume) → [docs/player_ux_flows.md](./docs/player_ux_flows.md)
+- [x] Signed URL access rules documented (expiry, scopes) → [docs/signed_url_access_rules.md](./docs/signed_url_access_rules.md)
 - [x] Library and playback API endpoints documented → [API.md](./API.md)
 
 **Coding (MVP)**
