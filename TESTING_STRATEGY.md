@@ -54,6 +54,7 @@ This document defines the testing strategy for **NAOS (Narrative & Audio Operati
    - Tool proposal schemas
    - Validation failures surface clear errors
    - Audit logging for changes
+   - Detailed MCP spine test checklist lives in SYSTEM_TODO.md
 
 3. **Audio Engine (Listener Cognition)**
    - Beat marker placement rules

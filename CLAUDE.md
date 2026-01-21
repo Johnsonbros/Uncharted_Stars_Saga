@@ -325,6 +325,7 @@ When working on this codebase, AI assistants should:
    - Start with [SYSTEM_TODO.md](SYSTEM_TODO.md) to locate subsystem checklists
    - Keep checklists/tests/diagrams in sync when changes are made
    - Add new items for newly discovered error paths or missing coverage
+   - MCP Spine build/tests checklist is maintained in SYSTEM_TODO.md
 
 ### Task Management
 
