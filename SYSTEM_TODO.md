@@ -132,16 +132,16 @@ Task Card:
 - [x] Scoped permissions enforcement (resource/tool scopes + model roles)
 - [x] Model registry with scoped capabilities (Opus/Sonnet/Haiku)
 - [x] Proposal audit log + validation report
-- [ ] Canon gate integration hook (block apply on failed validation)
+- [x] Canon gate integration hook (block apply on failed validation)
 - [x] Tool response templates with deterministic metadata (proposal_id, scope, status)
-- [ ] MCP prompt templates for common workflows (continuity check, outline, recap)
-- [ ] Access token strategy (service-to-service auth, short-lived tokens)
-- [ ] Rate limiting + abuse safeguards per model and scope
+- [x] MCP prompt templates for common workflows (continuity check, outline, recap) → [docs/mcp_prompt_templates.md](./docs/mcp_prompt_templates.md)
+- [x] Access token strategy (service-to-service auth, short-lived tokens) → [docs/mcp_access_token_strategy.md](./docs/mcp_access_token_strategy.md)
+- [x] Rate limiting + abuse safeguards per model and scope → [docs/mcp_rate_limiting_policy.md](./docs/mcp_rate_limiting_policy.md)
 - [x] Error taxonomy mapping for MCP responses (codes, severity, owner) → [docs/error_taxonomy.md](./docs/error_taxonomy.md)
-- [~] Observability hooks (structured logs, trace IDs, audit events)
-- [ ] Local dev harness (mock resources + test proposals)
-- [ ] MCP Inspector configuration for debugging
-- [ ] Deployment config for MCP service (env vars, secrets, health checks)
+- [x] Observability hooks (structured logs, trace IDs, audit events)
+- [x] Local dev harness (mock resources + test proposals) → [docs/mcp_local_dev_harness.md](./docs/mcp_local_dev_harness.md)
+- [x] MCP Inspector configuration for debugging → [docs/mcp_inspector_configuration.md](./docs/mcp_inspector_configuration.md)
+- [x] Deployment config for MCP service (env vars, secrets, health checks) → [docs/mcp_deployment_config.md](./docs/mcp_deployment_config.md)
 
 Task Card: Establish MCP server runtime (Node/TS) + basic bootstrap
 - Status: [x]
@@ -261,6 +261,94 @@ Task Card: Tool response templates with deterministic metadata (proposal_id, sco
 - Files involved: services/mcp-spine/src/tools/proposalTool.ts
 - Resources (docs/links/specs): docs/mcp_service_contracts.md
 - Tests required: None (manual response verification).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Canon gate integration hook (block apply on failed validation)
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Block proposal apply when validation fails; expose apply flow for validated proposals.
+- Done looks like (acceptance criteria): Apply tool rejects failed validation and updates status to applied when passed.
+- Files involved: services/mcp-spine/src/index.ts, services/mcp-spine/src/tools/proposalTool.ts
+- Resources (docs/links/specs): docs/proposal_schema_v1.md
+- Tests required: Integration: canon gate rejects invalid proposals.
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: MCP prompt templates for common workflows (continuity check, outline, recap)
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Provide standardized prompt templates for continuity, outline, and recap workflows.
+- Done looks like (acceptance criteria): Prompt templates documented and stored for MCP tooling.
+- Files involved: docs/mcp_prompt_templates.md, services/mcp-spine/src/prompts/promptTemplates.ts
+- Resources (docs/links/specs): docs/mcp_service_contracts.md
+- Tests required: None (documentation/templates only).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Access token strategy (service-to-service auth, short-lived tokens)
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Define access token expectations and enforce token checks on protected MCP routes.
+- Done looks like (acceptance criteria): Access token strategy documented and request auth enforced when configured.
+- Files involved: docs/mcp_access_token_strategy.md, services/mcp-spine/src/config.ts, services/mcp-spine/src/index.ts
+- Resources (docs/links/specs): docs/mcp_service_contracts.md
+- Tests required: Integration: forbidden scope access rejection.
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Rate limiting + abuse safeguards per model and scope
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Add configurable rate limit checks keyed by scope, role, model, and IP.
+- Done looks like (acceptance criteria): MCP rejects over-limit requests with 429 and logs rate-limit events.
+- Files involved: docs/mcp_rate_limiting_policy.md, services/mcp-spine/src/rateLimit.ts, services/mcp-spine/src/index.ts, services/mcp-spine/src/config.ts
+- Resources (docs/links/specs): docs/error_taxonomy.md
+- Tests required: Integration: rate limit enforcement and error response mapping.
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Observability hooks (structured logs, trace IDs, audit events)
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Add request logging with request IDs and document instrumentation standards.
+- Done looks like (acceptance criteria): MCP logs include request_id and responses include request_id for tracing.
+- Files involved: docs/observability_logging_alerting.md, services/mcp-spine/src/index.ts
+- Resources (docs/links/specs): docs/error_taxonomy.md
+- Tests required: None (manual log verification).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Local dev harness (mock resources + test proposals)
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Provide a lightweight set of local commands to exercise MCP endpoints.
+- Done looks like (acceptance criteria): Documentation includes curl examples for handshake, resource resolve, proposal create/apply.
+- Files involved: docs/mcp_local_dev_harness.md
+- Resources (docs/links/specs): docs/mcp_service_contracts.md
+- Tests required: None (manual developer workflow).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: MCP Inspector configuration for debugging
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Provide inspector config baseline for local debugging.
+- Done looks like (acceptance criteria): Config file and docs for inspector are present.
+- Files involved: docs/mcp_inspector_configuration.md, services/mcp-spine/mcp-inspector.json
+- Resources (docs/links/specs): docs/mcp_service_contracts.md
+- Tests required: None (manual inspector setup).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Deployment config for MCP service (env vars, secrets, health checks)
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Document required environment variables, secrets, and health checks.
+- Done looks like (acceptance criteria): Deployment config doc lists env vars, health checks, and secret handling.
+- Files involved: docs/mcp_deployment_config.md
+- Resources (docs/links/specs): docs/mcp_service_contracts.md
+- Tests required: None (documentation only).
 - Docs updates required: SYSTEM_TODO.md updated.
 - Subtasks (optional):
 
@@ -434,7 +522,7 @@ Task Card: Tool response templates with deterministic metadata (proposal_id, sco
 - [x] Integration: signed URL expiry enforcement
 
 **Diagrams**
-- [x] Storage → CDN delivery flow
+- [x] Storage → CDN delivery flow → [docs/storage_cdn_delivery_flow.md](./docs/storage_cdn_delivery_flow.md)
 
 ---
 
@@ -541,9 +629,9 @@ When updating this system-wide list, update references in:
 
 ## 7) Near-Term Priority Queue
 
-1. [ ] Create system diagrams listed in Section 5
+1. [x] Create system diagrams listed in Section 5
 2. [x] Define unified error taxonomy + severity table → [docs/error_taxonomy.md](./docs/error_taxonomy.md)
 3. [x] Draft subsystem playbooks for Narrative, Audio, MCP, Listener Platform
 4. [ ] Align tests with build checklists for Phase 1 deliverables
-5. [ ] Add instrumentation standards (log fields, trace IDs)
+5. [x] Add instrumentation standards (log fields, trace IDs)
 6. [ ] Begin MVP coding passes for each subsystem (Narrative, Audio, MCP, Listener, Data Layer)

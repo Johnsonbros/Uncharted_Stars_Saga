@@ -1,0 +1,10 @@
+{
+  "name": "mcp-spine-local",
+  "baseUrl": "http://localhost:7000",
+  "handshakePath": "/mcp/handshake",
+  "resourcesPath": "/mcp/resources",
+  "toolsPath": "/mcp/tools",
+  "headers": {
+    "Authorization": "Bearer ${MCP_SPINE_ACCESS_TOKEN}"
+  }
+}

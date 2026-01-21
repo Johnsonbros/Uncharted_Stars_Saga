@@ -84,7 +84,27 @@ All services log JSON objects with consistent keys:
 
 ---
 
-## 3) Alerting Rules for Critical Failures
+## 3) Instrumentation Standards (Log Fields + Trace IDs)
+
+### Required Headers (HTTP)
+- `x-trace-id`: End-to-end trace identifier generated at the edge.
+- `x-request-id`: Request identifier generated at the entry service if missing.
+- `x-session-id`: Session identifier for listener platform requests.
+
+### MCP Spine Specifics
+- MCP Spine must include `request_id` in every JSON response to support tracing.
+- Proposal lifecycle logs must include `proposal_id` and `validation_status`.
+- Rate-limit violations are logged as `warn` with `scope`, `role`, `model`, and `reset_at`.
+
+### Standard Log Fields
+- `service`, `environment`, `timestamp`, `level`, `message`
+- `trace_id`, `request_id`
+- `status_code`, `duration_ms`
+- `metadata.route`, `metadata.method`
+
+---
+
+## 4) Alerting Rules for Critical Failures
 
 ### Severity Mapping
 
