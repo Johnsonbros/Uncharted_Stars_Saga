@@ -1161,6 +1161,7 @@ Streaming playback
 - [ ] Resource endpoints (read-only)
 - [ ] Basic tool: `continuity.check`
 - [ ] Scope-based permissions
+- [ ] Reference full MCP Spine checklist in SYSTEM_TODO.md for detailed tasks
 
 **Database Schema**
 - [ ] Narrative database (events, scenes)

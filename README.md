@@ -76,6 +76,7 @@ Transform narrative state into **performance-ready audio artifacts**:
 - **Multi-Model Support**: Different AI models for different tasks
 - **Institutional Memory**: AI as long-term creative assistant
 - **Scoped Permissions**: Fine-grained access control
+- **Implementation Checklist**: See `SYSTEM_TODO.md` → MCP Spine for the detailed task list
 
 ### 🧠 Agentic Backend (Authoring + Operations)
 

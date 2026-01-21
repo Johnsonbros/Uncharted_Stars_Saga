@@ -70,20 +70,53 @@
 ### 1.3 MCP Spine
 
 **Build Checklist**
-- [ ] Resource endpoints for read-only access
+- [ ] Define MCP spine service boundary + repo folder structure
+- [ ] Establish MCP server runtime (Node/TS) + basic bootstrap
+- [ ] Implement MCP server handshake and version negotiation
+- [ ] Register core resource catalog (read-only narrative/audio/listener summaries)
+- [ ] Implement resource resolver layer with access guards
+- [ ] Define proposal schema (canonical JSON schema + versioning strategy)
+- [ ] Build proposal lifecycle store (draft → submitted → validated → applied → archived)
 - [ ] Tool endpoints for proposals only (no direct canon writes)
-- [ ] Scoped permissions enforcement
+- [ ] Proposal validation pipeline (continuity, dependency DAG, canon gates)
+- [ ] Scoped permissions enforcement (resource/tool scopes + model roles)
+- [ ] Model registry with scoped capabilities (Opus/Sonnet/Haiku)
 - [ ] Proposal audit log + validation report
+- [ ] Canon gate integration hook (block apply on failed validation)
+- [ ] Tool response templates with deterministic metadata (proposal_id, scope, status)
+- [ ] MCP prompt templates for common workflows (continuity check, outline, recap)
+- [ ] Access token strategy (service-to-service auth, short-lived tokens)
+- [ ] Rate limiting + abuse safeguards per model and scope
+- [ ] Error taxonomy mapping for MCP responses (codes, severity, owner)
+- [ ] Observability hooks (structured logs, trace IDs, audit events)
+- [ ] Local dev harness (mock resources + test proposals)
+- [ ] MCP Inspector configuration for debugging
+- [ ] Deployment config for MCP service (env vars, secrets, health checks)
 
 **Tests**
 - [ ] Unit: scope authorization checks
-- [ ] Unit: proposal schema validation
+- [ ] Unit: proposal schema validation (happy + failure modes)
+- [ ] Unit: resource resolver access guards
+- [ ] Unit: tool response metadata consistency
 - [ ] Integration: proposal workflow end-to-end (create → validate → apply)
 - [ ] Integration: forbidden scope access rejection
+- [ ] Integration: canon gate rejects invalid proposals
+- [ ] Integration: audit log written on proposal lifecycle transitions
+- [ ] Integration: rate limit enforcement and error response mapping
 
 **Diagrams**
 - [ ] Proposal-based modification flow (flowchart)
 - [ ] MCP permissions scope map (diagram)
+- [ ] MCP request lifecycle sequence (diagram)
+- [ ] MCP spine architecture block diagram (diagram)
+
+**Initial Setup Steps (Start Here)**
+1. [ ] Confirm MCP server runtime choice and initialize service scaffold
+2. [ ] Define resource catalog MVP (events, canon, knowledge snapshots)
+3. [ ] Draft proposal JSON schema v1 + validation rules
+4. [ ] Implement scope map v1 (roles → resources/tools)
+5. [ ] Wire basic proposal tool endpoint returning proposal_id
+6. [ ] Stub validation pipeline with placeholder checks + audit log
 
 ---
 
