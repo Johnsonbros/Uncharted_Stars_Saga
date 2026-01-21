@@ -283,6 +283,7 @@ This is a solo-author project. The repository follows a feature-branch workflow 
 - **[SYSTEM_TODO.md](./SYSTEM_TODO.md)**: System-wide TODOs, tests, diagrams, and traceability checklists
 - **[docs/incident_response_flow.md](./docs/incident_response_flow.md)**: Incident response flowchart for tracing and resolving errors
 - **[docs/narrative_engine_diagrams.md](./docs/narrative_engine_diagrams.md)**: Narrative event DAG and canon gate flow diagrams
+- **[docs/auto_scene_generation_pipeline.md](./docs/auto_scene_generation_pipeline.md)**: Auto scene generation pipeline flowchart
 - **[CLAUDE.md](./CLAUDE.md)**: AI assistant guide for development
 - **[TESTING_STRATEGY.md](./TESTING_STRATEGY.md)**: Testing approach and best practices
 - **[docs/audio_storage_conventions.md](./docs/audio_storage_conventions.md)**: Audio storage paths, metadata, and CDN delivery contract
