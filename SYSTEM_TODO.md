@@ -79,7 +79,7 @@
 - [ ] Build proposal lifecycle store (draft → submitted → validated → applied → archived)
 - [ ] Tool endpoints for proposals only (no direct canon writes)
 - [ ] Proposal validation pipeline (continuity, dependency DAG, canon gates)
-- [ ] Scoped permissions enforcement (resource/tool scopes + model roles)
+- [x] Scoped permissions enforcement (resource/tool scopes + model roles)
 - [ ] Model registry with scoped capabilities (Opus/Sonnet/Haiku)
 - [ ] Proposal audit log + validation report
 - [ ] Canon gate integration hook (block apply on failed validation)

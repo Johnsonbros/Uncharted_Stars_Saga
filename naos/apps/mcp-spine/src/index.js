@@ -5,7 +5,7 @@ const { listResources, readResource } = require("./resources");
 const { listTools, callTool } = require("./tools");
 const { listPrompts, getPrompt } = require("./prompts");
 const { listAuditLog, transitionProposal, getProposal } = require("./proposals");
-const { getScopesForRole } = require("./scopes");
+const { ROLE_SCOPES, getScopesForRole } = require("./scopes");
 
 const PORT = process.env.MCP_SPINE_PORT || 4040;
 const MCP_VERSION = "0.1";
@@ -39,7 +39,18 @@ function jsonRpcErrorResponse(id, error) {
 }
 
 function getRoleFromRequest(request) {
-  return request?.params?.role || "haiku";
+  const configuredRole = process.env.MCP_SPINE_ROLE;
+  if (configuredRole) {
+    return configuredRole;
+  }
+
+  const allowOverride = process.env.MCP_SPINE_ALLOW_ROLE_OVERRIDE === "true";
+  const requestedRole = request?.params?.role;
+  if (allowOverride && requestedRole && ROLE_SCOPES[requestedRole]) {
+    return requestedRole;
+  }
+
+  return "haiku";
 }
 
 async function handleJsonRpc(request) {
