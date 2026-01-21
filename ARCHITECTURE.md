@@ -600,6 +600,8 @@ CREATE TABLE scene_events (
 - Metadata in relational database
 - CDN for delivery
 
+For storage path and CDN delivery details, see [docs/audio_storage_conventions.md](./docs/audio_storage_conventions.md).
+
 ```sql
 -- Audio masters
 CREATE TABLE audio_masters (
