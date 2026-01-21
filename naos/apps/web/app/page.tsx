@@ -35,12 +35,28 @@ const experienceSteps = [
   }
 ];
 
+const highlightStats = [
+  {
+    label: "Membership",
+    value: "$49 lifetime"
+  },
+  {
+    label: "Formats",
+    value: "Audio + read"
+  },
+  {
+    label: "Story cadence",
+    value: "Seasonal drops"
+  }
+];
+
 export default function HomePage() {
   return (
     <main>
       <nav className="nav">
-        <div>
-          <div className="tag">NAOS Listener Platform</div>
+        <div className="brand">
+          <span className="tag">NAOS Listener Platform</span>
+          <strong>Uncharted Stars Saga</strong>
         </div>
         <div className="nav-links">
           <a href="#experience">Experience</a>
@@ -54,14 +70,14 @@ export default function HomePage() {
       </nav>
 
       <section className="hero">
-        <div>
-          <div className="tag">Audiobook-first universe</div>
+        <div className="hero-content">
+          <span className="tag">Audiobook-first universe</span>
           <h1>Uncharted Stars Saga is a premium listening universe.</h1>
           <p>
             NAOS delivers a cinematic audio experience, clean reading mode, and a
             community that stays with the story for the long haul.
           </p>
-          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+          <div className="hero-actions">
             <a className="button" href="#membership">
               Become a Founder
             </a>
@@ -69,28 +85,50 @@ export default function HomePage() {
               Play the trailer
             </a>
           </div>
+          <div className="hero-stats">
+            {highlightStats.map(stat => (
+              <div className="stat-card" key={stat.label}>
+                <span>{stat.label}</span>
+                <strong>{stat.value}</strong>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="hero-card">
-          <h3>What you get</h3>
-          <ul style={{ margin: 0, paddingLeft: 20, color: "var(--muted)" }}>
+          <div>
+            <h3>What you get</h3>
+            <p className="muted">
+              A guided listening experience with clear context, audio notes, and
+              automatic progress sync.
+            </p>
+          </div>
+          <ul className="hero-list">
             <li>Immediate access to every published chapter.</li>
             <li>Progress sync across sessions and devices.</li>
             <li>Clean player built for long-form listening.</li>
           </ul>
-          <div className="card">
+          <div className="card highlight-card">
             <strong>Now playing</strong>
-            <p style={{ marginTop: 8 }}>
-              “Act I: Discovery” · 46 min · Resume from 18:42
-            </p>
+            <p className="muted">“Act I: Discovery” · 46 min · Resume from 18:42</p>
+            <div className="progress">
+              <div className="progress-bar" style={{ width: "41%" }} />
+            </div>
           </div>
         </div>
       </section>
 
       <section id="experience">
-        <h2 className="section-title">The listener journey</h2>
+        <div className="section-header">
+          <h2 className="section-title">The listener journey</h2>
+          <p className="section-copy">
+            A frictionless path from discovery to long-form immersion designed
+            for audio-first worlds.
+          </p>
+        </div>
         <div className="grid">
-          {experienceSteps.map(step => (
+          {experienceSteps.map((step, index) => (
             <div className="card" key={step.title}>
+              <div className="step-index">{index + 1}</div>
               <h4>{step.title}</h4>
               <p>{step.description}</p>
             </div>
@@ -99,7 +137,12 @@ export default function HomePage() {
       </section>
 
       <section id="features">
-        <h2 className="section-title">Built for deep listening</h2>
+        <div className="section-header">
+          <h2 className="section-title">Built for deep listening</h2>
+          <p className="section-copy">
+            Every surface is tuned for focus, continuity, and premium playback.
+          </p>
+        </div>
         <div className="grid">
           {featureCards.map(card => (
             <div className="card" key={card.title}>
@@ -111,11 +154,17 @@ export default function HomePage() {
       </section>
 
       <section id="trailer">
-        <h2 className="section-title">Hybrid audio trailer</h2>
+        <div className="section-header">
+          <h2 className="section-title">Hybrid audio trailer</h2>
+          <p className="section-copy">
+            A short immersive prologue designed to introduce the universe and
+            drop listeners straight into the narrative.
+          </p>
+        </div>
         <div className="trailer">
           <div>
             <strong>Before you hear the story...</strong>
-            <p style={{ color: "var(--muted)", marginTop: 8 }}>
+            <p className="muted">
               A two-minute immersion designed to introduce the universe and
               transition straight into the narrative.
             </p>
@@ -123,10 +172,10 @@ export default function HomePage() {
           <audio controls preload="none">
             Your browser does not support audio playback.
           </audio>
-          <span style={{ color: "var(--muted)", fontSize: "0.9rem" }}>
+          <span className="muted" style={{ fontSize: "0.9rem" }}>
             Trailer audio will appear here once the first episode is published.
           </span>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <div className="tag-list">
             <span className="tag">Out-of-world intro</span>
             <span className="tag">In-world excerpt</span>
             <span className="tag">Soft close</span>
@@ -135,7 +184,13 @@ export default function HomePage() {
       </section>
 
       <section id="membership">
-        <h2 className="section-title">Founders lifetime membership</h2>
+        <div className="section-header">
+          <h2 className="section-title">Founders lifetime membership</h2>
+          <p className="section-copy">
+            One price. Every chapter. Direct support for a long-running story
+            universe.
+          </p>
+        </div>
         <div className="grid">
           <div className="card">
             <h4>One price, full access</h4>
@@ -159,7 +214,14 @@ export default function HomePage() {
             </p>
           </div>
         </div>
-        <div style={{ marginTop: 24 }}>
+        <div className="cta">
+          <div>
+            <h3>Ready for the first drop?</h3>
+            <p className="muted">
+              Join the Founders list to unlock the full library and future
+              releases.
+            </p>
+          </div>
           <a className="button" href="/founders">
             Start Founders checkout
           </a>
