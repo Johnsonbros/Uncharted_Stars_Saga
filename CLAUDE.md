@@ -287,6 +287,7 @@ For network operations (push, fetch, pull):
 - TESTING_STRATEGY.md - Testing approach and best practices
 - ARCHITECTURE.md - Detailed system design and roadmap
 - docs/audio_storage_conventions.md - Audio storage paths, metadata, and CDN delivery contract
+- docs/error_taxonomy.md - Unified error taxonomy, severity table, and ownership rules
 - CONTRIBUTING.md - Contribution guidelines (to be created)
 - CHANGELOG.md - Version history (to be created)
 - API.md - API documentation (to be created when applicable)

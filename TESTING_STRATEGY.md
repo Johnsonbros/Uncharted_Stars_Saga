@@ -10,6 +10,7 @@ This document defines the testing strategy for **NAOS (Narrative & Audio Operati
 **Opportunity**: Establish testing best practices from day one
 **System TODO Hub**: Use [SYSTEM_TODO.md](./SYSTEM_TODO.md) to align test backlog with subsystem checklists.
 **Audio Storage Contract**: Reference [docs/audio_storage_conventions.md](./docs/audio_storage_conventions.md) for CDN and storage behavior that tests must validate.
+**Error Taxonomy**: Reference [docs/error_taxonomy.md](./docs/error_taxonomy.md) for severity levels and expected error codes in tests.
 
 ## Coverage Goals
 

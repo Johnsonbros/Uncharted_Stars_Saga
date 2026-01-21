@@ -87,7 +87,7 @@
 - [ ] MCP prompt templates for common workflows (continuity check, outline, recap)
 - [ ] Access token strategy (service-to-service auth, short-lived tokens)
 - [ ] Rate limiting + abuse safeguards per model and scope
-- [ ] Error taxonomy mapping for MCP responses (codes, severity, owner)
+- [x] Error taxonomy mapping for MCP responses (codes, severity, owner) → [docs/error_taxonomy.md](./docs/error_taxonomy.md)
 - [ ] Observability hooks (structured logs, trace IDs, audit events)
 - [ ] Local dev harness (mock resources + test proposals)
 - [ ] MCP Inspector configuration for debugging
@@ -225,7 +225,7 @@
 
 ### 4.1 Global Error Trace Checklist
 
-- [ ] Unified error taxonomy (codes, severity, owner)
+- [x] Unified error taxonomy (codes, severity, owner) → [docs/error_taxonomy.md](./docs/error_taxonomy.md)
 - [ ] Log correlation IDs across services
 - [ ] Structured logging format (JSON)
 - [ ] Alerting rules for critical failures
@@ -288,7 +288,7 @@ When updating this system-wide list, update references in:
 ## 7) Near-Term Priority Queue
 
 1. [ ] Create system diagrams listed in Section 5
-2. [ ] Define unified error taxonomy + severity table
+2. [x] Define unified error taxonomy + severity table → [docs/error_taxonomy.md](./docs/error_taxonomy.md)
 3. [ ] Draft subsystem playbooks for Narrative, Audio, MCP, Listener Platform
 4. [ ] Align tests with build checklists for Phase 1 deliverables
 5. [ ] Add instrumentation standards (log fields, trace IDs)
