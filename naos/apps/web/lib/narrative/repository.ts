@@ -1,25 +1,47 @@
 import { and, eq, inArray } from "drizzle-orm";
 import { db } from "@/lib/db";
-import { eventDependencies, events, promises } from "@/drizzle/schema";
+import { eventDependencies, events, knowledgeStates, promises } from "@/drizzle/schema";
 import {
   checkContinuity,
   createEvent,
   transitionCanonStatus,
+  transitionPromiseStatus,
   updateEvent,
   validateCanonGate
 } from "./engine";
 import {
   type Event,
   type EventInput,
+  type KnowledgeEffect,
+  type KnowledgeState,
+  type PromiseInput,
   type PromiseRecord,
+  type PromiseStatus,
   EventSchema,
+  KnowledgeEffectSchema,
+  KnowledgeStateSchema,
+  PromiseInputSchema,
   PromiseRecordSchema
 } from "./models";
 
 type EventRow = typeof events.$inferSelect;
+type KnowledgeRow = typeof knowledgeStates.$inferSelect;
 type PromiseRow = typeof promises.$inferSelect;
 
-function mapEventRow(row: EventRow, dependencies: string[]): Event {
+function mapKnowledgeRow(row: KnowledgeRow): KnowledgeEffect {
+  return KnowledgeEffectSchema.parse({
+    characterId: row.characterId,
+    learnedAt: row.learnedAt,
+    certainty: row.certainty,
+    source: row.source
+  });
+}
+
+function mapEventRow(
+  row: EventRow,
+  dependencies: string[],
+  knowledgeEffects: KnowledgeEffect[]
+): Event {
   return EventSchema.parse({
     id: row.id,
     timestamp: row.timestamp,
@@ -29,7 +51,7 @@ function mapEventRow(row: EventRow, dependencies: string[]): Event {
     description: row.description,
     dependencies,
     impacts: (row.impacts ?? []) as Event["impacts"],
-    knowledgeEffects: [],
+    knowledgeEffects,
     canonStatus: row.canonStatus
   });
 }
@@ -65,6 +87,29 @@ async function fetchDependenciesByEventId(eventIds: string[]): Promise<Map<strin
   return map;
 }
 
+async function fetchKnowledgeEffectsByEventId(
+  projectId: string,
+  eventIds: string[]
+): Promise<Map<string, KnowledgeEffect[]>> {
+  const map = new Map<string, KnowledgeEffect[]>();
+  if (eventIds.length === 0) {
+    return map;
+  }
+
+  const rows = await db
+    .select()
+    .from(knowledgeStates)
+    .where(and(eq(knowledgeStates.projectId, projectId), inArray(knowledgeStates.eventId, eventIds)));
+
+  for (const row of rows) {
+    const list = map.get(row.eventId) ?? [];
+    list.push(mapKnowledgeRow(row));
+    map.set(row.eventId, list);
+  }
+
+  return map;
+}
+
 async function assertDependenciesExist(dependencyIds: string[]) {
   if (dependencyIds.length === 0) {
     return;
@@ -87,6 +132,17 @@ async function assertDependenciesExist(dependencyIds: string[]) {
   }
 }
 
+function assertKnowledgeTemporalConstraints(event: Readonly<Event>) {
+  for (const effect of event.knowledgeEffects) {
+    const learnedAt = effect.learnedAt ?? event.timestamp;
+    if (learnedAt < event.timestamp) {
+      throw new Error(
+        `Knowledge for character ${effect.characterId} cannot be learned before event ${event.id} (${learnedAt.toISOString()} < ${event.timestamp.toISOString()}).`
+      );
+    }
+  }
+}
+
 function assertContinuity(events: Readonly<Event>[]) {
   const report = checkContinuity(events);
   const issues = [
@@ -105,7 +161,13 @@ function assertContinuity(events: Readonly<Event>[]) {
 export async function fetchProjectEvents(projectId: string): Promise<Event[]> {
   const rows = await db.select().from(events).where(eq(events.projectId, projectId));
   const dependencyMap = await fetchDependenciesByEventId(rows.map((row) => row.id));
-  return rows.map((row) => mapEventRow(row, dependencyMap.get(row.id) ?? []));
+  const knowledgeMap = await fetchKnowledgeEffectsByEventId(
+    projectId,
+    rows.map((row) => row.id)
+  );
+  return rows.map((row) =>
+    mapEventRow(row, dependencyMap.get(row.id) ?? [], knowledgeMap.get(row.id) ?? [])
+  );
 }
 
 export async function fetchEventById(projectId: string, eventId: string): Promise<Event | null> {
@@ -117,12 +179,39 @@ export async function fetchEventById(projectId: string, eventId: string): Promis
     return null;
   }
   const dependencyMap = await fetchDependenciesByEventId([eventId]);
-  return mapEventRow(rows[0], dependencyMap.get(eventId) ?? []);
+  const knowledgeMap = await fetchKnowledgeEffectsByEventId(projectId, [eventId]);
+  return mapEventRow(
+    rows[0],
+    dependencyMap.get(eventId) ?? [],
+    knowledgeMap.get(eventId) ?? []
+  );
 }
 
 export async function fetchPromises(projectId: string): Promise<PromiseRecord[]> {
   const rows = await db.select().from(promises).where(eq(promises.projectId, projectId));
   return rows.map(mapPromiseRow);
+}
+
+export async function fetchKnowledgeStates(
+  projectId: string,
+  eventIds: string[]
+): Promise<KnowledgeState[]> {
+  if (eventIds.length === 0) {
+    return [];
+  }
+  const rows = await db
+    .select()
+    .from(knowledgeStates)
+    .where(and(eq(knowledgeStates.projectId, projectId), inArray(knowledgeStates.eventId, eventIds)));
+  return rows.map((row) =>
+    KnowledgeStateSchema.parse({
+      characterId: row.characterId,
+      eventId: row.eventId,
+      learnedAt: row.learnedAt,
+      certainty: row.certainty,
+      source: row.source
+    })
+  );
 }
 
 export async function createEventRecord(
@@ -137,6 +226,7 @@ export async function createEventRecord(
   }
 
   await assertDependenciesExist(dependencies);
+  assertKnowledgeTemporalConstraints(event);
 
   const existingEvents = await fetchProjectEvents(projectId);
   assertContinuity([...existingEvents, event]);
@@ -165,13 +255,32 @@ export async function createEventRecord(
         }))
       );
     }
+
+    if (event.knowledgeEffects.length > 0) {
+      await tx.insert(knowledgeStates).values(
+        event.knowledgeEffects.map((effect) => ({
+          projectId,
+          characterId: effect.characterId,
+          eventId: event.id,
+          learnedAt: effect.learnedAt ?? event.timestamp,
+          certainty: effect.certainty,
+          source: effect.source,
+          canonStatus: event.canonStatus
+        }))
+      );
+    }
   });
 
   return Object.freeze({ ...event, dependencies });
 }
 
 export type EventUpdateInput = Partial<
-  Pick<Event, "timestamp" | "type" | "participants" | "location" | "description" | "dependencies" | "impacts">
+  Pick<
+    Event,
+    "timestamp" | "type" | "participants" | "location" | "description" | "dependencies" | "impacts"
+  > & {
+    knowledgeEffects: Event["knowledgeEffects"];
+  }
 >;
 
 export async function updateEventRecord(
@@ -192,6 +301,7 @@ export async function updateEventRecord(
   }
 
   await assertDependenciesExist(dependencies);
+  assertKnowledgeTemporalConstraints(updated);
 
   const existingEvents = await fetchProjectEvents(projectId);
   const mergedEvents = existingEvents.map((event) =>
@@ -220,6 +330,23 @@ export async function updateEventRecord(
           dependencies.map((dependencyId) => ({
             eventId,
             dependsOnEventId: dependencyId
+          }))
+        );
+      }
+    }
+
+    if ("knowledgeEffects" in updates) {
+      await tx.delete(knowledgeStates).where(eq(knowledgeStates.eventId, eventId));
+      if (updated.knowledgeEffects.length > 0) {
+        await tx.insert(knowledgeStates).values(
+          updated.knowledgeEffects.map((effect) => ({
+            projectId,
+            characterId: effect.characterId,
+            eventId,
+            learnedAt: effect.learnedAt ?? updated.timestamp,
+            certainty: effect.certainty,
+            source: effect.source,
+            canonStatus: updated.canonStatus
           }))
         );
       }
@@ -257,5 +384,76 @@ export async function updateEventCanonStatus(
     .set({ canonStatus: updated.canonStatus, updatedAt: new Date() })
     .where(eq(events.id, eventId));
 
+  if (nextStatus === "canon") {
+    await db
+      .update(knowledgeStates)
+      .set({ canonStatus: updated.canonStatus, updatedAt: new Date() })
+      .where(eq(knowledgeStates.eventId, eventId));
+  }
+
   return Object.freeze({ ...updated });
+}
+
+export async function createPromiseRecord(
+  projectId: string,
+  input: PromiseInput
+): Promise<PromiseRecord> {
+  const parsed = PromiseInputSchema.parse(input);
+  if (parsed.status === "fulfilled" && !parsed.fulfilledIn) {
+    throw new Error("Fulfilled promises must include fulfilledIn.");
+  }
+  if (parsed.status !== "fulfilled" && parsed.fulfilledIn) {
+    throw new Error("Only fulfilled promises may set fulfilledIn.");
+  }
+
+  const [row] = await db
+    .insert(promises)
+    .values({
+      projectId,
+      type: parsed.type,
+      establishedInScene: parsed.establishedIn,
+      description: parsed.description,
+      status: parsed.status ?? "pending",
+      fulfilledInScene: parsed.fulfilledIn ?? null,
+      canonStatus: "draft"
+    })
+    .returning();
+
+  return mapPromiseRow(row);
+}
+
+export async function updatePromiseStatusRecord(
+  projectId: string,
+  promiseId: string,
+  nextStatus: PromiseStatus,
+  fulfilledIn?: string
+): Promise<PromiseRecord> {
+  const rows = await db
+    .select()
+    .from(promises)
+    .where(and(eq(promises.projectId, projectId), eq(promises.id, promiseId)));
+  if (rows.length === 0) {
+    throw new Error(`Promise ${promiseId} not found.`);
+  }
+  const current = mapPromiseRow(rows[0]);
+  const updated = transitionPromiseStatus(current, nextStatus);
+
+  if (updated.status === "fulfilled" && !fulfilledIn) {
+    throw new Error("Fulfilled promises must include fulfilledIn.");
+  }
+  if (updated.status !== "fulfilled" && fulfilledIn) {
+    throw new Error("Only fulfilled promises may set fulfilledIn.");
+  }
+
+  const [row] = await db
+    .update(promises)
+    .set({
+      status: updated.status,
+      fulfilledInScene: fulfilledIn ?? null,
+      updatedAt: new Date()
+    })
+    .where(eq(promises.id, promiseId))
+    .returning();
+
+  return mapPromiseRow(row);
 }

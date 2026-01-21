@@ -25,24 +25,24 @@
 ### 1.1 Narrative Engine
 
 **Build Checklist**
-- [ ] Event model implemented with immutable canon transitions
-- [ ] Dependency DAG validation implemented (acyclic + referential integrity)
-- [ ] Knowledge state tracking with temporal constraints
-- [ ] Promise tracking (pending/fulfilled/broken/transformed)
-- [ ] Canon vs. draft separation enforced at persistence layer
-- [ ] Canon gate validation pipeline (continuity, promises, listener cognition)
+- [x] Event model implemented with immutable canon transitions
+- [x] Dependency DAG validation implemented (acyclic + referential integrity)
+- [x] Knowledge state tracking with temporal constraints
+- [x] Promise tracking (pending/fulfilled/broken/transformed)
+- [x] Canon vs. draft separation enforced at persistence layer
+- [x] Canon gate validation pipeline (continuity, promises, listener cognition)
 
 **Tests**
-- [ ] Unit: event creation, mutation rejection once canon
-- [ ] Unit: DAG validator (cycle detection, missing nodes)
-- [ ] Unit: knowledge state propagation rules
-- [ ] Unit: promise lifecycle transitions
+- [x] Unit: event creation, mutation rejection once canon
+- [x] Unit: DAG validator (cycle detection, missing nodes)
+- [x] Unit: knowledge state propagation rules
+- [x] Unit: promise lifecycle transitions
 - [ ] Integration: canon gate rejects contradictory changes
 - [ ] Integration: draft changes do not leak into canon
 
 **Diagrams**
-- [ ] Event dependency DAG example (diagram)
-- [ ] Canon gate decision flow (flowchart)
+- [x] Event dependency DAG example (diagram)
+- [x] Canon gate decision flow (flowchart)
 
 ---
 
