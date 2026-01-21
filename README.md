@@ -289,6 +289,7 @@ This is a solo-author project. The repository follows a feature-branch workflow 
 - **[TESTING_STRATEGY.md](./TESTING_STRATEGY.md)**: Testing approach and best practices
 - **[docs/audio_storage_conventions.md](./docs/audio_storage_conventions.md)**: Audio storage paths, metadata, and CDN delivery contract
 - **[docs/error_taxonomy.md](./docs/error_taxonomy.md)**: Unified error taxonomy, severity table, and ownership rules
+- **[docs/creator_studio_ui.md](./docs/creator_studio_ui.md)**: Creator Studio UI goals, pages, and next additions
 
 ## Project Status
 
