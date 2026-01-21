@@ -43,7 +43,20 @@ function getRoleFromRequest(request) {
 }
 
 async function handleJsonRpc(request) {
+  if (!request || typeof request !== "object") {
+    return jsonRpcErrorResponse(
+      null,
+      toJsonRpcError(ERROR_CODES.internal, { reason: "invalid_request" })
+    );
+  }
+
   const { id, method, params } = request || {};
+  if (!method || typeof method !== "string") {
+    return jsonRpcErrorResponse(
+      id ?? null,
+      toJsonRpcError(ERROR_CODES.internal, { reason: "missing_method" })
+    );
+  }
   const role = getRoleFromRequest(request);
 
   try {

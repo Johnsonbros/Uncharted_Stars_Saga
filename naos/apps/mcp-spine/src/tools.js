@@ -7,36 +7,123 @@ const TOOL_DEFINITIONS = [
     name: "scene.propose_patch",
     description: "Propose a patch to an existing scene.",
     scope: "write:proposal",
+    inputSchema: {
+      required: ["sceneId", "changes"],
+      properties: {
+        sceneId: { type: "string" },
+        changes: { type: "array" },
+        reason: { type: "string" },
+      },
+    },
   },
   {
     name: "event.propose_add",
     description: "Propose a new narrative event.",
     scope: "write:proposal",
+    inputSchema: {
+      required: ["event", "dependencies"],
+      properties: {
+        event: { type: "object" },
+        dependencies: { type: "array" },
+        reason: { type: "string" },
+      },
+    },
   },
   {
     name: "continuity.check",
     description: "Analyze continuity within a scope.",
     scope: "analyze:continuity",
+    inputSchema: {
+      required: ["scope"],
+      properties: {
+        scope: { type: "string" },
+        targetId: { type: "string" },
+        notes: { type: "array" },
+      },
+    },
   },
   {
     name: "diff.semantic",
     description: "Compute semantic diffs between versions.",
     scope: "read:story",
+    inputSchema: {
+      required: ["versionA", "versionB"],
+      properties: {
+        versionA: { type: "string" },
+        versionB: { type: "string" },
+        focus: { type: "string" },
+      },
+    },
   },
   {
     name: "listener_confusion.audit",
     description: "Audit scenes for audio listener confusion risks.",
     scope: "analyze:confusion",
+    inputSchema: {
+      required: ["sceneId"],
+      properties: {
+        sceneId: { type: "string" },
+        narrationStyle: { type: "string" },
+      },
+    },
   },
   {
     name: "audio_packet.generate",
     description: "Generate an audio recording packet for a chapter.",
     scope: "read:audio",
+    inputSchema: {
+      required: ["chapterId"],
+      properties: {
+        chapterId: { type: "string" },
+        voiceProfileId: { type: "string" },
+        narrator: { type: "string" },
+      },
+    },
   },
 ];
 
 function listTools() {
-  return TOOL_DEFINITIONS.map(({ name, description }) => ({ name, description }));
+  return TOOL_DEFINITIONS.map(({ name, description, inputSchema, scope }) => ({
+    name,
+    description,
+    inputSchema,
+    scope,
+  }));
+}
+
+function validateToolInput({ tool, params }) {
+  const issues = [];
+  const payload = params || {};
+
+  if (!tool?.inputSchema) {
+    return { valid: true, issues: [] };
+  }
+
+  const { required = [], properties = {} } = tool.inputSchema;
+  required.forEach((field) => {
+    if (payload[field] === undefined || payload[field] === null || payload[field] === "") {
+      issues.push(`${field} is required`);
+    }
+  });
+
+  Object.entries(properties).forEach(([field, schema]) => {
+    if (payload[field] === undefined || payload[field] === null) {
+      return;
+    }
+    if (schema.type === "array" && !Array.isArray(payload[field])) {
+      issues.push(`${field} must be an array`);
+      return;
+    }
+    if (schema.type === "string" && typeof payload[field] !== "string") {
+      issues.push(`${field} must be a string`);
+      return;
+    }
+    if (schema.type === "object" && typeof payload[field] !== "object") {
+      issues.push(`${field} must be an object`);
+    }
+  });
+
+  return { valid: issues.length === 0, issues };
 }
 
 function callTool({ name, params, role }) {
@@ -55,7 +142,16 @@ function callTool({ name, params, role }) {
     };
   }
 
+  const validation = validateToolInput({ tool, params });
+  if (!validation.valid) {
+    return {
+      error: ERROR_CODES.invalidProposal,
+      data: { issues: validation.issues, toolName: name },
+    };
+  }
+
   const { role: _role, name: _name, ...payload } = params || {};
+  const issuedAt = new Date().toISOString();
 
   switch (name) {
     case "scene.propose_patch":
@@ -68,37 +164,62 @@ function callTool({ name, params, role }) {
     case "continuity.check":
       return {
         result: {
-          status: "stubbed",
+          status: "ok",
           issues: [],
-          scope: params?.scope || "scene",
-          targetId: params?.targetId || null,
+          scope: payload.scope,
+          targetId: payload.targetId || null,
+          notes: Array.isArray(payload.notes) ? payload.notes : [],
+          issuedAt,
         },
       };
     case "diff.semantic":
       return {
         result: {
-          status: "stubbed",
-          summary: "Semantic diff generation is pending implementation.",
-          versionA: params?.versionA || null,
-          versionB: params?.versionB || null,
+          status: "ok",
+          summary: `Semantic diff placeholders for ${payload.versionA} → ${payload.versionB}.`,
+          versionA: payload.versionA,
+          versionB: payload.versionB,
+          focus: payload.focus || "story",
+          issuedAt,
         },
       };
     case "listener_confusion.audit":
       return {
         result: {
-          status: "stubbed",
+          status: "ok",
           score: 0,
           issues: [],
-          sceneId: params?.sceneId || null,
+          sceneId: payload.sceneId,
+          narrationStyle: payload.narrationStyle || "neutral",
+          issuedAt,
         },
       };
     case "audio_packet.generate":
       return {
         result: {
-          status: "stubbed",
+          status: "ok",
           packetId: `pkt_${Date.now()}`,
-          chapterId: params?.chapterId || null,
-          voiceProfileId: params?.voiceProfileId || null,
+          chapterId: payload.chapterId,
+          voiceProfileId: payload.voiceProfileId || "default",
+          narrator: payload.narrator || "system",
+          issuedAt,
+          segments: [
+            {
+              id: "intro",
+              label: "Chapter intro",
+              durationSec: 20,
+            },
+            {
+              id: "body",
+              label: "Primary narrative",
+              durationSec: 300,
+            },
+            {
+              id: "outro",
+              label: "Chapter outro",
+              durationSec: 15,
+            },
+          ],
         },
       };
     default:
