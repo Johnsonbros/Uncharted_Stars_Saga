@@ -118,8 +118,10 @@ function validateToolInput({ tool, params }) {
       issues.push(`${field} must be a string`);
       return;
     }
-    if (schema.type === "object" && typeof payload[field] !== "object") {
-      issues.push(`${field} must be an object`);
+    if (schema.type === "object") {
+      if (typeof payload[field] !== "object" || Array.isArray(payload[field])) {
+        issues.push(`${field} must be an object`);
+      }
     }
   });
 
