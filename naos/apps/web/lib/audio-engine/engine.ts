@@ -151,7 +151,10 @@ function resolveChannelMarkers(
       const lastEnd = last.offsetMs + last.durationMs;
       if (current.offsetMs < lastEnd + minGapMs) {
         if (current.priority > last.priority) {
-          const trimmedDuration = Math.max(0, current.offsetMs - last.offsetMs);
+          const trimmedDuration = Math.max(
+            0,
+            current.offsetMs - minGapMs - last.offsetMs
+          );
           if (trimmedDuration === 0) {
             resolved.pop();
             recordConflict(
