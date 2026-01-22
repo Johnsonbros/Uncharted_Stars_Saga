@@ -31,7 +31,11 @@ export async function buildNarrativeStateSnapshot(
   const events = await fetchProjectEvents(projectId);
   const promises = await fetchPromises(projectId);
   const continuity = checkContinuity(events);
-  const canonGate = validateCanonGate(events, promises);
+  const canonBuckets = splitByCanonStatus(events);
+  const canonGate = validateCanonGate(
+    [...canonBuckets.canon, ...canonBuckets.proposed],
+    promises
+  );
   const knowledge = deriveKnowledgeState(events);
 
   return {
@@ -41,7 +45,7 @@ export async function buildNarrativeStateSnapshot(
     promises,
     continuity,
     canonGate,
-    canonBuckets: splitByCanonStatus(events),
+    canonBuckets,
     knowledge
   };
 }
