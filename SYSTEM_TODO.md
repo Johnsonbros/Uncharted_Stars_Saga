@@ -717,11 +717,8 @@ Task Card: Email auth onboarding (Replit or Supabase)
 - [ ] Accessibility checks (contrast, focus, keyboard nav)
 
 Task Card: E2E: marketing → signup → checkout
-- Status: [x]
-- Assignee: Agent <4>
-- Claim token: 2026-01-22T00:55Z/agent-04
-- Claimed at: 2026-01-22T00:55Z
-- Why not done / Blocker:
+- Status: [ ]
+- Why not done / Blocker: Tests have not been run; keep checklist pending until executed.
 - What needs to be completed: Add E2E coverage for landing to signup to founders checkout flow.
 - Done looks like (acceptance criteria): E2E test covers landing CTA, navigates to signup, submits email with mocked onboarding response, and returns to founders checkout page.
 - Files involved: naos/apps/web/playwright.config.ts, naos/apps/web/tests/e2e/marketing-flow.spec.ts, naos/apps/web/package.json, naos/apps/web/package-lock.json, SYSTEM_TODO.md
@@ -731,11 +728,8 @@ Task Card: E2E: marketing → signup → checkout
 - Subtasks (optional):
 
 Task Card: Accessibility checks (contrast, focus, keyboard nav)
-- Status: [x]
-- Assignee: Agent <3>
-- Claim token: 2026-01-22T00:40Z/agent-03
-- Claimed at: 2026-01-22T00:40Z
-- Why not done / Blocker:
+- Status: [ ]
+- Why not done / Blocker: Accessibility checks have not been run; keep checklist pending until executed.
 - What needs to be completed: Run accessibility checks on the marketing, signup, and founders flows and address any issues found.
 - Done looks like (acceptance criteria): Focus indicators are visible for links, buttons, and form fields on the landing, signup, and founders pages.
 - Files involved: naos/apps/web/app/globals.css, SYSTEM_TODO.md
@@ -1134,4 +1128,4 @@ When updating this system-wide list, update references in:
 3. [x] Draft subsystem playbooks for Narrative, Audio, MCP, Listener Platform
 4. [x] Align tests with build checklists for Phase 1 deliverables
 5. [x] Add instrumentation standards (log fields, trace IDs)
-6. [ ] Begin MVP coding passes for each subsystem (Narrative, Audio, MCP, Listener, Data Layer)
+6. [x] Begin MVP coding passes for each subsystem (Narrative, Audio, MCP, Listener, Data Layer)
