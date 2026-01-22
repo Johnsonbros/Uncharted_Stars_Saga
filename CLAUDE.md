@@ -353,6 +353,10 @@ activeForm: "Implementing user authentication"
 status: "in_progress"
 ```
 
+### Parallel Agent Coordination
+
+When multiple agents are running in parallel, follow the **Multi-Agent Sprint Protocol** in `agent.MD` and claim tasks in `SYSTEM_TODO.md` before starting work. Use the **Standard Agent Prompt** in `agent.MD` to launch additional agents so they auto-select unclaimed tasks and avoid overlap.
+
 ### Development Best Practices
 
 **DO:**

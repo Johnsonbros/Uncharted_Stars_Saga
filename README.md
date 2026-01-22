@@ -265,8 +265,9 @@ NAOS is optimized for a single creator who:
 **For Developers:**
 1. Read [ARCHITECTURE.md](./ARCHITECTURE.md) for complete system design
 2. Review [SYSTEM_TODO.md](./SYSTEM_TODO.md) for the system-wide build/test/diagram checklist
-3. Review [CLAUDE.md](./CLAUDE.md) for development guidelines
-4. Check [TESTING_STRATEGY.md](./TESTING_STRATEGY.md) for testing approach
+3. Review [agent.MD](./agent.MD) for the multi-agent sprint protocol and standard prompt
+4. Review [CLAUDE.md](./CLAUDE.md) for development guidelines
+5. Check [TESTING_STRATEGY.md](./TESTING_STRATEGY.md) for testing approach
 
 **Development Environment:**
 - Primary: Replit (all-in-one development and hosting)
@@ -281,6 +282,7 @@ This is a solo-author project. The repository follows a feature-branch workflow 
 
 - **[ARCHITECTURE.md](./ARCHITECTURE.md)**: Complete NAOS system architecture and design
 - **[SYSTEM_TODO.md](./SYSTEM_TODO.md)**: System-wide TODOs, tests, diagrams, and traceability checklists
+- **[agent.MD](./agent.MD)**: Multi-agent sprint protocol, task-claiming rules, and standard prompt
 - **[docs/incident_response_flow.md](./docs/incident_response_flow.md)**: Incident response flowchart for tracing and resolving errors
 - **[docs/narrative_engine_diagrams.md](./docs/narrative_engine_diagrams.md)**: Narrative event DAG and canon gate flow diagrams
 - **[docs/auto_scene_generation_pipeline.md](./docs/auto_scene_generation_pipeline.md)**: Auto scene generation pipeline flowchart

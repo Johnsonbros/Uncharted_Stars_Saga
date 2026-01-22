@@ -40,6 +40,52 @@ It overrides generic agent defaults and prioritizes correctness, canon integrity
 5. **Validate:** Run tests per `TESTING_STRATEGY.md` or explain why not.
 6. **Summarize:** Provide a short, actionable summary with files changed.
 
+## Multi-Agent Sprint Protocol (Parallel, Non-Overlapping)
+**Goal:** Allow multiple agents to work in parallel without duplicating effort or colliding on files.
+
+### 1) Task Claiming Rules (Required)
+- **Single active task per agent.**
+- **Claim before work:** Update the Task Card in `SYSTEM_TODO.md` to set:
+  - `Status: [~]`
+  - `Assignee:` (your agent name)
+  - `Claim token:` (timestamp + short ID, e.g., `2026-01-20T18:42Z/agent-03`)
+  - `Claimed at:` (UTC)
+- **If a task is already claimed**, pick another unclaimed task.
+- **If you must abandon a task**, set `Status: [ ]` and add a brief blocker note.
+
+### 2) Sprint Packet Structure (Recommended)
+When work can be parallelized, group items into **Sprint Packets**:
+- **Packet size:** 5 tasks max.
+- **Each task:** up to 5 explicit subtasks.
+- **Packet owner:** assigns tasks, ensures no overlap, tracks completion.
+
+### 3) Handoff Requirements (Required)
+On completion, update the Task Card:
+- `Status: [x]`
+- `Done looks like:` (confirm acceptance criteria)
+- `Files involved:` (updated list)
+- `Tests required:` (run or note why not)
+- `Docs updates required:` (verify or add)
+- Add a **handoff note** with next-step context if follow-on work is needed.
+
+### 4) Conflict Resolution
+- If two agents collide, the **earliest claim token wins**.
+- The second agent must **unclaim and pick a new task**.
+- Escalate unresolved conflicts by documenting them in the Task Card.
+
+## Standard Agent Prompt (Copy/Paste)
+Use this prompt to launch any parallel agent so they self-select tasks without overlap:
+
+```
+You are Agent <NAME>. Follow agent.MD and SYSTEM_TODO.md.
+
+1) Open SYSTEM_TODO.md and choose the next unclaimed task using the Next-Task Selection Rules.
+2) Claim it by updating the Task Card: Status [~], Assignee, Claim token, Claimed at.
+3) Do only that task. If blocked, unclaim it with a blocker note and pick another.
+4) On completion, set Status [x], fill acceptance criteria, files, tests, and docs updates.
+5) Provide a short handoff summary.
+```
+
 ## Efficiency Checklist
 - Prefer small, focused diffs.
 - Avoid reformatting unrelated code.

@@ -23,6 +23,9 @@ required to finish.
 ```
 Task Card:
 - Status: [ ] / [~] / [x]
+- Assignee:
+- Claim token:
+- Claimed at:
 - Why not done / Blocker:
 - What needs to be completed:
 - Done looks like (acceptance criteria):
@@ -32,6 +35,14 @@ Task Card:
 - Docs updates required:
 - Subtasks (optional):
 ```
+
+### Parallel Agent Coordination (Non-Overlapping Work)
+
+- **Claim before work:** No agent starts work until the Task Card shows `Status: [~]` plus assignee + claim token.
+- **Single task per agent:** Only one in-progress task at a time per agent.
+- **First claim wins:** If two agents overlap, the earliest claim token keeps the task.
+- **Unclaim if blocked:** Reset to `Status: [ ]` with a blocker note and move on.
+- **Handoff on completion:** Always update acceptance criteria, files, tests, and docs fields so the next agent can pick up cleanly.
 
 ### Next-Task Selection Rules (Agent Priority)
 
