@@ -1,9 +1,9 @@
 # Uncharted Stars Saga - System Architecture
 ## Narrative & Audio Operating System (NAOS)
 
-> **Document Version:** 1.0
+> **Document Version:** 1.1
 > **Last Updated:** 2026-01-22
-> **Status:** Phase 2 Kickoff - Audio Engine Build
+> **Status:** Phase 2 Kickoff - Audio Engine Build + Studio Mode Design
 
 ---
 
@@ -14,16 +14,15 @@
 3. [Core Design Principles](#3-core-design-principles)
 4. [System Architecture Overview](#4-system-architecture-overview)
 5. [Component Architecture](#5-component-architecture)
-6. [MCP Integration Layer](#6-mcp-integration-layer)
-7. [Data Architecture](#7-data-architecture)
-8. [Audiobook Production Pipeline](#8-audiobook-production-pipeline)
+6. [Data Architecture](#6-data-architecture)
+7. [Audiobook Production Pipeline](#7-audiobook-production-pipeline)
+8. [Studio Mode: Real-Time Audio Creation](#8-studio-mode-real-time-audio-creation)
 9. [Listener Platform](#9-listener-platform)
-10. [Business Model](#10-business-model)
-11. [Technology Stack](#11-technology-stack)
-12. [Security & Privacy](#12-security--privacy)
-13. [Scalability & Performance](#13-scalability--performance)
-14. [Implementation Roadmap](#14-implementation-roadmap)
-15. [Open Questions & Future Considerations](#15-open-questions--future-considerations)
+10. [Technology Stack](#10-technology-stack)
+11. [Security & Privacy](#11-security--privacy)
+12. [Scalability & Performance](#12-scalability--performance)
+13. [Implementation Roadmap](#13-implementation-roadmap)
+14. [Open Questions & Future Considerations](#14-open-questions--future-considerations)
 
 ---
 
@@ -786,7 +785,333 @@ Each stage has explicit quality gates:
 
 ---
 
-## 8. Listener Platform
+## 8. Studio Mode: Real-Time Audio Creation
+
+### 8.1 Overview
+
+**Studio Mode** is NAOS's breakthrough feature: real-time audio-directed story development where the creator acts as a director, providing live audio guidance while Claude performs adaptive narration with character voices.
+
+**Traditional Audiobook Workflow:**
+```
+Write text → Review → Edit → TTS generation → Review audio → Publish
+```
+
+**Studio Mode Workflow:**
+```
+Direct via audio → Claude narrates in real-time → Adjust on-the-fly → Session becomes Audio Scene Object → Publish
+```
+
+This eliminates the writing-to-audio conversion gap and creates a more natural, performative creative process optimized for audiobook production.
+
+### 8.2 Core Innovation: Director-Performer Paradigm
+
+**Creator as Director:**
+- Provides live audio direction during narration
+- "More emphasis on that line"
+- "Switch to Marcus's voice here"
+- "Add a pause before revealing the twist"
+- "Change the tone - he's lying"
+
+**Claude as Adaptive Performer:**
+- Narrates based on current narrative state
+- Modulates voice for different characters
+- Responds to director cues in real-time
+- Maintains character consistency
+- Applies beat markers automatically
+
+**System as Stage Manager:**
+- Feeds relevant context at the right moments
+- Enforces canon guardrails
+- Tracks session state
+- Generates production-ready Audio Scene Objects
+- Validates listener cognition
+
+### 8.3 Technical Architecture
+
+**High-Level Components:**
+```
+Studio UI Layer (Audio interface, context panel, guardrail status)
+        ↓
+Session Orchestrator (Agent SDK, conversation state, tool calling)
+        ↓
+   ┌────┴────┬──────────────┬───────────────┐
+   │         │              │               │
+Real-Time   Context      Guardrails     MCP Spine
+Audio Layer Manager      Engine         (Resources/Tools)
+   │         │              │               │
+   └────┬────┴──────────────┴───────────────┘
+        ↓
+NAOS Engines (Narrative + Audio)
+```
+
+**Key Technologies:**
+- **Real-Time Audio:** OpenAI Realtime API (voice-to-voice, <500ms latency)
+- **Orchestration:** Anthropic Agent SDK with streaming
+- **Context Management:** Prompt caching (150k tokens) + RAG retrieval (20k tokens)
+- **Guardrails:** Canon gate integration, character consistency, attribution validation
+- **Output:** Audio Scene Objects with beat markers and voice profiles
+
+### 8.4 Context Management Strategy
+
+**Hybrid Approach:**
+
+**Cached Canon State (150k tokens):**
+- All canon events (immutable)
+- All canon knowledge states
+- All canon promises
+- Character profiles
+- Updated once per session (prompt caching saves 90% of token cost)
+
+**Retrieved Context (20k tokens):**
+- Draft events related to current scene
+- Recent session history
+- Relevant character interactions
+- Scene-specific knowledge
+- Updated dynamically during session
+
+**Session State (10k tokens):**
+- Current scene transcript
+- Director instructions
+- Recent tool calls
+- Guardrail interventions
+- Updated every message
+
+**Total Context Budget:** ~180k tokens (leaving 20k for responses)
+
+### 8.5 Guardrails System
+
+**Canon Gates (BLOCKING):**
+- Prevents modifications that break established canon
+- Validates dependency consistency
+- Checks timestamp ordering
+- Enforces knowledge state rules
+- **Action:** Blocks narration + suggests correction
+
+**Character Consistency (WARNING):**
+- Validates voice profile matches character
+- Checks knowledge state consistency
+- Monitors behavior against character profile
+- **Action:** Warns creator + suggests alternative
+
+**Promise Tracking (INFORMATIONAL):**
+- Tracks commitments to listeners
+- Alerts when promises are fulfilled or at risk
+- **Action:** Informs creator + suggests fulfillment moments
+
+**Listener Attribution (WARNING):**
+- Ensures speaker is always clear
+- Validates narrator presence in ambiguous scenes
+- Checks beat marker density
+- Monitors speaker switch frequency
+- **Action:** Warns + suggests attribution improvements
+
+### 8.6 Session Output Pipeline
+
+**1. Session Recording:**
+- Audio buffer segments
+- Transcript segments
+- Voice profile assignments
+- Beat marker timings
+- Metadata (timestamps, tags)
+
+**2. Audio Scene Object Generation:**
+- Convert session to AudioSceneObject schema
+- Apply beat marker authoring rules
+- Assign voice profiles to tracks
+- Generate deterministic fingerprints
+
+**3. Listener Cognition Audit:**
+- Validate narrator presence
+- Check speaker attribution clarity
+- Validate beat marker density
+- Monitor speaker switches
+- Generate audit report
+
+**4. Recording Packet Export:**
+- Production-ready instructions
+- Complete context for voice director
+- Beat markers and pronunciation notes
+- Fingerprint for version control
+
+### 8.7 User Experience Flow
+
+**Session Lifecycle:**
+
+**1. Session Setup (30-60 seconds)**
+- Load project narrative state
+- Cache canon in Claude's context
+- Select scene to work on
+- Choose character voices
+- Configure guardrails
+
+**2. Creative Performance (10-60 minutes)**
+```
+Creator: "Let's start with Alex discovering the signal"
+
+Claude (narrating): "Captain Alex Martinez stood on the
+                     observation deck, the faint pattern
+                     catching her eye..."
+
+Creator: "More tension - she's afraid"
+
+Claude (adapting): [Voice modulates fearful, faster pace]
+                   "This wasn't supposed to be here. Nothing
+                    was supposed to be here..."
+
+[Guardrail validates: knowledge states OK, canon consistent]
+[System tracks: beat markers, voice changes, transcript]
+```
+
+**3. Guardrail Intervention (when needed)**
+```
+Claude (about to say): "Chen accessed Earth Command files..."
+
+System (blocks): ⚠️ CANON VIOLATION
+                Chen doesn't know about Earth Command yet.
+
+                Suggestion: "Chen checked the ship's database
+                            but found nothing..."
+
+Creator: [Accepts suggestion]
+
+Claude: "Chen checked the ship's database but found nothing.
+         Whatever this was, it predated their briefing..."
+```
+
+**4. Session Completion (1-2 minutes)**
+- Generate Audio Scene Object
+- Run listener cognition audit
+- Create recording packet
+- Save as draft for review
+- Update narrative state
+
+### 8.8 Cost & Performance
+
+**Cost Estimates (per hour of Studio session):**
+- OpenAI Realtime API: ~$18/hour
+- Anthropic Claude (Agent SDK): ~$4.30/hour
+- Storage (audio recordings): ~$0.012/hour
+- **Total:** ~$22-25/hour
+
+**Revenue Context:**
+- $49 Founders membership
+- Break-even: ~2 hours of Studio Mode per member
+- Profitable after 2+ hours of creative work
+
+**Performance Targets:**
+- Audio round-trip latency: <500ms
+- Guardrail validation: <200ms
+- Context retrieval: <100ms
+- Total perceived latency: <800ms
+
+### 8.9 Implementation Roadmap
+
+**Phase 1 (Weeks 1-2): Foundation**
+- Text-based Studio Mode
+- Context management with prompt caching
+- Guardrails integration
+- Canon gate validation
+
+**Phase 2 (Weeks 3-4): Audio Integration**
+- OpenAI Realtime API integration
+- Voice profile system
+- Beat marker detection
+- Audio interface
+
+**Phase 3 (Weeks 5-6): Advanced Context**
+- Prompt caching optimization
+- Query-based retrieval
+- RAG/embeddings (future)
+- Context budget management
+
+**Phase 4 (Weeks 7-8): Guardrails Production**
+- All guardrail types implemented
+- Intervention UI with suggestions
+- Override system
+- Guardrail analytics
+
+**Phase 5 (Weeks 9-10): Output Pipeline**
+- Session recording
+- Audio Scene Object generation
+- Cognition audit integration
+- Recording packet export
+
+**Phase 6 (Weeks 11-12): Polish & Launch**
+- Performance optimization
+- Error handling
+- Testing & QA
+- Founders beta launch
+
+**Target:** Production-ready Studio Mode in 12 weeks
+
+### 8.10 Future Enhancements
+
+**Multi-Voice System (Phase 7):**
+- Multiple AI voices in parallel for dialogue
+- Natural multi-character performances
+- Audio mixing and synchronization
+
+**Multi-Agent System (Phase 8):**
+- Narrator + Character agents
+- Emergent dialogue dynamics
+- Agent coordination framework
+
+**Voice Cloning (Phase 9):**
+- User's own voice for all characters
+- ElevenLabs voice cloning integration
+- Authentic voice consistency
+
+**Guardrail Learning (Phase 10):**
+- ML-based guardrails that learn from corrections
+- Adaptive to creator's style
+- Reduced false positives over time
+
+### 8.11 Success Metrics
+
+**MVP Success Criteria:**
+- Audio latency <800ms (P95)
+- Context loading <100ms (P95)
+- Canon violations blocked 100%
+- False positive rate <5%
+- Session failure rate <1%
+
+**Founders Launch Criteria:**
+- 5+ beta users completed 10+ sessions
+- User satisfaction >90%
+- Audio quality rating >4/5
+- Cognition audit pass rate >90%
+
+**Long-Term Success:**
+- 80% of Founders use Studio Mode
+- 3x faster than traditional workflow
+- 95% of Studio outputs published without major edits
+- Studio Mode users 2x more likely to continue creating
+
+### 8.12 Key Differentiators
+
+**Why Studio Mode is Unique:**
+
+| Feature | Traditional Tools | Studio Mode |
+|---------|------------------|-------------|
+| Creation Method | Write text | Direct audio performance |
+| AI Role | Text generation | Adaptive narration |
+| Voice Application | Post-production | Real-time, character-aware |
+| Canon Integrity | Manual checking | AI-enforced guardrails |
+| Context Management | None | 180k tokens (cached + retrieved) |
+| Output Format | Text document | Audio Scene Object |
+| Creative Flow | Sequential (write → record) | Parallel (direct → capture) |
+
+**Innovation Summary:**
+- **First** real-time audio-directed AI story development system
+- **First** to enforce narrative canon during creative performance
+- **First** to combine extended context + guardrails + audio AI
+- **First** audiobook-native creation workflow (not text-adapted)
+
+See [docs/studio_mode_architecture.md](docs/studio_mode_architecture.md) for complete technical specification and [docs/studio_mode_roadmap.md](docs/studio_mode_roadmap.md) for detailed implementation plan.
+
+---
+
+## 9. Listener Platform
 
 ### 8.1 Purpose
 
@@ -918,7 +1243,7 @@ Streaming playback
 
 ---
 
-## 9. Technology Stack
+## 10. Technology Stack
 
 ### 9.1 Creator OS (Private)
 
@@ -1067,7 +1392,7 @@ Streaming playback
 
 ---
 
-## 10. Security & Privacy
+## 11. Security & Privacy
 
 ### 10.1 Threat Model
 
@@ -1131,7 +1456,7 @@ Streaming playback
 
 ---
 
-## 11. Scalability & Performance
+## 12. Scalability & Performance
 
 ### 11.1 Scaling Strategy
 
@@ -1173,7 +1498,7 @@ Streaming playback
 
 ---
 
-## 12. Implementation Roadmap
+## 13. Implementation Roadmap
 
 ### Phase 0: Foundation Plan (Complete)
 
@@ -1282,7 +1607,7 @@ Streaming playback
 
 ---
 
-## 13. Open Questions & Future Considerations
+## 14. Open Questions & Future Considerations
 
 ### 13.1 Open Questions
 
@@ -1357,7 +1682,7 @@ Over 5-10 years, NAOS becomes:
 
 ---
 
-## 14. Appendix: Key Definitions
+## 15. Appendix: Key Definitions
 
 **Canon:** Immutable, published story truth that defines what "really happened"
 
@@ -1381,7 +1706,7 @@ Over 5-10 years, NAOS becomes:
 
 ---
 
-## 15. Document Maintenance
+## 16. Document Maintenance
 
 This document should be updated when:
 - Architecture decisions are made
