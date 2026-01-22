@@ -164,7 +164,7 @@ const server = createServer(async (request, response) => {
     }
 
     try {
-      const result = resolveResource({ resourceId, role, model });
+      const result = await resolveResource({ resourceId, role, model });
       writeJson(response, 200, result, requestId);
     } catch (error) {
       writeJson(response, 403, {

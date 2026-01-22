@@ -1,6 +1,7 @@
 import { RESOURCE_CATALOG_V1 } from "./resourceCatalog.js";
 import { getRoleScopes } from "../scopes/scopeUtils.js";
 import { getModelScopes } from "../models/modelRegistry.js";
+import { getResourcePayload } from "./resourceData.js";
 
 export type ResourceResolveRequest = {
   resourceId: string;
@@ -12,15 +13,13 @@ export type ResourceResolveResult = {
   resourceId: string;
   version: string;
   data: Record<string, unknown>;
+  metadata: {
+    generated_at: string;
+    source_commit: string;
+  };
 };
 
-const RESOURCE_DATA: Record<string, Record<string, unknown>> = {
-  "narrative.events": { events: [] },
-  "narrative.canon": { canon_version: "v1", events: [] },
-  "narrative.knowledge_snapshots": { snapshots: [] },
-  "audio.scene_index": { scenes: [] },
-  "listener.summary": { listeners: [] },
-};
+const SOURCE_COMMIT = process.env.SOURCE_COMMIT ?? "unknown";
 
 const isAuthorized = (resourceId: string, role?: string, model?: string) => {
   const resource = RESOURCE_CATALOG_V1.find((entry) => entry.id === resourceId);
@@ -35,9 +34,9 @@ const isAuthorized = (resourceId: string, role?: string, model?: string) => {
   return resource.scopes.every((scope) => combinedScopes.has(scope));
 };
 
-export const resolveResource = (
+export const resolveResource = async (
   request: ResourceResolveRequest,
-): ResourceResolveResult => {
+): Promise<ResourceResolveResult> => {
   const resource = RESOURCE_CATALOG_V1.find(
     (entry) => entry.id === request.resourceId,
   );
@@ -50,9 +49,15 @@ export const resolveResource = (
     throw new Error(`Unauthorized to access resource: ${request.resourceId}`);
   }
 
+  const payload = await getResourcePayload(resource.id);
+
   return {
     resourceId: resource.id,
     version: resource.version,
-    data: RESOURCE_DATA[resource.id] ?? {},
+    data: payload,
+    metadata: {
+      generated_at: new Date().toISOString(),
+      source_commit: SOURCE_COMMIT,
+    },
   };
 };
