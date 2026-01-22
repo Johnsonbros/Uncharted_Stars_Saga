@@ -6,8 +6,7 @@ import { RESOURCE_CATALOG_V1 } from "./resources/resourceCatalog.js";
 import { resolveResource } from "./resources/resourceResolver.js";
 import { ProposalStore } from "./proposals/proposalStore.js";
 import { ProposalTool } from "./tools/proposalTool.js";
-import { getRoleScopes } from "./scopes/scopeUtils.js";
-import { getModelScopes } from "./models/modelRegistry.js";
+import { isAuthorizedForScope } from "./scopes/authorization.js";
 import { RateLimiter } from "./rateLimit.js";
 
 const config = loadConfig();
@@ -41,11 +40,6 @@ const writeJson = (
   const payload = requestId ? { request_id: requestId, ...body } : body;
   response.writeHead(statusCode, { "Content-Type": "application/json" });
   response.end(JSON.stringify(payload));
-};
-
-const isAuthorizedForScope = (scope: string, role?: string, model?: string) => {
-  const scopes = new Set([...getRoleScopes(role), ...getModelScopes(model)]);
-  return scopes.has(scope);
 };
 
 const getRequestId = (request: import("http").IncomingMessage) => {

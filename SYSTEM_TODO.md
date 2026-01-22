@@ -353,15 +353,126 @@ Task Card: Deployment config for MCP service (env vars, secrets, health checks)
 - Subtasks (optional):
 
 **Tests**
-- [ ] Unit: scope authorization checks
-- [ ] Unit: proposal schema validation (happy + failure modes)
-- [ ] Unit: resource resolver access guards
-- [ ] Unit: tool response metadata consistency
-- [ ] Integration: proposal workflow end-to-end (create → validate → apply)
-- [ ] Integration: forbidden scope access rejection
-- [ ] Integration: canon gate rejects invalid proposals
-- [ ] Integration: audit log written on proposal lifecycle transitions
-- [ ] Integration: rate limit enforcement and error response mapping
+- [x] Unit: scope authorization checks
+- [x] Unit: proposal schema validation (happy + failure modes)
+- [x] Unit: resource resolver access guards
+- [x] Unit: tool response metadata consistency
+- [x] Unit: rate limit window reset behavior
+- [x] Integration: proposal workflow end-to-end (create → validate → apply)
+- [x] Integration: forbidden scope access rejection
+- [x] Integration: canon gate rejects invalid proposals
+- [x] Integration: audit log written on proposal lifecycle transitions
+- [x] Integration: rate limit enforcement and error response mapping
+
+Task Card: Unit: scope authorization checks
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Verify scope lookup utilities return expected role and model scopes.
+- Done looks like (acceptance criteria): Tests assert role + model scopes for known identities and empty results for unknown roles.
+- Files involved: services/mcp-spine/tests/scopeAuthorization.test.ts
+- Resources (docs/links/specs): docs/mcp_permissions_scope_map.md
+- Tests required: services/mcp-spine/tests/scopeAuthorization.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Unit: proposal schema validation (happy + failure modes)
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Add schema validation helper and cover valid/invalid payloads.
+- Done looks like (acceptance criteria): Tests pass for valid proposals and flag invalid field values.
+- Files involved: services/mcp-spine/src/proposals/proposalSchemaValidator.ts, services/mcp-spine/tests/proposalSchemaValidator.test.ts
+- Resources (docs/links/specs): docs/proposal_schema_v1.md
+- Tests required: services/mcp-spine/tests/proposalSchemaValidator.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Unit: resource resolver access guards
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Ensure resolver allows authorized access and blocks unauthorized roles.
+- Done looks like (acceptance criteria): Tests confirm allowed access and unauthorized errors.
+- Files involved: services/mcp-spine/src/resources/resourceResolver.ts, services/mcp-spine/tests/resourceResolver.test.ts
+- Resources (docs/links/specs): docs/mcp_service_contracts.md
+- Tests required: services/mcp-spine/tests/resourceResolver.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Unit: tool response metadata consistency
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Verify proposal tool responses include required metadata.
+- Done looks like (acceptance criteria): Tests assert proposal_id, scope, timestamps, and validation fields.
+- Files involved: services/mcp-spine/src/tools/proposalTool.ts, services/mcp-spine/tests/proposalTool.test.ts
+- Resources (docs/links/specs): docs/mcp_service_contracts.md
+- Tests required: services/mcp-spine/tests/proposalTool.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Unit: rate limit window reset behavior
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Ensure limiter resets counts after the configured window.
+- Done looks like (acceptance criteria): Tests confirm new allowance after simulated window expiration.
+- Files involved: services/mcp-spine/src/rateLimit.ts, services/mcp-spine/tests/rateLimit.test.ts
+- Resources (docs/links/specs): docs/mcp_rate_limiting_policy.md
+- Tests required: services/mcp-spine/tests/rateLimit.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Integration: proposal workflow end-to-end (create → validate → apply)
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Exercise proposal tool lifecycle from creation through application.
+- Done looks like (acceptance criteria): Tests confirm validated proposals apply and status updates to applied.
+- Files involved: services/mcp-spine/src/tools/proposalTool.ts, services/mcp-spine/src/proposals/proposalStore.ts, services/mcp-spine/tests/proposalTool.test.ts
+- Resources (docs/links/specs): docs/proposal_schema_v1.md
+- Tests required: services/mcp-spine/tests/proposalTool.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Integration: forbidden scope access rejection
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Validate scope authorization blocks disallowed access.
+- Done looks like (acceptance criteria): Tests confirm disallowed scope returns false for authorization helper.
+- Files involved: services/mcp-spine/src/scopes/authorization.ts, services/mcp-spine/tests/scopeAuthorizationIntegration.test.ts
+- Resources (docs/links/specs): docs/mcp_permissions_scope_map.md
+- Tests required: services/mcp-spine/tests/scopeAuthorizationIntegration.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Integration: canon gate rejects invalid proposals
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Ensure invalid proposals fail validation and cannot be applied.
+- Done looks like (acceptance criteria): Tests confirm failed validation and apply returns canon gate failure message.
+- Files involved: services/mcp-spine/src/tools/proposalTool.ts, services/mcp-spine/src/proposals/validationPipeline.ts, services/mcp-spine/tests/proposalTool.test.ts
+- Resources (docs/links/specs): docs/proposal_schema_v1.md, docs/narrative_engine_diagrams.md
+- Tests required: services/mcp-spine/tests/proposalTool.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Integration: audit log written on proposal lifecycle transitions
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Confirm logging hooks fire for proposal creation, validation, and apply.
+- Done looks like (acceptance criteria): Tests validate log entries for proposal.created, proposal.validated, and proposal.applied.
+- Files involved: services/mcp-spine/src/tools/proposalTool.ts, services/mcp-spine/tests/proposalTool.test.ts
+- Resources (docs/links/specs): docs/error_taxonomy.md
+- Tests required: services/mcp-spine/tests/proposalTool.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Integration: rate limit enforcement and error response mapping
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Validate limiter denies requests after exceeding the windowed quota.
+- Done looks like (acceptance criteria): Tests confirm denied requests return allowed=false and include reset timestamp.
+- Files involved: services/mcp-spine/src/rateLimit.ts, services/mcp-spine/tests/rateLimit.test.ts
+- Resources (docs/links/specs): docs/mcp_rate_limiting_policy.md
+- Tests required: services/mcp-spine/tests/rateLimit.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
 
 **Diagrams**
 - [x] Proposal-based modification flow (flowchart) → [docs/proposal_modification_flow.md](./docs/proposal_modification_flow.md)
