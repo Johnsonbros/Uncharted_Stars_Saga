@@ -902,7 +902,7 @@ Task Card: Canon/draft separation enforcement
 
 **Tests**
 - [x] Migration tests
-- [ ] Data integrity checks (foreign keys, enums)
+- [x] Data integrity checks (foreign keys, enums)
 
 Task Card: Migration tests
 - Status: [x]
@@ -918,6 +918,21 @@ Task Card: Migration tests
 - Docs updates required: SYSTEM_TODO.md updated.
 - Subtasks (optional):
 - Handoff note: Consider adding data integrity checks for FKs/enums in a follow-up test alongside this suite.
+
+Task Card: Data integrity checks (foreign keys, enums)
+- Status: [x]
+- Assignee: Agent <8>
+- Claim token: 2026-01-22T03:11Z/agent-08
+- Claimed at: 2026-01-22T03:11Z
+- Why not done / Blocker:
+- What needs to be completed: Add test coverage verifying the narrative DB migration defines required foreign keys and enum constraints.
+- Done looks like (acceptance criteria): Tests assert the narrative migration includes foreign key references for dependencies and knowledge states plus enums for event types and promise statuses.
+- Files involved: naos/apps/web/lib/__tests__/narrativeMigrations.test.ts, SYSTEM_TODO.md
+- Resources (docs/links/specs): docs/narrative_db_documentation.md, docs/canon_draft_enforcement.md
+- Tests required: npm test (vitest) (not run)
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+- Handoff note: Foreign key and enum checks live alongside the existing migration tests.
 
 **Diagrams**
 - [x] Narrative schema ERD → [docs/narrative_schema_erd.md](./docs/narrative_schema_erd.md)

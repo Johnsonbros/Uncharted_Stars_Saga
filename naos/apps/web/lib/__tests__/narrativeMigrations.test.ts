@@ -38,4 +38,23 @@ describe("narrative DB migration", () => {
       "CREATE TRIGGER event_dependencies_prevent_canon_mutation"
     );
   });
+
+  it("defines foreign keys and enum-backed columns", async () => {
+    const sql = await readFile(migrationPath, "utf-8");
+
+    expect(sql).toContain(
+      "event_id UUID NOT NULL REFERENCES events(id) ON DELETE CASCADE ON UPDATE CASCADE"
+    );
+    expect(sql).toContain(
+      "depends_on_event_id UUID NOT NULL REFERENCES events(id) ON DELETE RESTRICT ON UPDATE CASCADE"
+    );
+    expect(sql).toContain(
+      "event_id UUID NOT NULL REFERENCES events(id) ON DELETE RESTRICT ON UPDATE CASCADE"
+    );
+    expect(sql).toContain("canon_status canon_status NOT NULL DEFAULT 'draft'");
+    expect(sql).toContain("certainty knowledge_certainty NOT NULL");
+    expect(sql).toContain("source knowledge_source NOT NULL");
+    expect(sql).toContain("type promise_type NOT NULL");
+    expect(sql).toContain("status promise_status NOT NULL");
+  });
 });
