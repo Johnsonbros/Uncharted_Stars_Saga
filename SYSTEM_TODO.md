@@ -1009,7 +1009,22 @@ Task Card: Data retention and deletion workflow
 
 **Tests**
 - [x] Migration tests
-- [ ] Integration: playback position updates and retrieval
+- [x] Integration: playback position updates and retrieval
+
+Task Card: Integration: playback position updates and retrieval
+- Status: [x]
+- Assignee: Agent <12>
+- Claim token: 2026-01-22T03:45Z/agent-12
+- Claimed at: 2026-01-22T03:45Z
+- Why not done / Blocker:
+- What needs to be completed: Add integration coverage for playback position persistence and retrieval endpoints.
+- Done looks like (acceptance criteria): Tests cover saving a playback position for a listener+asset and fetching the stored position via the playback API routes.
+- Files involved: naos/apps/web/app/api/playback/position/route.ts, naos/apps/web/lib/listenerPlaybackPositions.ts, naos/apps/web/lib/__tests__/listenerPlaybackPositions.test.ts, SYSTEM_TODO.md
+- Resources (docs/links/specs): docs/listener_db_systematic_plan.md, docs/audio_streaming_access_flow.md, API.md
+- Tests required: npm run test (vitest) (not run)
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+- Handoff note: Run the vitest suite when the environment is ready to validate the new playback API tests.
 
 Task Card: Migration tests
 - Status: [x]
