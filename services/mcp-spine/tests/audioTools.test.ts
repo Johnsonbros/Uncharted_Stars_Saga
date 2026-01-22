@@ -1,4 +1,5 @@
-import { describe, it, expect } from "@jest/globals";
+import { describe, it } from "node:test";
+import assert from "node:assert";
 import { AudioTools } from "../src/tools/audioTools.js";
 import type { Logger } from "../src/types/loggerTypes.js";
 import type {
@@ -72,12 +73,12 @@ describe("AudioTools", () => {
         requestId: "test-req-001",
       });
 
-      expect(result.success).toBe(true);
-      expect(result.packet).toBeDefined();
-      expect(result.packet?.sceneId).toBe(scene.id);
-      expect(result.packet?.tracks.length).toBe(1);
-      expect(result.request_id).toBe("test-req-001");
-      expect(result.scene_id).toBe(scene.id);
+      assert.strictEqual(result.success, true);
+      assert.ok(result.packet);
+      assert.strictEqual(result.packet?.sceneId, scene.id);
+      assert.strictEqual(result.packet?.tracks.length, 1);
+      assert.strictEqual(result.request_id, "test-req-001");
+      assert.strictEqual(result.scene_id, scene.id);
     });
 
     it("rejects an invalid scene with validation errors", async () => {
@@ -96,11 +97,11 @@ describe("AudioTools", () => {
         requestedBy: "test-user",
       });
 
-      expect(result.success).toBe(false);
-      expect(result.packet).toBeUndefined();
-      expect(result.validation).toBeDefined();
-      expect(result.validation?.passed).toBe(false);
-      expect(result.error).toContain("validation failed");
+      assert.strictEqual(result.success, false);
+      assert.strictEqual(result.packet, undefined);
+      assert.ok(result.validation);
+      assert.strictEqual(result.validation?.passed, false);
+      assert.ok(result.error?.includes("validation failed"));
     });
 
     it("rejects a scene with voice profile mismatches", async () => {
@@ -119,9 +120,9 @@ describe("AudioTools", () => {
         requestedBy: "test-user",
       });
 
-      expect(result.success).toBe(false);
-      expect(result.validation).toBeDefined();
-      expect(result.validation?.voiceProfileIssues.length).toBeGreaterThan(0);
+      assert.strictEqual(result.success, false);
+      assert.ok(result.validation);
+      assert.ok((result.validation?.voiceProfileIssues.length ?? 0) > 0);
     });
   });
 
@@ -138,12 +139,12 @@ describe("AudioTools", () => {
         requestId: "test-req-002",
       });
 
-      expect(result.success).toBe(true);
-      expect(result.audit).toBeDefined();
-      expect(result.audit?.passed).toBe(true);
-      expect(result.audit?.issues.length).toBe(0);
-      expect(result.request_id).toBe("test-req-002");
-      expect(result.scene_id).toBe(scene.id);
+      assert.strictEqual(result.success, true);
+      assert.ok(result.audit);
+      assert.strictEqual(result.audit?.passed, true);
+      assert.strictEqual(result.audit?.issues.length, 0);
+      assert.strictEqual(result.request_id, "test-req-002");
+      assert.strictEqual(result.scene_id, scene.id);
     });
 
     it("flags cognition issues for a scene with dense beat markers", async () => {
@@ -169,11 +170,11 @@ describe("AudioTools", () => {
         requestedBy: "test-user",
       });
 
-      expect(result.success).toBe(true);
-      expect(result.audit).toBeDefined();
-      expect(result.audit?.passed).toBe(false);
-      expect(result.audit?.issues.length).toBeGreaterThan(0);
-      expect(result.audit?.issues.some((issue) => issue.includes("density"))).toBe(true);
+      assert.strictEqual(result.success, true);
+      assert.ok(result.audit);
+      assert.strictEqual(result.audit?.passed, false);
+      assert.ok((result.audit?.issues.length ?? 0) > 0);
+      assert.ok(result.audit?.issues.some((issue) => issue.includes("density")));
     });
 
     it("flags cognition issues for scenes without a narrator", async () => {
@@ -198,10 +199,10 @@ describe("AudioTools", () => {
         requestedBy: "test-user",
       });
 
-      expect(result.success).toBe(true);
-      expect(result.audit).toBeDefined();
-      expect(result.audit?.passed).toBe(false);
-      expect(result.audit?.issues.some((issue) => issue.includes("narrator"))).toBe(true);
+      assert.strictEqual(result.success, true);
+      assert.ok(result.audit);
+      assert.strictEqual(result.audit?.passed, false);
+      assert.ok(result.audit?.issues.some((issue) => issue.includes("narrator")));
     });
   });
 });
