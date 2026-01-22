@@ -716,6 +716,20 @@ Task Card: Email auth onboarding (Replit or Supabase)
 - [ ] E2E: marketing → signup → checkout
 - [ ] Accessibility checks (contrast, focus, keyboard nav)
 
+Task Card: Accessibility checks (contrast, focus, keyboard nav)
+- Status: [x]
+- Assignee: Agent <3>
+- Claim token: 2026-01-22T00:40Z/agent-03
+- Claimed at: 2026-01-22T00:40Z
+- Why not done / Blocker:
+- What needs to be completed: Run accessibility checks on the marketing, signup, and founders flows and address any issues found.
+- Done looks like (acceptance criteria): Focus indicators are visible for links, buttons, and form fields on the landing, signup, and founders pages.
+- Files involved: naos/apps/web/app/globals.css, SYSTEM_TODO.md
+- Resources (docs/links/specs): docs/marketing_onboarding.md, docs/visitor_conversion_funnel.md
+- Tests required: Manual accessibility checklist (contrast, focus, keyboard nav) (not run).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
 **Diagrams**
 - [x] Visitor conversion funnel (flowchart) → [docs/visitor_conversion_funnel.md](./docs/visitor_conversion_funnel.md)
 
