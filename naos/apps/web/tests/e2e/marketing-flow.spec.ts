@@ -17,10 +17,18 @@ test("marketing flow navigates from landing to signup to founders checkout", asy
   await page.getByRole("link", { name: "Email onboarding" }).click();
   await expect(page).toHaveURL(/\/signup/);
 
-  await page.getByLabel("Email address").fill("listener@example.com");
-  await page.getByRole("button", { name: "Join the Founders list" }).click();
+  await expect(page.locator("form.studio-form")).toHaveAttribute(
+    "data-hydrated",
+    "true"
+  );
 
-  await expect(page.getByText("You are on the list.")).toBeVisible();
+  await page.getByLabel("Email address").fill("listener@example.com");
+  await Promise.all([
+    page.waitForResponse("**/api/onboarding/register"),
+    page.getByRole("button", { name: "Join the Founders list" }).click()
+  ]);
+
+  await expect(page.getByText(/You are on the list\./)).toBeVisible();
   await page.getByRole("link", { name: "Continue to checkout" }).click();
   await expect(page).toHaveURL(/\/founders/);
 });

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type FormState = "idle" | "loading" | "success" | "error";
 
@@ -8,6 +8,11 @@ export default function SignupForm() {
   const [email, setEmail] = useState("");
   const [state, setState] = useState<FormState>("idle");
   const [message, setMessage] = useState<string | null>(null);
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -38,7 +43,11 @@ export default function SignupForm() {
   };
 
   return (
-    <form className="studio-form" onSubmit={handleSubmit}>
+    <form
+      className="studio-form"
+      data-hydrated={isHydrated ? "true" : "false"}
+      onSubmit={handleSubmit}
+    >
       <label>
         Email address
         <input
