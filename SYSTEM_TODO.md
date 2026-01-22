@@ -716,6 +716,20 @@ Task Card: Email auth onboarding (Replit or Supabase)
 - [ ] E2E: marketing → signup → checkout
 - [ ] Accessibility checks (contrast, focus, keyboard nav)
 
+Task Card: E2E: marketing → signup → checkout
+- Status: [x]
+- Assignee: Agent <4>
+- Claim token: 2026-01-22T00:55Z/agent-04
+- Claimed at: 2026-01-22T00:55Z
+- Why not done / Blocker:
+- What needs to be completed: Add E2E coverage for landing to signup to founders checkout flow.
+- Done looks like (acceptance criteria): E2E test covers landing CTA, navigates to signup, submits email with mocked onboarding response, and returns to founders checkout page.
+- Files involved: naos/apps/web/playwright.config.ts, naos/apps/web/tests/e2e/marketing-flow.spec.ts, naos/apps/web/package.json, naos/apps/web/package-lock.json, SYSTEM_TODO.md
+- Resources (docs/links/specs): docs/marketing_onboarding.md, docs/visitor_conversion_funnel.md
+- Tests required: npm run test:e2e (not run).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
 Task Card: Accessibility checks (contrast, focus, keyboard nav)
 - Status: [x]
 - Assignee: Agent <3>
