@@ -11,7 +11,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:check": "node ./scripts/narrative-db-integrity-check.mjs",
     "db:listener-retention": "node ./scripts/listener-data-retention.mjs",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "drizzle-orm": "^0.36.0",
@@ -23,6 +24,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.50.1",
     "@types/node": "^22.10.0",
     "@types/pg": "^8.11.10",
     "@types/react": "^19.0.2",
