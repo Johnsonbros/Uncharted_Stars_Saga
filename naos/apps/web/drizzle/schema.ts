@@ -201,9 +201,10 @@ export const playbackPositions = pgTable(
   "playback_positions",
   {
     id: uuid("id").defaultRandom().primaryKey(),
-    listenerId: uuid("listener_id")
-      .notNull()
-      .references(() => listeners.id, { onDelete: "cascade", onUpdate: "cascade" }),
+    listenerId: uuid("listener_id").references(() => listeners.id, {
+      onDelete: "set null",
+      onUpdate: "cascade"
+    }),
     assetId: text("asset_id").notNull(),
     positionSeconds: integer("position_seconds").notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow()

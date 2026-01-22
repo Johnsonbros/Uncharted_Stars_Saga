@@ -94,7 +94,9 @@ const main = async () => {
 
     if (!dryRun) {
       await client.query(
-        `DELETE FROM playback_positions
+        `UPDATE playback_positions
+         SET listener_id = NULL,
+             updated_at = NOW()
          WHERE listener_id = $1`,
         [listenerId]
       );
