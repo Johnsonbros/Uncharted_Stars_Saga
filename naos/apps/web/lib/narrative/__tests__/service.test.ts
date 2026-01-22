@@ -11,7 +11,7 @@ vi.mock("../repository", () => ({
 
 const buildEvent = (overrides: Partial<Event>): Event =>
   EventSchema.parse({
-    id: "event-id",
+    id: "00000000-0000-0000-0000-000000000001",
     timestamp: new Date("2025-01-01T00:00:00.000Z"),
     type: "scene",
     participants: [],
@@ -30,19 +30,19 @@ describe("buildNarrativeStateSnapshot", () => {
 
   it("does not let draft continuity issues fail the canon gate", async () => {
     const canonEvent = buildEvent({
-      id: "canon-event",
+      id: "00000000-0000-0000-0000-000000000002",
       timestamp: new Date("2025-01-02T00:00:00.000Z"),
       canonStatus: "canon"
     });
     const proposedEvent = buildEvent({
-      id: "proposed-event",
+      id: "00000000-0000-0000-0000-000000000003",
       timestamp: new Date("2025-01-03T00:00:00.000Z"),
       canonStatus: "proposed"
     });
     const draftEvent = buildEvent({
-      id: "draft-event",
+      id: "00000000-0000-0000-0000-000000000004",
       canonStatus: "draft",
-      dependencies: ["missing-event"]
+      dependencies: ["00000000-0000-0000-0000-999999999999"]
     });
 
     vi.mocked(repository.fetchProjectEvents).mockResolvedValue([
