@@ -220,7 +220,7 @@ const server = createServer(async (request, response) => {
       return;
     }
 
-    const toolResponse = proposalTool.createProposal({
+    const toolResponse = await proposalTool.createProposal({
       title,
       author: author as {
         model: string;
@@ -285,7 +285,7 @@ const server = createServer(async (request, response) => {
       return;
     }
 
-    const applyResponse = proposalTool.applyProposal(proposalId);
+    const applyResponse = await proposalTool.applyProposal(proposalId);
     if (!applyResponse) {
       writeJson(response, 404, { error: "Proposal not found." }, requestId);
       return;
