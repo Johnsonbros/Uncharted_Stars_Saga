@@ -649,9 +649,42 @@ Task Card: Integration: rate limit enforcement and error response mapping
 - [x] Onboarding content checklist documented (email copy + FAQ) → [docs/marketing_onboarding.md](./docs/marketing_onboarding.md)
 
 **Coding (MVP)**
-- [ ] Landing page with audio trailer
-- [ ] Founders pricing and CTA flow
-- [ ] Email auth onboarding (Replit or Supabase)
+- [x] Landing page with audio trailer
+- [x] Founders pricing and CTA flow
+- [x] Email auth onboarding (Replit or Supabase)
+
+Task Card: Landing page with audio trailer
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Ship the public landing page with an audio trailer panel and membership CTA.
+- Done looks like (acceptance criteria): Landing page renders the trailer section and founders CTA with marketing copy.
+- Files involved: naos/apps/web/app/page.tsx, naos/apps/web/app/globals.css
+- Resources (docs/links/specs): docs/marketing_onboarding.md
+- Tests required: None (static UI only).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Founders pricing and CTA flow
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Provide a dedicated Founders checkout page and CTA path from the landing page.
+- Done looks like (acceptance criteria): /founders renders pricing details and a checkout CTA.
+- Files involved: naos/apps/web/app/founders/page.tsx, naos/apps/web/app/founders/FoundersCheckoutForm.tsx
+- Resources (docs/links/specs): docs/marketing_onboarding.md, docs/visitor_conversion_funnel.md
+- Tests required: None (UI + API integration only).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Email auth onboarding (Replit or Supabase)
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Add an email capture flow that seeds listener accounts before checkout.
+- Done looks like (acceptance criteria): /signup accepts email input and records a pending listener entry.
+- Files involved: naos/apps/web/app/signup/page.tsx, naos/apps/web/app/signup/SignupForm.tsx, naos/apps/web/app/api/onboarding/register/route.ts
+- Resources (docs/links/specs): docs/marketing_onboarding.md
+- Tests required: None (API route only).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
 
 **Tests**
 - [ ] E2E: marketing → signup → checkout
@@ -669,9 +702,42 @@ Task Card: Integration: rate limit enforcement and error response mapping
 - [x] Webhook event matrix documented (Stripe event → handler action) → [docs/payments_entitlements.md](./docs/payments_entitlements.md)
 
 **Coding (MVP)**
-- [ ] Stripe Checkout integration
-- [ ] Webhook verification + idempotency
-- [ ] Entitlement grant + verification API
+- [x] Stripe Checkout integration
+- [x] Webhook verification + idempotency
+- [x] Entitlement grant + verification API
+
+Task Card: Stripe Checkout integration
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Create a checkout session endpoint and wire the Founders flow to Stripe Checkout.
+- Done looks like (acceptance criteria): POST /api/checkout/start returns a Stripe Checkout session URL.
+- Files involved: naos/apps/web/app/api/checkout/start/route.ts, naos/apps/web/app/founders/FoundersCheckoutForm.tsx, naos/apps/web/lib/stripe.ts
+- Resources (docs/links/specs): docs/payments_entitlements.md, API.md
+- Tests required: None (Stripe external dependency).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Webhook verification + idempotency
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Verify Stripe webhook signatures and ignore duplicate events.
+- Done looks like (acceptance criteria): Webhook handler validates signatures and records event IDs to prevent reprocessing.
+- Files involved: naos/apps/web/app/api/webhooks/stripe/route.ts, naos/apps/web/drizzle/schema.ts, naos/apps/web/drizzle/migrations/0002_listener_db.sql
+- Resources (docs/links/specs): docs/payments_entitlements.md, docs/error_taxonomy.md, API.md
+- Tests required: None (manual Stripe validation).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Entitlement grant + verification API
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Provide API endpoints to grant entitlements and verify active access.
+- Done looks like (acceptance criteria): POST /api/entitlements/grant and GET /api/entitlements return entitlement data.
+- Files involved: naos/apps/web/app/api/entitlements/grant/route.ts, naos/apps/web/app/api/entitlements/route.ts, naos/apps/web/lib/listenerEntitlements.ts
+- Resources (docs/links/specs): docs/payments_entitlements.md, API.md
+- Tests required: None (API routes only).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
 
 **Tests**
 - [ ] Integration: webhook signature validation
@@ -715,9 +781,42 @@ Task Card: Integration: rate limit enforcement and error response mapping
 - [x] Canon/draft enforcement rules documented (constraints + triggers) → [docs/canon_draft_enforcement.md](./docs/canon_draft_enforcement.md)
 
 **Coding (MVP)**
-- [ ] Schema migrations for events, knowledge states, promises
-- [ ] Referential integrity constraints
-- [ ] Canon/draft separation enforcement
+- [x] Schema migrations for events, knowledge states, promises
+- [x] Referential integrity constraints
+- [x] Canon/draft separation enforcement
+
+Task Card: Schema migrations for events, knowledge states, promises
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Provide database migrations for narrative events, knowledge, and promises.
+- Done looks like (acceptance criteria): Migration creates narrative tables with expected fields.
+- Files involved: naos/apps/web/drizzle/migrations/0000_narrative_db.sql
+- Resources (docs/links/specs): docs/narrative_db_documentation.md, docs/canon_draft_enforcement.md
+- Tests required: None (migration only).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Referential integrity constraints
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Enforce narrative FK relationships and dependency constraints.
+- Done looks like (acceptance criteria): Migration enforces FK constraints for events, dependencies, and knowledge.
+- Files involved: naos/apps/web/drizzle/migrations/0000_narrative_db.sql
+- Resources (docs/links/specs): docs/narrative_db_documentation.md
+- Tests required: None (migration only).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Canon/draft separation enforcement
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Prevent updates/deletes on canonical narrative records.
+- Done looks like (acceptance criteria): Migration installs triggers that block canon mutation.
+- Files involved: naos/apps/web/drizzle/migrations/0000_narrative_db.sql
+- Resources (docs/links/specs): docs/canon_draft_enforcement.md
+- Tests required: None (migration only).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
 
 **Tests**
 - [ ] Migration tests
@@ -754,8 +853,19 @@ Task Card: Integration: rate limit enforcement and error response mapping
 - [x] Data retention and deletion policy documented → [docs/listener_db_documentation.md](./docs/listener_db_documentation.md)
 
 **Coding (MVP)**
-- [ ] User accounts, entitlements, playback positions schema
+- [x] User accounts, entitlements, playback positions schema
 - [ ] Data retention and deletion workflow
+
+Task Card: User accounts, entitlements, playback positions schema
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Create listener DB tables for accounts, entitlements, and playback positions.
+- Done looks like (acceptance criteria): Migration defines listeners, entitlements, playback positions, and Stripe event idempotency tables.
+- Files involved: naos/apps/web/drizzle/schema.ts, naos/apps/web/drizzle/migrations/0002_listener_db.sql
+- Resources (docs/links/specs): docs/listener_db_documentation.md, docs/payments_entitlements.md
+- Tests required: None (migration only).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
 
 **Tests**
 - [ ] Migration tests

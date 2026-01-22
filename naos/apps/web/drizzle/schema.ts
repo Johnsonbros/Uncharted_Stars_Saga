@@ -8,7 +8,8 @@ import {
   jsonb,
   primaryKey,
   integer,
-  bigint
+  bigint,
+  uniqueIndex
 } from "drizzle-orm/pg-core";
 
 export const canonStatus = pgEnum("canon_status", ["draft", "proposed", "canon"]);
@@ -30,6 +31,12 @@ export const promiseStatus = pgEnum("promise_status", [
   "fulfilled",
   "broken",
   "transformed"
+]);
+export const listenerStatus = pgEnum("listener_status", ["pending", "active", "deleted"]);
+export const entitlementStatus = pgEnum("entitlement_status", [
+  "active",
+  "expired",
+  "revoked"
 ]);
 
 export const proposals = pgTable("proposals", {
@@ -170,7 +177,9 @@ export const audioSceneObjects = pgTable("audio_scene_objects", {
 export const listeners = pgTable("listeners", {
   id: uuid("id").defaultRandom().primaryKey(),
   email: text("email").notNull().unique(),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+  status: listenerStatus("status").notNull().default("pending"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow()
 });
 
 export const entitlements = pgTable("entitlements", {
@@ -178,23 +187,37 @@ export const entitlements = pgTable("entitlements", {
   listenerId: uuid("listener_id")
     .notNull()
     .references(() => listeners.id, { onDelete: "cascade", onUpdate: "cascade" }),
-  entitlementType: text("entitlement_type").notNull(),
-  grantedAt: timestamp("granted_at", { withTimezone: true }).notNull(),
+  productId: text("product_id").notNull(),
+  accessStart: timestamp("access_start", { withTimezone: true }).notNull().defaultNow(),
+  accessEnd: timestamp("access_end", { withTimezone: true }),
+  status: entitlementStatus("status").notNull().default("active"),
   stripePaymentIntentId: text("stripe_payment_intent_id"),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+  stripeEventId: text("stripe_event_id"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow()
 });
 
-export const playbackProgress = pgTable(
-  "playback_progress",
+export const playbackPositions = pgTable(
+  "playback_positions",
   {
+    id: uuid("id").defaultRandom().primaryKey(),
     listenerId: uuid("listener_id")
       .notNull()
       .references(() => listeners.id, { onDelete: "cascade", onUpdate: "cascade" }),
-    chapterId: text("chapter_id").notNull(),
+    assetId: text("asset_id").notNull(),
     positionSeconds: integer("position_seconds").notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow()
   },
   (table) => ({
-    pk: primaryKey({ columns: [table.listenerId, table.chapterId] })
+    uniqueListenerAsset: uniqueIndex("playback_positions_listener_asset_unique").on(
+      table.listenerId,
+      table.assetId
+    )
   })
 );
+
+export const stripeEvents = pgTable("stripe_events", {
+  id: text("id").primaryKey(),
+  type: text("type").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+});
