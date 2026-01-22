@@ -102,6 +102,7 @@ Task Card: Integration: canon gate rejects contradictory changes
 - Tests required: naos/apps/web/lib/narrative/__tests__/engine.test.ts
 - Docs updates required: SYSTEM_TODO.md updated.
 - Subtasks (optional):
+- Handoff note: Wire this script into a scheduled job (cron) in the deployment environment when the listener DB is connected.
 
 **Diagrams**
 - [x] Event dependency DAG example (diagram)
@@ -865,7 +866,7 @@ Task Card: Canon/draft separation enforcement
 
 **Coding (MVP)**
 - [x] User accounts, entitlements, playback positions schema
-- [ ] Data retention and deletion workflow
+- [x] Data retention and deletion workflow
 
 Task Card: User accounts, entitlements, playback positions schema
 - Status: [x]
@@ -875,6 +876,20 @@ Task Card: User accounts, entitlements, playback positions schema
 - Files involved: naos/apps/web/drizzle/schema.ts, naos/apps/web/drizzle/migrations/0002_listener_db.sql
 - Resources (docs/links/specs): docs/listener_db_documentation.md, docs/payments_entitlements.md
 - Tests required: None (migration only).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Data retention and deletion workflow
+- Status: [x]
+- Assignee: Agent <2>
+- Claim token: 2026-01-22T00:32Z/agent-02
+- Claimed at: 2026-01-22T00:32Z
+- Why not done / Blocker:
+- What needs to be completed: Implement scheduled workflow to anonymize/delete listener data per retention policy.
+- Done looks like (acceptance criteria): A runnable workflow can purge stale playback positions, delete expired entitlements, and anonymize user PII for deletion requests with clear logging of actions taken.
+- Files involved: naos/apps/web/scripts/listener-data-retention.mjs, naos/apps/web/package.json
+- Resources (docs/links/specs): docs/listener_db_documentation.md
+- Tests required: None (manual run/verification only).
 - Docs updates required: SYSTEM_TODO.md updated.
 - Subtasks (optional):
 
