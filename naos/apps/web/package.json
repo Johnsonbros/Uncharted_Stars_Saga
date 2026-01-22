@@ -10,6 +10,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:check": "node ./scripts/narrative-db-integrity-check.mjs",
+    "db:listener-retention": "node ./scripts/listener-data-retention.mjs",
     "test": "vitest run"
   },
   "dependencies": {
