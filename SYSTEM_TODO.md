@@ -994,8 +994,22 @@ Task Card: Data retention and deletion workflow
 - Subtasks (optional):
 
 **Tests**
-- [ ] Migration tests
+- [x] Migration tests
 - [ ] Integration: playback position updates and retrieval
+
+Task Card: Migration tests
+- Status: [x]
+- Assignee: Agent <12>
+- Claim token: 2026-01-22T03:28Z/agent-12
+- Claimed at: 2026-01-22T03:28Z
+- Why not done / Blocker:
+- What needs to be completed: Add test coverage validating the listener DB migration defines required tables, enums, and constraints.
+- Done looks like (acceptance criteria): Tests assert the listener migration includes listener_status and entitlement_status enums plus listeners, entitlements, playback_positions, and stripe_events tables with key constraints.
+- Files involved: naos/apps/web/drizzle/migrations/0002_listener_db.sql, naos/apps/web/lib/__tests__/listenerMigrations.test.ts, SYSTEM_TODO.md
+- Resources (docs/links/specs): docs/listener_db_documentation.md
+- Tests required: npm test (vitest) (not run)
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
 
 **Diagrams**
 - [x] Listener schema ERD → [docs/listener_schema_erd.md](./docs/listener_schema_erd.md)
