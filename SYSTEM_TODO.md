@@ -794,9 +794,23 @@ Task Card: Entitlement grant + verification API
 - Subtasks (optional):
 
 **Tests**
-- [ ] Integration: webhook signature validation
+- [x] Integration: webhook signature validation
 - [ ] Integration: entitlement grant and retrieval
 - [ ] E2E: successful payment unlocks library access
+
+Task Card: Integration: webhook signature validation
+- Status: [x]
+- Assignee: Agent <5>
+- Claim token: 2026-01-22T01:20Z/agent-05
+- Claimed at: 2026-01-22T01:20Z
+- Why not done / Blocker:
+- What needs to be completed: Add integration coverage for Stripe webhook signature validation errors.
+- Done looks like (acceptance criteria): Webhook handler returns 400 responses when the Stripe signature header is missing or invalid.
+- Files involved: naos/apps/web/app/api/webhooks/stripe/route.ts, naos/apps/web/lib/__tests__/stripeWebhook.test.ts, SYSTEM_TODO.md
+- Resources (docs/links/specs): docs/payments_entitlements.md, docs/error_taxonomy.md, API.md
+- Tests required: npm run test (not run)
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
 
 **Diagrams**
 - [x] Payment → entitlement flow (flowchart) → [docs/payment_entitlement_flow.md](./docs/payment_entitlement_flow.md)
