@@ -6,6 +6,7 @@ import { RESOURCE_CATALOG_V1 } from "./resources/resourceCatalog.js";
 import { resolveResource } from "./resources/resourceResolver.js";
 import { ProposalStore } from "./proposals/proposalStore.js";
 import { ProposalTool } from "./tools/proposalTool.js";
+import { AudioTools } from "./tools/audioTools.js";
 import { isAuthorizedForScope } from "./scopes/authorization.js";
 import { RateLimiter } from "./rateLimit.js";
 
@@ -17,6 +18,7 @@ const logger = createLogger({
 
 const proposalStore = new ProposalStore();
 const proposalTool = new ProposalTool(proposalStore, logger);
+const audioTools = new AudioTools(logger);
 const rateLimiter = new RateLimiter(config.rateLimitPerMinute, 60_000);
 
 const readJsonBody = async (request: import("http").IncomingMessage) => {
@@ -292,6 +294,132 @@ const server = createServer(async (request, response) => {
     }
 
     writeJson(response, 200, applyResponse, requestId);
+    return;
+  }
+
+  if (
+    request.method === "POST" &&
+    url.pathname === "/mcp/tools/audio/generate"
+  ) {
+    const payload = await readJsonBody(request);
+    const role = payload?.role as string | undefined;
+    const model = payload?.model as string | undefined;
+
+    if (!isAuthorizedForScope("audio:generate", role, model)) {
+      writeJson(response, 403, {
+        error: "Unauthorized to generate audio packets.",
+      }, requestId);
+      return;
+    }
+
+    const rateLimit = rateLimiter.check(
+      getRateLimitKey("audio:generate", role, model, request),
+    );
+    if (!rateLimit.allowed) {
+      logger.warn("request.rate_limited", {
+        request_id: requestId,
+        scope: "audio:generate",
+        role,
+        model,
+        reset_at: rateLimit.resetAt,
+      });
+      writeJson(
+        response,
+        429,
+        {
+          error: "Rate limit exceeded.",
+          reset_at: rateLimit.resetAt,
+        },
+        requestId,
+      );
+      return;
+    }
+
+    const sceneId = payload?.scene_id as string | undefined;
+    const scene = payload?.scene as Record<string, unknown> | undefined;
+    const profiles = payload?.profiles as Record<string, unknown>[] | undefined;
+    const requestedBy = payload?.requested_by as string | undefined;
+
+    if (!sceneId || !scene || !profiles || !requestedBy) {
+      writeJson(response, 400, {
+        error: "scene_id, scene, profiles, and requested_by are required.",
+      }, requestId);
+      return;
+    }
+
+    const audioResponse = await audioTools.generateAudioPacket({
+      sceneId,
+      scene: scene as any,
+      profiles: profiles as any,
+      requestedBy,
+      requestId,
+    });
+
+    const statusCode = audioResponse.success ? 200 : 400;
+    writeJson(response, statusCode, audioResponse, requestId);
+    return;
+  }
+
+  if (
+    request.method === "POST" &&
+    url.pathname === "/mcp/tools/audio/audit"
+  ) {
+    const payload = await readJsonBody(request);
+    const role = payload?.role as string | undefined;
+    const model = payload?.model as string | undefined;
+
+    if (!isAuthorizedForScope("audio:audit", role, model)) {
+      writeJson(response, 403, {
+        error: "Unauthorized to audit audio scenes.",
+      }, requestId);
+      return;
+    }
+
+    const rateLimit = rateLimiter.check(
+      getRateLimitKey("audio:audit", role, model, request),
+    );
+    if (!rateLimit.allowed) {
+      logger.warn("request.rate_limited", {
+        request_id: requestId,
+        scope: "audio:audit",
+        role,
+        model,
+        reset_at: rateLimit.resetAt,
+      });
+      writeJson(
+        response,
+        429,
+        {
+          error: "Rate limit exceeded.",
+          reset_at: rateLimit.resetAt,
+        },
+        requestId,
+      );
+      return;
+    }
+
+    const sceneId = payload?.scene_id as string | undefined;
+    const scene = payload?.scene as Record<string, unknown> | undefined;
+    const beatMarkers = payload?.beat_markers as Record<string, unknown>[] | undefined;
+    const requestedBy = payload?.requested_by as string | undefined;
+
+    if (!sceneId || !scene || !requestedBy) {
+      writeJson(response, 400, {
+        error: "scene_id, scene, and requested_by are required.",
+      }, requestId);
+      return;
+    }
+
+    const auditResponse = await audioTools.auditListenerConfusion({
+      sceneId,
+      scene: scene as any,
+      beatMarkers: beatMarkers as any,
+      requestedBy,
+      requestId,
+    });
+
+    const statusCode = auditResponse.success ? 200 : 400;
+    writeJson(response, statusCode, auditResponse, requestId);
     return;
   }
 
