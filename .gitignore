@@ -1,2 +1,25 @@
 node_modules/
 .next/
+
+# Build outputs
+dist/
+*.js.map
+
+# TypeScript compiled files in source directories
+services/**/*.js
+naos/**/lib/**/*.js
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
