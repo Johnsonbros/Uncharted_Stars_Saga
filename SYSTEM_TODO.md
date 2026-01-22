@@ -974,6 +974,6 @@ When updating this system-wide list, update references in:
 1. [x] Create system diagrams listed in Section 5
 2. [x] Define unified error taxonomy + severity table → [docs/error_taxonomy.md](./docs/error_taxonomy.md)
 3. [x] Draft subsystem playbooks for Narrative, Audio, MCP, Listener Platform
-4. [ ] Align tests with build checklists for Phase 1 deliverables
+4. [x] Align tests with build checklists for Phase 1 deliverables
 5. [x] Add instrumentation standards (log fields, trace IDs)
 6. [ ] Begin MVP coding passes for each subsystem (Narrative, Audio, MCP, Listener, Data Layer)
