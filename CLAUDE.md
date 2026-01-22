@@ -1,7 +1,7 @@
 # CLAUDE.md - AI Assistant Guide for Uncharted Stars Saga
 
 > **Last Updated:** 2026-01-22
-> **Repository Status:** Phase 1 - Foundation Build (Kickoff)
+> **Repository Status:** Phase 2 - Audio Engine (Kickoff)
 
 This document provides comprehensive guidance for AI assistants (like Claude) working on the Uncharted Stars Saga repository. It documents the codebase structure, development workflows, conventions, and best practices.
 
@@ -75,7 +75,7 @@ See [README.md](README.md) for overview and [ARCHITECTURE.md](ARCHITECTURE.md) f
 
 ### Repository Structure
 
-As of 2026-01-22, the foundation plan is closed and Phase 1 execution has begun. The repository contains foundational documentation:
+As of 2026-01-22, the foundation plan is closed and Phase 2 execution has begun. The repository contains foundational documentation:
 
 ```
 Uncharted_Stars_Saga/
@@ -110,7 +110,7 @@ Uncharted_Stars_Saga/
 - Built-in database, storage, and CDN
 - Automatic deployments with HTTPS
 - Secrets management built-in
-- Cost-effective for Phase 1
+- Cost-effective for early phases
 - Clear upgrade path to external services if scale demands
 
 ### Dependencies & Configuration
@@ -519,35 +519,33 @@ cargo add <package>
 
 The project follows a phased approach (see README.md for complete roadmap):
 
-**Phase 1: Foundation (Current Phase)**
+**Phase 1: Foundation (Complete)**
 - Technology stack selection
 - Core architecture design
 - Database schema design
 - Auth system implementation
 
-**Phase 2: Core Features**
+**Phase 2: Audio Engine (Current Phase)**
+- Audio scene object model and validation
+- Beat marker and voice profile systems
+- Recording packet generation
+- MCP audio tools and listener confusion audits
+
+**Phase 3: Listener Platform**
 - Marketing website and landing pages
 - User authentication and authorization
 - Stripe payment integration
-- Basic content delivery (eBook viewer)
+- Audiobook player and library access
 
-**Phase 3: AI Integration**
-- Agent SDK backend implementation
-- MCP server for third-party services
-- MCP server for writing and editing
-- Basic agentic content creation workflows
+**Phase 4: Integration & Polish**
+- Content publishing pipeline
+- End-to-end testing and security audit
+- Documentation and runbooks
 
-**Phase 4: Collaboration**
-- Custom auth key generation system
-- Granular permission controls
-- Collaborative writing interface
-- Editor and co-author workflows
-
-**Phase 5: Advanced Features**
-- Audiobook streaming infrastructure
-- Admin analytics dashboard
-- Multi-tenant support
-- Advanced AI-powered content tools
+**Phase 5: Founders Launch**
+- Beta testing and refinements
+- First chapters prepared and published
+- Founders membership launch
 
 **Phase 6: Scale & Polish**
 - Performance optimization

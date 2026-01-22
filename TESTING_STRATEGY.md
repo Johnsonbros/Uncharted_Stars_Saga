@@ -6,8 +6,8 @@ This document defines the testing strategy for **NAOS (Narrative & Audio Operati
 
 ## Current State
 
-**Status**: Foundation plan complete; Phase 1 execution underway with MCP spine and web app source code present
-**Opportunity**: Expand test coverage as additional Phase 1 subsystems ship
+**Status**: Phase 1 complete; Phase 2 execution underway with Audio Engine focus
+**Opportunity**: Expand test coverage for audio scene objects, MCP audio tooling, and audio metadata persistence
 **System TODO Hub**: Use [SYSTEM_TODO.md](./SYSTEM_TODO.md) to align test backlog with subsystem checklists and the incident response flowchart in [docs/incident_response_flow.md](./docs/incident_response_flow.md).
 **Audio Storage Contract**: Reference [docs/audio_storage_conventions.md](./docs/audio_storage_conventions.md) for CDN and storage behavior that tests must validate.
 **Error Taxonomy**: Reference [docs/error_taxonomy.md](./docs/error_taxonomy.md) for severity levels and expected error codes in tests.
@@ -82,9 +82,9 @@ This document defines the testing strategy for **NAOS (Narrative & Audio Operati
    - Canon data immutability guarantees
    - Object storage access controls
 
-## Checklist Alignment (Phase 1 Deliverables)
+## Checklist Alignment (Phase 2 Deliverables)
 
-This matrix aligns **SYSTEM_TODO.md** build checklists with required tests so coverage stays synchronized with subsystem readiness. Each checklist item should map to at least one test in the indicated layer. Update this table whenever subsystem checklists change.
+This matrix aligns **SYSTEM_TODO.md** build checklists with required tests so coverage stays synchronized with subsystem readiness. Each checklist item should map to at least one test in the indicated layer. Update this table whenever subsystem checklists change, especially for Phase 2 audio deliverables.
 
 | Subsystem Checklist (SYSTEM_TODO.md) | Required Test Coverage | Minimum Test Types | Notes |
 | --- | --- | --- | --- |
