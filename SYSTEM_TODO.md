@@ -901,8 +901,23 @@ Task Card: Canon/draft separation enforcement
 - Subtasks (optional):
 
 **Tests**
-- [ ] Migration tests
+- [x] Migration tests
 - [ ] Data integrity checks (foreign keys, enums)
+
+Task Card: Migration tests
+- Status: [x]
+- Assignee: Agent <7>
+- Claim token: 2026-01-22T03:01Z/agent-07
+- Claimed at: 2026-01-22T03:01Z
+- Why not done / Blocker:
+- What needs to be completed: Add test coverage that validates the narrative DB migration includes required tables, enums, and triggers.
+- Done looks like (acceptance criteria): Tests assert the narrative migration defines core enums, tables (events, event_dependencies, knowledge_states, promises), and canon mutation triggers.
+- Files involved: naos/apps/web/drizzle/migrations/0000_narrative_db.sql, naos/apps/web/lib/__tests__/narrativeMigrations.test.ts, SYSTEM_TODO.md
+- Resources (docs/links/specs): docs/narrative_db_documentation.md, docs/canon_draft_enforcement.md
+- Tests required: npm test (vitest) (not run)
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+- Handoff note: Consider adding data integrity checks for FKs/enums in a follow-up test alongside this suite.
 
 **Diagrams**
 - [x] Narrative schema ERD → [docs/narrative_schema_erd.md](./docs/narrative_schema_erd.md)
