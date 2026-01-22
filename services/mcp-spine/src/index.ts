@@ -9,6 +9,7 @@ import { ProposalTool } from "./tools/proposalTool.js";
 import { AudioTools } from "./tools/audioTools.js";
 import { isAuthorizedForScope } from "./scopes/authorization.js";
 import { RateLimiter } from "./rateLimit.js";
+import { NarrativeSessionOrchestrator } from "./sessionOrchestrator.js";
 
 const config = loadConfig();
 const logger = createLogger({
@@ -20,6 +21,23 @@ const proposalStore = new ProposalStore();
 const proposalTool = new ProposalTool(proposalStore, logger);
 const audioTools = new AudioTools(logger);
 const rateLimiter = new RateLimiter(config.rateLimitPerMinute, 60_000);
+
+// Initialize session orchestrator (Agent SDK foundation)
+let sessionOrchestrator: NarrativeSessionOrchestrator | undefined;
+if (config.anthropicApiKey) {
+  sessionOrchestrator = new NarrativeSessionOrchestrator(
+    {
+      apiKey: config.anthropicApiKey,
+      model: "claude-3-5-sonnet-20241022",
+      maxTokens: 4096,
+      temperature: 0.7,
+    },
+    logger,
+  );
+  logger.info("Session orchestrator initialized with Agent SDK");
+} else {
+  logger.warn("ANTHROPIC_API_KEY not set - session orchestrator disabled");
+}
 
 const readJsonBody = async (request: import("http").IncomingMessage) => {
   const chunks: Uint8Array[] = [];
@@ -420,6 +438,161 @@ const server = createServer(async (request, response) => {
 
     const statusCode = auditResponse.success ? 200 : 400;
     writeJson(response, statusCode, auditResponse, requestId);
+    return;
+  }
+
+  // Agent SDK Session Orchestrator endpoints
+  if (request.method === "POST" && url.pathname === "/sessions/start") {
+    if (!sessionOrchestrator) {
+      writeJson(response, 503, {
+        error: "Session orchestrator not available. Set ANTHROPIC_API_KEY.",
+      }, requestId);
+      return;
+    }
+
+    const payload = await readJsonBody(request);
+    const sessionId = payload?.session_id as string | undefined;
+    const projectId = payload?.project_id as string | undefined;
+    const sceneId = payload?.scene_id as string | undefined;
+    const metadata = payload?.metadata as Record<string, unknown> | undefined;
+
+    if (!sessionId || !projectId) {
+      writeJson(response, 400, {
+        error: "session_id and project_id are required.",
+      }, requestId);
+      return;
+    }
+
+    try {
+      await sessionOrchestrator.startSession({
+        sessionId,
+        projectId,
+        sceneId,
+        metadata,
+      });
+
+      writeJson(response, 200, {
+        success: true,
+        session_id: sessionId,
+      }, requestId);
+    } catch (error) {
+      writeJson(response, 500, {
+        error: (error as Error).message,
+      }, requestId);
+    }
+    return;
+  }
+
+  if (request.method === "POST" && url.pathname === "/sessions/message") {
+    if (!sessionOrchestrator) {
+      writeJson(response, 503, {
+        error: "Session orchestrator not available. Set ANTHROPIC_API_KEY.",
+      }, requestId);
+      return;
+    }
+
+    const payload = await readJsonBody(request);
+    const sessionId = payload?.session_id as string | undefined;
+    const message = payload?.message as string | undefined;
+
+    if (!sessionId || !message) {
+      writeJson(response, 400, {
+        error: "session_id and message are required.",
+      }, requestId);
+      return;
+    }
+
+    try {
+      const responseText = await sessionOrchestrator.sendMessage(sessionId, message);
+
+      writeJson(response, 200, {
+        success: true,
+        response: responseText,
+      }, requestId);
+    } catch (error) {
+      writeJson(response, 500, {
+        error: (error as Error).message,
+      }, requestId);
+    }
+    return;
+  }
+
+  if (request.method === "DELETE" && url.pathname === "/sessions/end") {
+    if (!sessionOrchestrator) {
+      writeJson(response, 503, {
+        error: "Session orchestrator not available. Set ANTHROPIC_API_KEY.",
+      }, requestId);
+      return;
+    }
+
+    const payload = await readJsonBody(request);
+    const sessionId = payload?.session_id as string | undefined;
+
+    if (!sessionId) {
+      writeJson(response, 400, {
+        error: "session_id is required.",
+      }, requestId);
+      return;
+    }
+
+    try {
+      sessionOrchestrator.endSession(sessionId);
+
+      writeJson(response, 200, {
+        success: true,
+      }, requestId);
+    } catch (error) {
+      writeJson(response, 500, {
+        error: (error as Error).message,
+      }, requestId);
+    }
+    return;
+  }
+
+  if (request.method === "GET" && url.pathname === "/sessions/info") {
+    if (!sessionOrchestrator) {
+      writeJson(response, 503, {
+        error: "Session orchestrator not available. Set ANTHROPIC_API_KEY.",
+      }, requestId);
+      return;
+    }
+
+    const sessionId = url.searchParams.get("session_id");
+
+    if (!sessionId) {
+      writeJson(response, 400, {
+        error: "session_id query parameter is required.",
+      }, requestId);
+      return;
+    }
+
+    const sessionInfo = sessionOrchestrator.getSessionInfo(sessionId);
+
+    if (!sessionInfo) {
+      writeJson(response, 404, {
+        error: "Session not found.",
+      }, requestId);
+      return;
+    }
+
+    writeJson(response, 200, sessionInfo as unknown as Record<string, unknown>, requestId);
+    return;
+  }
+
+  if (request.method === "GET" && url.pathname === "/sessions/list") {
+    if (!sessionOrchestrator) {
+      writeJson(response, 503, {
+        error: "Session orchestrator not available. Set ANTHROPIC_API_KEY.",
+      }, requestId);
+      return;
+    }
+
+    const sessions = sessionOrchestrator.getActiveSessions();
+
+    writeJson(response, 200, {
+      sessions,
+      count: sessions.length,
+    }, requestId);
     return;
   }
 

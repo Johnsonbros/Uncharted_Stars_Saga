@@ -8,6 +8,7 @@ export type ServiceConfig = {
   environment: ServiceEnvironment;
   logLevel: LogLevel;
   accessToken?: string;
+  anthropicApiKey?: string;
   rateLimitPerMinute: number;
   startupWarnings: string[];
 };
@@ -115,6 +116,7 @@ export const loadConfig = (serviceName = "mcp-spine"): ServiceConfig => {
     normalizeString(process.env.MCP_RATE_LIMIT_PER_MINUTE),
     warnings,
   );
+  const anthropicApiKey = normalizeString(process.env.ANTHROPIC_API_KEY);
 
   return {
     serviceName,
@@ -122,6 +124,7 @@ export const loadConfig = (serviceName = "mcp-spine"): ServiceConfig => {
     environment,
     logLevel,
     accessToken: accessToken || undefined,
+    anthropicApiKey: anthropicApiKey || undefined,
     rateLimitPerMinute,
     startupWarnings: warnings,
   };
