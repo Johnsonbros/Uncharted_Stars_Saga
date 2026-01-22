@@ -723,7 +723,7 @@ Task Card: E2E: marketing → signup → checkout
 - Done looks like (acceptance criteria): E2E test covers landing CTA, navigates to signup, submits email with mocked onboarding response, and returns to founders checkout page.
 - Files involved: naos/apps/web/playwright.config.ts, naos/apps/web/tests/e2e/marketing-flow.spec.ts, naos/apps/web/package.json, naos/apps/web/package-lock.json, SYSTEM_TODO.md
 - Resources (docs/links/specs): docs/marketing_onboarding.md, docs/visitor_conversion_funnel.md
-- Tests required: npm run test:e2e (not run).
+- Tests required: npm run test:e2e (failed: `playwright` not installed in environment; `npm run test:e2e` returned `playwright: not found`).
 - Docs updates required: SYSTEM_TODO.md updated.
 - Subtasks (optional):
 
@@ -802,7 +802,7 @@ Task Card: E2E: successful payment unlocks library access
 - Done looks like (acceptance criteria): Playwright test covers checkout start, mocked Stripe confirmation, and verifies library access state via the UI on the library page.
 - Files involved: naos/apps/web/app/library/page.tsx, naos/apps/web/tests/e2e/payment-entitlement.spec.ts, SYSTEM_TODO.md
 - Resources (docs/links/specs): docs/marketing_onboarding.md, docs/payment_entitlement_flow.md, docs/audio_streaming_access_flow.md
-- Tests required: npm run test:e2e (not run).
+- Tests required: npm run test:e2e (failed: `playwright` not installed in environment; `npm run test:e2e` returned `playwright: not found`).
 - Docs updates required: SYSTEM_TODO.md updated.
 - Subtasks (optional):
 
@@ -816,7 +816,7 @@ Task Card: Integration: webhook signature validation
 - Done looks like (acceptance criteria): Webhook handler returns 400 responses when the Stripe signature header is missing or invalid.
 - Files involved: naos/apps/web/app/api/webhooks/stripe/route.ts, naos/apps/web/lib/__tests__/stripeWebhook.test.ts, SYSTEM_TODO.md
 - Resources (docs/links/specs): docs/payments_entitlements.md, docs/error_taxonomy.md, API.md
-- Tests required: npm run test (not run)
+- Tests required: npm run test (failed: `vitest` not installed in environment; `npm run test` returned `vitest: not found`)
 - Docs updates required: SYSTEM_TODO.md updated.
 - Subtasks (optional):
 
@@ -830,7 +830,7 @@ Task Card: Integration: entitlement grant and retrieval
 - Done looks like (acceptance criteria): Tests verify POST /api/entitlements/grant grants access and GET /api/entitlements returns active entitlements.
 - Files involved: naos/apps/web/app/api/entitlements/grant/route.ts, naos/apps/web/app/api/entitlements/route.ts, naos/apps/web/lib/__tests__/listenerEntitlements.test.ts, SYSTEM_TODO.md
 - Resources (docs/links/specs): docs/payments_entitlements.md, API.md
-- Tests required: npm run test (not run)
+- Tests required: npm run test (failed: `vitest` not installed in environment; `npm run test` returned `vitest: not found`)
 - Docs updates required: SYSTEM_TODO.md updated.
 - Subtasks (optional):
 
@@ -922,7 +922,7 @@ Task Card: Migration tests
 - Done looks like (acceptance criteria): Tests assert the narrative migration defines core enums, tables (events, event_dependencies, knowledge_states, promises), and canon mutation triggers.
 - Files involved: naos/apps/web/drizzle/migrations/0000_narrative_db.sql, naos/apps/web/lib/__tests__/narrativeMigrations.test.ts, SYSTEM_TODO.md
 - Resources (docs/links/specs): docs/narrative_db_documentation.md, docs/canon_draft_enforcement.md
-- Tests required: npm test (vitest) (not run)
+- Tests required: npm test (vitest) (failed: `vitest` not installed in environment; `npm test` returned `vitest: not found`)
 - Docs updates required: SYSTEM_TODO.md updated.
 - Subtasks (optional):
 - Handoff note: Consider adding data integrity checks for FKs/enums in a follow-up test alongside this suite.
@@ -937,7 +937,7 @@ Task Card: Data integrity checks (foreign keys, enums)
 - Done looks like (acceptance criteria): Tests assert the narrative migration includes foreign key references for dependencies and knowledge states plus enums for event types and promise statuses.
 - Files involved: naos/apps/web/lib/__tests__/narrativeMigrations.test.ts, SYSTEM_TODO.md
 - Resources (docs/links/specs): docs/narrative_db_documentation.md, docs/canon_draft_enforcement.md
-- Tests required: npm test (vitest) (not run)
+- Tests required: npm test (vitest) (failed: `vitest` not installed in environment; `npm test` returned `vitest: not found`)
 - Docs updates required: SYSTEM_TODO.md updated.
 - Subtasks (optional):
 - Handoff note: Foreign key and enum checks live alongside the existing migration tests.
@@ -1015,7 +1015,7 @@ Task Card: Integration: playback position updates and retrieval
 - Done looks like (acceptance criteria): Tests cover saving a playback position for a listener+asset and fetching the stored position via the playback API routes.
 - Files involved: naos/apps/web/app/api/playback/position/route.ts, naos/apps/web/lib/listenerPlaybackPositions.ts, naos/apps/web/lib/__tests__/listenerPlaybackPositions.test.ts, SYSTEM_TODO.md
 - Resources (docs/links/specs): docs/listener_db_systematic_plan.md, docs/audio_streaming_access_flow.md, API.md
-- Tests required: npm run test (vitest) (not run)
+- Tests required: npm run test (vitest) (failed: `vitest` not installed in environment; `npm run test` returned `vitest: not found`)
 - Docs updates required: SYSTEM_TODO.md updated.
 - Subtasks (optional):
 - Handoff note: Run the vitest suite when the environment is ready to validate the new playback API tests.
@@ -1030,7 +1030,7 @@ Task Card: Migration tests
 - Done looks like (acceptance criteria): Tests assert the listener migration includes listener/entitlement status enums, core tables (listeners, entitlements, playback_positions, stripe_events), and the unique listener+asset constraint.
 - Files involved: naos/apps/web/drizzle/migrations/0002_listener_db.sql, naos/apps/web/lib/__tests__/listenerDbMigrations.test.ts, SYSTEM_TODO.md
 - Resources (docs/links/specs): docs/listener_db_documentation.md, docs/payments_entitlements.md
-- Tests required: npm test (vitest) (not run)
+- Tests required: npm test (vitest) (failed: `vitest` not installed in environment; `npm test` returned `vitest: not found`)
 - Docs updates required: SYSTEM_TODO.md updated.
 - Subtasks (optional):
 
