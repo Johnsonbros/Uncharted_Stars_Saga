@@ -78,8 +78,19 @@ Task Card:
 - [x] Unit: DAG validator (cycle detection, missing nodes)
 - [x] Unit: knowledge state propagation rules
 - [x] Unit: promise lifecycle transitions
-- [ ] Integration: canon gate rejects contradictory changes
+- [x] Integration: canon gate rejects contradictory changes
 - [ ] Integration: draft changes do not leak into canon
+
+Task Card: Integration: canon gate rejects contradictory changes
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Add integration coverage for canon gate failures caused by continuity conflicts.
+- Done looks like (acceptance criteria): Canon gate validation fails when events violate dependency timestamp order.
+- Files involved: naos/apps/web/lib/narrative/__tests__/engine.test.ts
+- Resources (docs/links/specs): docs/narrative_engine_diagrams.md
+- Tests required: naos/apps/web/lib/narrative/__tests__/engine.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
 
 **Diagrams**
 - [x] Event dependency DAG example (diagram)
@@ -94,21 +105,120 @@ Task Card:
 - [x] Voice profile constraints and audio safety guidelines documented → [docs/audio_engine_schema.md](./docs/audio_engine_schema.md)
 
 **Coding (MVP)**
-- [ ] Audio Scene Object schema defined and validated
-- [ ] Beat marker authoring and validation
-- [ ] Voice profile definition + enforcement
-- [ ] Recording packet generation with context blocks
-- [ ] Listener cognition safeguards pass/fail rules
+- [x] Audio Scene Object schema defined and validated
+- [x] Beat marker authoring and validation
+- [x] Voice profile definition + enforcement
+- [x] Recording packet generation with context blocks
+- [x] Listener cognition safeguards pass/fail rules
 
 **Tests**
-- [ ] Unit: beat marker insertion + ordering
-- [ ] Unit: voice profile constraints
-- [ ] Integration: recording packet output completeness
-- [ ] Integration: listener confusion audit scoring
+- [x] Unit: beat marker insertion + ordering
+- [x] Unit: voice profile constraints
+- [x] Integration: recording packet output completeness
+- [x] Integration: listener confusion audit scoring
 
 **Diagrams**
 - [x] Audio scene generation pipeline (flowchart) → [docs/auto_scene_generation_pipeline.md](./docs/auto_scene_generation_pipeline.md)
 - [x] Listener confusion audit decision tree (flowchart) → [docs/listener_confusion_audit_decision_tree.md](./docs/listener_confusion_audit_decision_tree.md)
+
+Task Card: Audio Scene Object schema defined and validated
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Implement schema definitions and validation for audio scene objects.
+- Done looks like (acceptance criteria): Audio scene schema validates required fields and timing constraints.
+- Files involved: naos/apps/web/lib/audio-engine/models.ts, naos/apps/web/lib/audio-engine/engine.ts
+- Resources (docs/links/specs): docs/audio_engine_schema.md
+- Tests required: naos/apps/web/lib/audio-engine/__tests__/engine.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Beat marker authoring and validation
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Normalize beat marker inputs and resolve ordering/conflicts.
+- Done looks like (acceptance criteria): Authoring routine orders markers and records overlap conflicts.
+- Files involved: naos/apps/web/lib/audio-engine/engine.ts
+- Resources (docs/links/specs): docs/audio_engine_schema.md
+- Tests required: naos/apps/web/lib/audio-engine/__tests__/engine.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Voice profile definition + enforcement
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Define voice profile schema and validate track-profile alignment.
+- Done looks like (acceptance criteria): Voice profile mismatches are detected during validation.
+- Files involved: naos/apps/web/lib/audio-engine/models.ts, naos/apps/web/lib/audio-engine/engine.ts
+- Resources (docs/links/specs): docs/audio_engine_schema.md
+- Tests required: naos/apps/web/lib/audio-engine/__tests__/engine.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Recording packet generation with context blocks
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Assemble recording packets that include tracks and context blocks.
+- Done looks like (acceptance criteria): Recording packet includes beat markers, speaker notes, and track scripts.
+- Files involved: naos/apps/web/lib/audio-engine/engine.ts
+- Resources (docs/links/specs): docs/audio_engine_schema.md
+- Tests required: naos/apps/web/lib/audio-engine/__tests__/engine.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Listener cognition safeguards pass/fail rules
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Evaluate scenes for cognition risks (attribution, density, speaker load).
+- Done looks like (acceptance criteria): Cognition audit scores scenes and reports issues/recommendations.
+- Files involved: naos/apps/web/lib/audio-engine/engine.ts
+- Resources (docs/links/specs): docs/listener_confusion_audit_decision_tree.md
+- Tests required: naos/apps/web/lib/audio-engine/__tests__/engine.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Unit: beat marker insertion + ordering
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Add unit coverage for beat marker ordering and overlap handling.
+- Done looks like (acceptance criteria): Tests assert ordered output and recorded conflicts.
+- Files involved: naos/apps/web/lib/audio-engine/__tests__/engine.test.ts
+- Resources (docs/links/specs): docs/audio_engine_schema.md
+- Tests required: naos/apps/web/lib/audio-engine/__tests__/engine.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Unit: voice profile constraints
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Test voice profile enforcement rules for track-role alignment.
+- Done looks like (acceptance criteria): Tests flag mismatched speaker or role profiles.
+- Files involved: naos/apps/web/lib/audio-engine/__tests__/engine.test.ts
+- Resources (docs/links/specs): docs/audio_engine_schema.md
+- Tests required: naos/apps/web/lib/audio-engine/__tests__/engine.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Integration: recording packet output completeness
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Verify recording packet generation includes all context blocks.
+- Done looks like (acceptance criteria): Packet contains beat markers, speaker notes, and track scripts.
+- Files involved: naos/apps/web/lib/audio-engine/__tests__/engine.test.ts
+- Resources (docs/links/specs): docs/audio_engine_schema.md
+- Tests required: naos/apps/web/lib/audio-engine/__tests__/engine.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Integration: listener confusion audit scoring
+- Status: [x]
+- Why not done / Blocker:
+- What needs to be completed: Validate cognition audit scoring for dense cues or missing attribution.
+- Done looks like (acceptance criteria): Audit fails and flags density issues when cues are too dense.
+- Files involved: naos/apps/web/lib/audio-engine/__tests__/engine.test.ts
+- Resources (docs/links/specs): docs/listener_confusion_audit_decision_tree.md
+- Tests required: naos/apps/web/lib/audio-engine/__tests__/engine.test.ts
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
 
 ---
 

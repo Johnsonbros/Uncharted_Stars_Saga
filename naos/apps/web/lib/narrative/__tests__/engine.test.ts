@@ -168,4 +168,20 @@ describe("narrative engine", () => {
     const report = validateCanonGate([event], []);
     expect(report.passed).toBe(false);
   });
+
+  it("rejects canon gate submissions with contradictory continuity", () => {
+    const dependency = buildEvent({
+      id: "99999999-9999-9999-9999-999999999999",
+      timestamp: new Date("2025-02-10T00:00:00.000Z")
+    });
+    const event = buildEvent({
+      id: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+      timestamp: new Date("2025-02-01T00:00:00.000Z"),
+      dependencies: [dependency.id]
+    });
+
+    const report = validateCanonGate([dependency, event], []);
+    expect(report.passed).toBe(false);
+    expect(report.continuity.timestampIssues).toHaveLength(1);
+  });
 });
