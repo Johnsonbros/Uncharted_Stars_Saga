@@ -67,10 +67,10 @@ Task Card:
 
 ---
 
-## Phase 1 Kickoff Baseline (2026-01-22)
+## Phase 2 Kickoff Baseline (2026-01-22)
 
-- Foundation plan tasks and documentation baselines are complete.
-- New Phase 1 execution work should be added as fresh checklist items below.
+- Phase 1 foundation execution is complete.
+- Phase 2 Audio Engine execution work should be added as fresh checklist items below.
 - Keep this hub aligned with any new subsystem scope, tests, and diagrams as they are defined.
 
 ## 1) Creator Operating System (Private)
@@ -1132,6 +1132,6 @@ When updating this system-wide list, update references in:
 1. [x] Create system diagrams listed in Section 5
 2. [x] Define unified error taxonomy + severity table → [docs/error_taxonomy.md](./docs/error_taxonomy.md)
 3. [x] Draft subsystem playbooks for Narrative, Audio, MCP, Listener Platform
-4. [x] Align tests with build checklists for Phase 1 deliverables
+4. [x] Align tests with build checklists for Phase 2 deliverables
 5. [x] Add instrumentation standards (log fields, trace IDs)
 6. [x] Begin MVP coding passes for each subsystem (Narrative, Audio, MCP, Listener, Data Layer)

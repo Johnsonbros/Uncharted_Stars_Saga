@@ -220,12 +220,12 @@ NAOS is optimized for a single creator who:
 - [x] Technology stack selection (Replit + Next.js)
 - [x] Foundation documentation baseline (CLAUDE.md, ARCHITECTURE.md, SYSTEM_TODO.md, TESTING_STRATEGY.md)
 
-### Phase 1: Foundation Build (Months 1-2) - Current
-- [ ] Narrative Engine core (events, canon, dependencies)
-- [ ] MCP Spine setup (resources, basic tools)
-- [ ] Database schemas (narrative, audio, listener)
+### Phase 1: Foundation Build (Months 1-2) - Complete
+- [x] Narrative Engine core (events, canon, dependencies)
+- [x] MCP Spine setup (resources, basic tools)
+- [x] Database schemas (narrative, audio, listener)
 
-### Phase 2: Audio Engine (Months 2-3)
+### Phase 2: Audio Engine (Months 2-3) - Current
 - [ ] Audio Scene Objects model
 - [ ] Beat markers and voice profiles
 - [ ] Recording packet generation
@@ -263,7 +263,7 @@ NAOS is optimized for a single creator who:
 
 ## Getting Started
 
-> **Note**: NAOS has closed the foundation plan and is now in Phase 1 (Foundation Build). Setup instructions will be added as components are implemented.
+> **Note**: NAOS has closed the foundation plan and is now in Phase 2 (Audio Engine). Setup instructions will be added as components are implemented.
 
 **For Developers:**
 1. Read [ARCHITECTURE.md](./ARCHITECTURE.md) for complete system design
@@ -298,10 +298,10 @@ This is a solo-author project. The repository follows a feature-branch workflow 
 
 ## Project Status
 
-**Current Phase**: Phase 1 - Foundation Build (Kickoff)
+**Current Phase**: Phase 2 - Audio Engine (Kickoff)
 **Last Updated**: 2026-01-22
-**Status**: ✅ Foundation plan closed; Phase 1 execution initialized
-**Next Milestone**: Narrative Engine core implementation
+**Status**: ✅ Phase 1 complete; Phase 2 execution initialized
+**Next Milestone**: Audio Engine core implementation and MCP audio tooling
 
 ## License
 
