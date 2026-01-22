@@ -795,7 +795,7 @@ Task Card: Entitlement grant + verification API
 
 **Tests**
 - [x] Integration: webhook signature validation
-- [ ] Integration: entitlement grant and retrieval
+- [x] Integration: entitlement grant and retrieval
 - [ ] E2E: successful payment unlocks library access
 
 Task Card: Integration: webhook signature validation
@@ -808,6 +808,20 @@ Task Card: Integration: webhook signature validation
 - Done looks like (acceptance criteria): Webhook handler returns 400 responses when the Stripe signature header is missing or invalid.
 - Files involved: naos/apps/web/app/api/webhooks/stripe/route.ts, naos/apps/web/lib/__tests__/stripeWebhook.test.ts, SYSTEM_TODO.md
 - Resources (docs/links/specs): docs/payments_entitlements.md, docs/error_taxonomy.md, API.md
+- Tests required: npm run test (not run)
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
+
+Task Card: Integration: entitlement grant and retrieval
+- Status: [x]
+- Assignee: Agent <6>
+- Claim token: 2026-01-22T01:26Z/agent-06
+- Claimed at: 2026-01-22T01:26Z
+- Why not done / Blocker:
+- What needs to be completed: Add integration coverage for entitlement grant and retrieval endpoints.
+- Done looks like (acceptance criteria): Tests verify POST /api/entitlements/grant grants access and GET /api/entitlements returns active entitlements.
+- Files involved: naos/apps/web/app/api/entitlements/grant/route.ts, naos/apps/web/app/api/entitlements/route.ts, naos/apps/web/lib/__tests__/listenerEntitlements.test.ts, SYSTEM_TODO.md
+- Resources (docs/links/specs): docs/payments_entitlements.md, API.md
 - Tests required: npm run test (not run)
 - Docs updates required: SYSTEM_TODO.md updated.
 - Subtasks (optional):
