@@ -82,6 +82,18 @@ This document defines the testing strategy for **NAOS (Narrative & Audio Operati
    - Canon data immutability guarantees
    - Object storage access controls
 
+## Checklist Alignment (Phase 1 Deliverables)
+
+This matrix aligns **SYSTEM_TODO.md** build checklists with required tests so coverage stays synchronized with subsystem readiness. Each checklist item should map to at least one test in the indicated layer. Update this table whenever subsystem checklists change.
+
+| Subsystem Checklist (SYSTEM_TODO.md) | Required Test Coverage | Minimum Test Types | Notes |
+| --- | --- | --- | --- |
+| Narrative Engine (Events, Knowledge, Promises, Canon Gates) | Event DAG integrity, canon gate validation, knowledge timing rules, promise lifecycle transitions | Unit + Integration | Include import-path coverage by creating draft events, knowledge, and promises via API and verifying canon gate behavior end-to-end. |
+| Audio Engine (Beat Markers, Voice Profiles, Recording Packets) | Beat marker placement, voice profile enforcement, recording packet completeness | Unit + Integration | Validate listener cognition safeguards for audio-first delivery. |
+| MCP Spine (Resources, Tools, Canon Gates, Audit Logs) | Read-only resource enforcement, proposal schema validation, canon gate error reporting, audit logging | Unit + Integration | Ensure proposal failures surface error taxonomy codes. |
+| Listener Platform (Auth, Playback, Entitlements) | Auth checks, signed URL enforcement, resume integrity | Unit + Integration + E2E | Include playback resume flow from the Listener Platform test plan. |
+| Data Layer (Persistence, Separation, Storage) | Canon immutability, separation boundaries, storage access controls | Integration + Contract | Verify canonical data never mutates and storage provenance metadata is enforced. |
+
 ### Medium Priority
 1. **Service Integration**
    - Narrative → Audio pipeline handoff
