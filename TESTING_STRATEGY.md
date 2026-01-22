@@ -6,8 +6,8 @@ This document defines the testing strategy for **NAOS (Narrative & Audio Operati
 
 ## Current State
 
-**Status**: Repository includes MCP spine and web app source code with active test suites
-**Opportunity**: Expand test coverage as additional subsystems ship
+**Status**: Foundation plan complete; Phase 1 execution underway with MCP spine and web app source code present
+**Opportunity**: Expand test coverage as additional Phase 1 subsystems ship
 **System TODO Hub**: Use [SYSTEM_TODO.md](./SYSTEM_TODO.md) to align test backlog with subsystem checklists and the incident response flowchart in [docs/incident_response_flow.md](./docs/incident_response_flow.md).
 **Audio Storage Contract**: Reference [docs/audio_storage_conventions.md](./docs/audio_storage_conventions.md) for CDN and storage behavior that tests must validate.
 **Error Taxonomy**: Reference [docs/error_taxonomy.md](./docs/error_taxonomy.md) for severity levels and expected error codes in tests.

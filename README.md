@@ -215,9 +215,12 @@ NAOS is optimized for a single creator who:
 
 > **Detailed roadmap in [ARCHITECTURE.md](./ARCHITECTURE.md#12-implementation-roadmap)**
 
-### Phase 1: Foundation (Months 1-2) - Current
+### Phase 0: Foundation Plan (Complete)
 - [x] Architecture definition (NAOS specification)
 - [x] Technology stack selection (Replit + Next.js)
+- [x] Foundation documentation baseline (CLAUDE.md, ARCHITECTURE.md, SYSTEM_TODO.md, TESTING_STRATEGY.md)
+
+### Phase 1: Foundation Build (Months 1-2) - Current
 - [ ] Narrative Engine core (events, canon, dependencies)
 - [ ] MCP Spine setup (resources, basic tools)
 - [ ] Database schemas (narrative, audio, listener)
@@ -260,7 +263,7 @@ NAOS is optimized for a single creator who:
 
 ## Getting Started
 
-> **Note**: NAOS is in Phase 1 (Foundation). Setup instructions will be added as components are implemented.
+> **Note**: NAOS has closed the foundation plan and is now in Phase 1 (Foundation Build). Setup instructions will be added as components are implemented.
 
 **For Developers:**
 1. Read [ARCHITECTURE.md](./ARCHITECTURE.md) for complete system design
@@ -295,9 +298,9 @@ This is a solo-author project. The repository follows a feature-branch workflow 
 
 ## Project Status
 
-**Current Phase**: Phase 1 - Foundation (Architecture Definition)
-**Last Updated**: 2026-01-20
-**Status**: ✅ NAOS architecture defined, ready for implementation
+**Current Phase**: Phase 1 - Foundation Build (Kickoff)
+**Last Updated**: 2026-01-22
+**Status**: ✅ Foundation plan closed; Phase 1 execution initialized
 **Next Milestone**: Narrative Engine core implementation
 
 ## License

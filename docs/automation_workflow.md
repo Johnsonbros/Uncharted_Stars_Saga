@@ -2,7 +2,7 @@
 
 This document defines the automation entry point for turning `SYSTEM_TODO.md` into
 structured work artifacts (JSON + reports). It is meant to be the first step in
-automating the remaining foundation requirements.
+automating the Phase 1 execution backlog as it expands.
 
 ## What the Script Does
 
