@@ -67,10 +67,10 @@ Task Card:
 
 ---
 
-## Phase 1 Kickoff Baseline (2026-01-22)
+## Phase 1 Execution Baseline (2026-01-22)
 
 - Foundation plan tasks and documentation baselines are complete.
-- New Phase 1 execution work should be added as fresh checklist items below.
+- Phase 1 execution work should be added as fresh checklist items below.
 - Keep this hub aligned with any new subsystem scope, tests, and diagrams as they are defined.
 
 ## 1) Creator Operating System (Private)
