@@ -25,9 +25,10 @@ describe("entitlement grant and retrieval", () => {
   });
 
   it("grants entitlements via the internal endpoint", async () => {
+    const listenerId = "00000000-0000-0000-0000-000000000123";
     const grantedEntitlement = {
       id: "ent_123",
-      listenerId: "listener-123",
+      listenerId,
       productId: "founders"
     };
     mockGrantEntitlement.mockResolvedValue(grantedEntitlement);
@@ -40,7 +41,7 @@ describe("entitlement grant and retrieval", () => {
           authorization: "Bearer test-token"
         },
         body: JSON.stringify({
-          listenerId: "listener-123",
+          listenerId,
           productId: "founders"
         })
       })
@@ -51,7 +52,7 @@ describe("entitlement grant and retrieval", () => {
       entitlement: grantedEntitlement
     });
     expect(mockGrantEntitlement).toHaveBeenCalledWith({
-      listenerId: "listener-123",
+      listenerId,
       email: undefined,
       productId: "founders",
       accessStart: undefined,
@@ -62,18 +63,19 @@ describe("entitlement grant and retrieval", () => {
   });
 
   it("lists active entitlements for a listener", async () => {
-    const entitlements = [{ id: "ent_456", listenerId: "listener-123" }];
+    const listenerId = "00000000-0000-0000-0000-000000000456";
+    const entitlements = [{ id: "ent_456", listenerId }];
     mockListActiveEntitlementsByListenerId.mockResolvedValue(entitlements);
 
     const { GET } = await import("@/app/api/entitlements/route");
     const response = await GET(
-      new Request("http://localhost/api/entitlements?listenerId=listener-123")
+      new Request(`http://localhost/api/entitlements?listenerId=${listenerId}`)
     );
 
     expect(response.status).toBe(200);
     await expect(response.json()).resolves.toEqual({ entitlements });
     expect(mockListActiveEntitlementsByListenerId).toHaveBeenCalledWith(
-      "listener-123"
+      listenerId
     );
     expect(mockListActiveEntitlementsByEmail).not.toHaveBeenCalled();
   });
