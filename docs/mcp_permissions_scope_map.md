@@ -23,21 +23,23 @@ Define the permission scopes for MCP resources and tools, mapping roles to allow
 - `proposal:create` → Create proposals only (no canon writes).
 - `proposal:validate` → Run validation pipeline and produce reports.
 - `proposal:apply` → Apply approved proposals (service-only).
+- `audio:generate` → Generate recording packets from audio scenes (Phase 2).
+- `audio:audit` → Run listener confusion audits on audio scenes (Phase 2).
 
 ## Access Matrix
-| Role | narrative:read | audio:read | listener:summary:read | proposal:create | proposal:validate | proposal:apply |
-|------|----------------|-----------|------------------------|-----------------|-------------------|----------------|
-| Creator | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ |
-| Editor/Reviewer | ✅ | ✅ | ❌ | ✅ | ✅ | ❌ |
-| Listener Support | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ |
-| Automation/Service | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Role | narrative:read | audio:read | listener:summary:read | proposal:create | proposal:validate | proposal:apply | audio:generate | audio:audit |
+|------|----------------|-----------|------------------------|-----------------|-------------------|----------------|----------------|-------------|
+| Creator | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |
+| Editor/Reviewer | ✅ | ✅ | ❌ | ✅ | ✅ | ❌ | ❌ | ✅ |
+| Listener Support | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| Automation/Service | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
-## Model Registry Scope Mapping (Phase 1)
+## Model Registry Scope Mapping (Phase 1-2)
 | Model | Allowed Scopes | Notes |
 |-------|----------------|-------|
-| Opus | narrative:read, audio:read, proposal:validate | Deep reasoning for continuity checks. |
-| Sonnet | narrative:read, audio:read, proposal:create | Drafting and proposal assembly. |
-| Haiku | narrative:read | Quick lookups and summaries only. |
+| Opus | narrative:read, audio:read, audio:generate, audio:audit, proposal:validate | Deep reasoning for continuity checks and audio generation. |
+| Sonnet | narrative:read, audio:read, audio:generate, audio:audit, proposal:create | Drafting, proposal assembly, and audio tools. |
+| Haiku | narrative:read, audio:audit | Quick lookups, summaries, and listener confusion audits. |
 
 ## Diagram
 ```mermaid
