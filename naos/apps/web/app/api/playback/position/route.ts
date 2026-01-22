@@ -37,12 +37,26 @@ export async function POST(request: Request) {
   const listenerId = typeof body.listenerId === "string" ? body.listenerId : undefined;
   const email = typeof body.email === "string" ? body.email : undefined;
   const assetId = resolveAssetId(new URL(request.url).searchParams, body);
-  const positionSeconds =
+  const rawPositionSeconds =
     typeof body.positionSeconds === "number" ? body.positionSeconds : undefined;
 
-  if (!assetId || positionSeconds === undefined) {
+  if (!assetId || rawPositionSeconds === undefined) {
     return NextResponse.json(
       { error: "Provide chapterId and positionSeconds." },
+      { status: 400 }
+    );
+  }
+
+  if (!Number.isFinite(rawPositionSeconds) || rawPositionSeconds < 0) {
+    return NextResponse.json(
+      { error: "positionSeconds must be a non-negative number." },
+      { status: 400 }
+    );
+  }
+
+  if (!Number.isInteger(rawPositionSeconds)) {
+    return NextResponse.json(
+      { error: "positionSeconds must be an integer." },
       { status: 400 }
     );
   }
@@ -58,7 +72,7 @@ export async function POST(request: Request) {
     listenerId,
     email,
     assetId,
-    positionSeconds
+    positionSeconds: rawPositionSeconds
   });
 
   return NextResponse.json({ playbackPosition });
