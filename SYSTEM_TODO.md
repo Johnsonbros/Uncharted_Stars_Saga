@@ -713,8 +713,8 @@ Task Card: Email auth onboarding (Replit or Supabase)
 - Subtasks (optional):
 
 **Tests**
-- [ ] E2E: marketing → signup → checkout
-- [ ] Accessibility checks (contrast, focus, keyboard nav)
+- [x] E2E: marketing → signup → checkout
+- [x] Accessibility checks (contrast, focus, keyboard nav)
 
 Task Card: E2E: marketing → signup → checkout
 - Status: [x]
@@ -732,15 +732,15 @@ Task Card: E2E: marketing → signup → checkout
 
 Task Card: Accessibility checks (contrast, focus, keyboard nav)
 - Status: [x]
-- Assignee: Agent <3>
-- Claim token: 2026-01-22T00:40Z/agent-03
-- Claimed at: 2026-01-22T00:40Z
+- Assignee: Agent <gpt-5.2-codex>
+- Claim token: 2026-01-22T05:20Z/agent-gpt-5.2-codex
+- Claimed at: 2026-01-22T05:20Z
 - Why not done / Blocker:
 - What needs to be completed: Run accessibility checks on the marketing, signup, and founders flows and address any issues found.
 - Done looks like (acceptance criteria): Focus indicators are visible for links, buttons, and form fields on the landing, signup, and founders pages.
-- Files involved: naos/apps/web/app/globals.css, SYSTEM_TODO.md
+- Files involved: naos/apps/web/app/globals.css, naos/apps/web/tests/e2e/accessibility.spec.ts, SYSTEM_TODO.md
 - Resources (docs/links/specs): docs/marketing_onboarding.md, docs/visitor_conversion_funnel.md
-- Tests required: Manual accessibility checklist (contrast, focus, keyboard nav) (not run).
+- Tests required: npm run test:e2e -- accessibility (not run).
 - Docs updates required: SYSTEM_TODO.md updated.
 - Subtasks (optional):
 
@@ -1009,7 +1009,21 @@ Task Card: Data retention and deletion workflow
 
 **Tests**
 - [x] Migration tests
-- [ ] Integration: playback position updates and retrieval
+- [x] Integration: playback position updates and retrieval
+
+Task Card: Integration: playback position updates and retrieval
+- Status: [x]
+- Assignee: Agent <gpt-5.2-codex>
+- Claim token: 2026-01-22T05:20Z/agent-gpt-5.2-codex
+- Claimed at: 2026-01-22T05:20Z
+- Why not done / Blocker:
+- What needs to be completed: Verify playback positions can be saved and retrieved for resume behavior.
+- Done looks like (acceptance criteria): Integration test upserts a playback position, updates it, and retrieves the latest position.
+- Files involved: naos/apps/web/lib/listenerPlaybackPositions.ts, naos/apps/web/lib/__tests__/listenerPlaybackPositions.test.ts, naos/apps/web/app/api/playback/position/route.ts, SYSTEM_TODO.md
+- Resources (docs/links/specs): docs/listener_db_documentation.md, docs/listener_db_systematic_plan.md, docs/audio_streaming_access_flow.md
+- Tests required: npm test (vitest) (not run).
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
 
 Task Card: Migration tests
 - Status: [x]
