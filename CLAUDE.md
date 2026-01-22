@@ -114,10 +114,14 @@ Uncharted_Stars_Saga/
 - Clear upgrade path to external services if scale demands
 
 ### Dependencies & Configuration
-**Status:** No configuration files present yet
+**Status:** Node/TypeScript app configs are present for the MCP spine and web app
 
-When technology stack is chosen, typical configuration files may include:
-- `package.json` - Node.js/npm dependencies
+Current configuration highlights:
+- `services/mcp-spine/package.json` - MCP spine service dependencies
+- `naos/apps/mcp-spine/package.json` - NAOS MCP spine app dependencies
+- `naos/apps/web/package.json` - NAOS web app dependencies
+
+Additional configuration files may be added as the stack expands:
 - `requirements.txt` or `pyproject.toml` - Python dependencies
 - `Cargo.toml` - Rust dependencies
 - Build system configuration files
