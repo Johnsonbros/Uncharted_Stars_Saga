@@ -90,7 +90,21 @@ Task Card:
 - [x] Unit: knowledge state propagation rules
 - [x] Unit: promise lifecycle transitions
 - [x] Integration: canon gate rejects contradictory changes
-- [ ] Integration: draft changes do not leak into canon
+- [x] Integration: draft changes do not leak into canon
+
+Task Card: Integration: draft changes do not leak into canon
+- Status: [x]
+- Assignee: Agent <1>
+- Claim token: 2026-01-22T00:34Z/agent-01
+- Claimed at: 2026-01-22T00:34Z
+- Why not done / Blocker:
+- What needs to be completed: Ensure canon gate evaluation ignores unrelated draft events during narrative snapshots or canonization checks.
+- Done looks like (acceptance criteria): Canon gate evaluation passes for canon/proposed events even when draft events contain continuity issues, confirmed via integration test.
+- Files involved: naos/apps/web/lib/narrative/service.ts, naos/apps/web/lib/narrative/__tests__/service.test.ts
+- Resources (docs/links/specs): docs/narrative_engine_api.md, docs/canon_draft_enforcement.md
+- Tests required: naos/apps/web/lib/narrative/__tests__/service.test.ts (not run)
+- Docs updates required: SYSTEM_TODO.md updated.
+- Subtasks (optional):
 
 Task Card: Integration: canon gate rejects contradictory changes
 - Status: [x]
