@@ -50,6 +50,17 @@ export interface CharacterProfile {
 }
 
 /**
+ * Audio scene object reference
+ */
+export interface AudioSceneReference {
+  id: string;
+  sceneId: string;
+  chapterId: string;
+  voiceProfileId: string;
+  canonStatus: "draft" | "proposed" | "canon";
+}
+
+/**
  * Assembled context for a session
  */
 export interface AssembledContext {
@@ -58,6 +69,7 @@ export interface AssembledContext {
   knowledgeStates: KnowledgeState[];
   promises: NarrativePromise[];
   characters: CharacterProfile[];
+  audioScenes: AudioSceneReference[];
   sceneContext?: string;
   totalTokens: number;
 }
@@ -133,6 +145,9 @@ export class ContextManager {
     // Load character profiles
     const characters = await this.loadCharacterProfiles(projectId);
 
+    // Load audio scene objects
+    const audioScenes = await this.loadAudioScenes(projectId, sceneId);
+
     // Load scene-specific context if provided
     let sceneContext: string | undefined;
     if (sceneId) {
@@ -146,6 +161,7 @@ export class ContextManager {
       knowledgeStates,
       promises,
       characters,
+      audioScenes,
       sceneContext,
     });
 
@@ -155,6 +171,7 @@ export class ContextManager {
       knowledgeStates,
       promises,
       characters,
+      audioScenes,
       sceneContext,
       totalTokens,
     };
@@ -172,6 +189,7 @@ export class ContextManager {
       knowledge_states: knowledgeStates.length,
       promises: promises.length,
       characters: characters.length,
+      audio_scenes: audioScenes.length,
       total_tokens: totalTokens,
     });
 
@@ -372,6 +390,22 @@ export class ContextManager {
       scene_id: sceneId,
     });
     return "";
+  }
+
+  /**
+   * Load audio scene objects (MVP: in-memory)
+   */
+  private async loadAudioScenes(
+    projectId: string,
+    sceneId?: string
+  ): Promise<AudioSceneReference[]> {
+    // TODO: Replace with actual database query
+    // Filter by sceneId if provided
+    this.logger.debug("context.loading_audio_scenes", {
+      project_id: projectId,
+      scene_id: sceneId,
+    });
+    return [];
   }
 
   /**
