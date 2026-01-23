@@ -4,6 +4,7 @@ import {
   getPlaybackPosition,
   upsertPlaybackPosition
 } from "@/lib/listenerPlaybackPositions";
+import { getCurrentSession } from "@/lib/auth";
 
 function resolveAssetId(searchParams: URLSearchParams, body?: Record<string, unknown>) {
   if (body && typeof body.chapterId === "string") {
@@ -16,9 +17,12 @@ function resolveAssetId(searchParams: URLSearchParams, body?: Record<string, unk
 }
 
 export async function GET(request: Request) {
+  const session = await getCurrentSession();
   const { searchParams } = new URL(request.url);
-  const listenerId = searchParams.get("listenerId");
   const assetId = resolveAssetId(searchParams);
+
+  // Use session listenerId if authenticated, otherwise fall back to query param
+  const listenerId = session?.listenerId ?? searchParams.get("listenerId");
 
   if (!listenerId || !assetId) {
     return NextResponse.json(
@@ -33,9 +37,13 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const session = await getCurrentSession();
   const body = (await request.json()) as Record<string, unknown>;
-  const listenerId = typeof body.listenerId === "string" ? body.listenerId : undefined;
-  const email = typeof body.email === "string" ? body.email : undefined;
+
+  // Prefer session-based authentication
+  const listenerId = session?.listenerId ?? (typeof body.listenerId === "string" ? body.listenerId : undefined);
+  const email = session?.email ?? (typeof body.email === "string" ? body.email : undefined);
+
   const assetId = resolveAssetId(new URL(request.url).searchParams, body);
   const rawPositionSeconds =
     typeof body.positionSeconds === "number" ? body.positionSeconds : undefined;
@@ -63,8 +71,8 @@ export async function POST(request: Request) {
 
   if (!listenerId && !email) {
     return NextResponse.json(
-      { error: "Provide listenerId or email." },
-      { status: 400 }
+      { error: "Authentication required to save playback position." },
+      { status: 401 }
     );
   }
 

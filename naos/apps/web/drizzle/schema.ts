@@ -222,3 +222,40 @@ export const stripeEvents = pgTable("stripe_events", {
   type: text("type").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
 });
+
+// Session management for listener authentication
+export const sessions = pgTable("sessions", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  listenerId: uuid("listener_id")
+    .notNull()
+    .references(() => listeners.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  token: text("token").notNull().unique(),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+});
+
+// Magic link tokens for passwordless authentication
+export const magicLinks = pgTable("magic_links", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  email: text("email").notNull(),
+  token: text("token").notNull().unique(),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+  usedAt: timestamp("used_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+});
+
+// Chapters table for audiobook content
+export const chapters = pgTable("chapters", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  slug: text("slug").notNull().unique(),
+  title: text("title").notNull(),
+  subtitle: text("subtitle"),
+  description: text("description"),
+  audioStoragePath: text("audio_storage_path"),
+  durationSeconds: integer("duration_seconds").notNull().default(0),
+  sequenceOrder: integer("sequence_order").notNull(),
+  publishedAt: timestamp("published_at", { withTimezone: true }),
+  isPublished: boolean("is_published").notNull().default(false),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow()
+});

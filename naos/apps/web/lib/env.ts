@@ -8,7 +8,10 @@ const EnvSchema = z.object({
   STRIPE_PRICE_ID: z.string().min(1),
   STRIPE_SUCCESS_URL: z.string().url(),
   STRIPE_CANCEL_URL: z.string().url(),
-  ENTITLEMENTS_INTERNAL_TOKEN: z.string().min(1)
+  ENTITLEMENTS_INTERNAL_TOKEN: z.string().min(1),
+  SESSION_SECRET: z.string().min(32).default("default-session-secret-change-in-production-32chars"),
+  APP_URL: z.string().url().default("http://localhost:3000"),
+  REPLIT_OBJECT_STORAGE_BUCKET: z.string().optional()
 });
 
 export const env = EnvSchema.parse({
@@ -19,5 +22,8 @@ export const env = EnvSchema.parse({
   STRIPE_PRICE_ID: process.env.STRIPE_PRICE_ID,
   STRIPE_SUCCESS_URL: process.env.STRIPE_SUCCESS_URL,
   STRIPE_CANCEL_URL: process.env.STRIPE_CANCEL_URL,
-  ENTITLEMENTS_INTERNAL_TOKEN: process.env.ENTITLEMENTS_INTERNAL_TOKEN
+  ENTITLEMENTS_INTERNAL_TOKEN: process.env.ENTITLEMENTS_INTERNAL_TOKEN,
+  SESSION_SECRET: process.env.SESSION_SECRET,
+  APP_URL: process.env.APP_URL,
+  REPLIT_OBJECT_STORAGE_BUCKET: process.env.REPLIT_OBJECT_STORAGE_BUCKET
 });
