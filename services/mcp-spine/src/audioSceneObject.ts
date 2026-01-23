@@ -416,6 +416,20 @@ export class AudioSceneManager {
   }
 
   /**
+   * Get all audio scenes
+   */
+  getAllScenes(): AudioSceneObject[] {
+    return Array.from(this.scenes.values())
+      .sort((a, b) => {
+        // Sort by chapter first, then by sequence
+        if (a.chapterId !== b.chapterId) {
+          return a.chapterId.localeCompare(b.chapterId);
+        }
+        return a.sequence - b.sequence;
+      });
+  }
+
+  /**
    * Delete a scene
    */
   deleteScene(sceneId: string): boolean {
