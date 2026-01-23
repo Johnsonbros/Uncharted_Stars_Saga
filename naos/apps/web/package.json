@@ -17,11 +17,11 @@
   },
   "dependencies": {
     "drizzle-orm": "^0.36.0",
-    "next": "15.1.6",
+    "next": "^16.1.4",
     "pg": "^8.12.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "stripe": "^16.9.0",
+    "stripe": "^20.2.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {

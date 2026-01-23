@@ -1,18 +1,67 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { eq, and } from "drizzle-orm";
 
-export default function AccountPage() {
-  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+import { getCurrentSession } from "@/lib/auth";
+import { db } from "@/lib/db";
+import { listeners, entitlements } from "@/drizzle/schema";
+import AccountSettings from "./AccountSettings";
 
-  // Mock user data - will be replaced with actual authentication
-  const userData = {
-    email: "founder@example.com",
-    joinedDate: "2026-01-22",
-    membershipType: "Founders Lifetime",
-    membershipStatus: "Active"
+function formatDate(date: Date | null): string {
+  if (!date) return "Unknown";
+  return new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric"
+  }).format(date);
+}
+
+async function getAccountData(listenerId: string) {
+  const [listener] = await db
+    .select()
+    .from(listeners)
+    .where(eq(listeners.id, listenerId));
+
+  if (!listener) return null;
+
+  const activeEntitlements = await db
+    .select()
+    .from(entitlements)
+    .where(
+      and(
+        eq(entitlements.listenerId, listenerId),
+        eq(entitlements.status, "active")
+      )
+    );
+
+  const hasFoundersAccess = activeEntitlements.some(
+    (e) => e.productId === "founders-lifetime" || e.productId.includes("founders")
+  );
+
+  return {
+    email: listener.email,
+    joinedDate: listener.createdAt,
+    membershipType: hasFoundersAccess
+      ? "Founders Lifetime"
+      : activeEntitlements.length > 0
+        ? "Standard"
+        : "None",
+    membershipStatus: activeEntitlements.length > 0 ? "Active" : "Inactive"
   };
+}
+
+export default async function AccountPage() {
+  const session = await getCurrentSession();
+
+  if (!session?.isAuthenticated) {
+    redirect("/login?return=/account");
+  }
+
+  const accountData = await getAccountData(session.listenerId);
+
+  if (!accountData) {
+    redirect("/login?return=/account");
+  }
 
   return (
     <div className="studio-shell">
@@ -28,6 +77,7 @@ export default function AccountPage() {
           <Link href="/account" style={{ color: "var(--accent)" }}>
             Account
           </Link>
+          <Link href="/api/auth/logout">Sign out</Link>
         </div>
       </nav>
 
@@ -46,181 +96,33 @@ export default function AccountPage() {
             <div className="studio-status">
               <div>
                 <span className="muted">Email</span>
-                <span>{userData.email}</span>
+                <span>{accountData.email}</span>
               </div>
               <div>
                 <span className="muted">Membership type</span>
-                <span>{userData.membershipType}</span>
+                <span>{accountData.membershipType}</span>
               </div>
               <div>
                 <span className="muted">Status</span>
-                <span className="studio-pill">{userData.membershipStatus}</span>
+                <span className="studio-pill">{accountData.membershipStatus}</span>
               </div>
               <div>
                 <span className="muted">Member since</span>
-                <span>{userData.joinedDate}</span>
+                <span>{formatDate(accountData.joinedDate)}</span>
               </div>
             </div>
+
+            {accountData.membershipType === "None" && (
+              <div style={{ marginTop: "20px" }}>
+                <Link href="/founders" className="button">
+                  Become a Founder
+                </Link>
+              </div>
+            )}
           </div>
 
-          {/* Notification Settings */}
-          <div className="studio-card">
-            <h3 style={{ margin: "0 0 16px" }}>Notifications</h3>
-            <p className="muted" style={{ margin: "0 0 20px" }}>
-              Choose how you want to be notified about new chapters and updates.
-            </p>
-
-            <div style={{ display: "grid", gap: "16px" }}>
-              <label
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  cursor: "pointer"
-                }}
-              >
-                <input
-                  type="checkbox"
-                  checked={notificationsEnabled}
-                  onChange={e => setNotificationsEnabled(e.target.checked)}
-                  style={{
-                    width: "20px",
-                    height: "20px",
-                    cursor: "pointer"
-                  }}
-                />
-                <div>
-                  <div style={{ fontWeight: 600, color: "var(--text)" }}>
-                    New chapter notifications
-                  </div>
-                  <div className="muted" style={{ fontSize: "0.9rem" }}>
-                    Get an email when new content is published
-                  </div>
-                </div>
-              </label>
-
-              <label
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  cursor: "pointer"
-                }}
-              >
-                <input
-                  type="checkbox"
-                  defaultChecked={true}
-                  style={{
-                    width: "20px",
-                    height: "20px",
-                    cursor: "pointer"
-                  }}
-                />
-                <div>
-                  <div style={{ fontWeight: 600, color: "var(--text)" }}>
-                    Creator updates
-                  </div>
-                  <div className="muted" style={{ fontSize: "0.9rem" }}>
-                    Behind-the-scenes notes and announcements
-                  </div>
-                </div>
-              </label>
-            </div>
-          </div>
-
-          {/* Playback Preferences */}
-          <div className="studio-card">
-            <h3 style={{ margin: "0 0 16px" }}>Playback preferences</h3>
-
-            <div className="studio-form">
-              <div className="studio-field">
-                <label htmlFor="playback-speed">Playback speed</label>
-                <select id="playback-speed" defaultValue="1.0">
-                  <option value="0.75">0.75x</option>
-                  <option value="1.0">1.0x (Normal)</option>
-                  <option value="1.25">1.25x</option>
-                  <option value="1.5">1.5x</option>
-                  <option value="1.75">1.75x</option>
-                  <option value="2.0">2.0x</option>
-                </select>
-              </div>
-
-              <div className="studio-field">
-                <label htmlFor="skip-duration">Skip forward/backward duration</label>
-                <select id="skip-duration" defaultValue="15">
-                  <option value="10">10 seconds</option>
-                  <option value="15">15 seconds</option>
-                  <option value="30">30 seconds</option>
-                  <option value="60">60 seconds</option>
-                </select>
-              </div>
-
-              <label
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  cursor: "pointer"
-                }}
-              >
-                <input
-                  type="checkbox"
-                  defaultChecked={true}
-                  style={{
-                    width: "20px",
-                    height: "20px",
-                    cursor: "pointer"
-                  }}
-                />
-                <div>
-                  <div style={{ fontWeight: 600, color: "var(--text)" }}>
-                    Auto-resume playback
-                  </div>
-                  <div className="muted" style={{ fontSize: "0.9rem" }}>
-                    Automatically continue from where you left off
-                  </div>
-                </div>
-              </label>
-            </div>
-          </div>
-
-          {/* Data & Privacy */}
-          <div className="studio-card">
-            <h3 style={{ margin: "0 0 16px" }}>Data & Privacy</h3>
-            <div style={{ display: "grid", gap: "16px" }}>
-              <div>
-                <strong style={{ display: "block", marginBottom: "8px" }}>
-                  Playback history
-                </strong>
-                <p className="muted" style={{ margin: "0 0 12px" }}>
-                  Your playback positions are stored to enable resume functionality
-                  across devices.
-                </p>
-                <button
-                  className="button secondary"
-                  style={{ fontSize: "0.9rem", padding: "8px 16px" }}
-                >
-                  Clear playback history
-                </button>
-              </div>
-
-              <div>
-                <strong style={{ display: "block", marginBottom: "8px" }}>
-                  Download your data
-                </strong>
-                <p className="muted" style={{ margin: "0 0 12px" }}>
-                  Request a copy of your account data, including membership details and
-                  playback history.
-                </p>
-                <button
-                  className="button secondary"
-                  style={{ fontSize: "0.9rem", padding: "8px 16px" }}
-                >
-                  Request data export
-                </button>
-              </div>
-            </div>
-          </div>
+          {/* Client-side settings */}
+          <AccountSettings />
 
           {/* Support */}
           <div className="studio-card soft">

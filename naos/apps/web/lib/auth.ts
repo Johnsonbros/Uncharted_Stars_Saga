@@ -7,7 +7,7 @@
 
 import { cookies } from "next/headers";
 import { randomBytes, createHash } from "crypto";
-import { eq, and, gt } from "drizzle-orm";
+import { eq, and, gt, lt } from "drizzle-orm";
 
 import { db } from "@/lib/db";
 import { listeners, sessions, magicLinks, entitlements } from "@/drizzle/schema";
@@ -299,6 +299,6 @@ export async function verifyListenerEmail(email: string): Promise<string | null>
 export async function cleanupExpiredTokens(): Promise<void> {
   const now = new Date();
 
-  await db.delete(sessions).where(gt(now, sessions.expiresAt));
-  await db.delete(magicLinks).where(gt(now, magicLinks.expiresAt));
+  await db.delete(sessions).where(lt(sessions.expiresAt, now));
+  await db.delete(magicLinks).where(lt(magicLinks.expiresAt, now));
 }
