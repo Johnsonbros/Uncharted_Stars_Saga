@@ -405,3 +405,267 @@ export const codexDraftEntries = pgTable("codex_draft_entries", {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   reviewedAt: timestamp("reviewed_at", { withTimezone: true })
 });
+
+// ============================================================================
+// AI CONTENT DEVELOPMENT SYSTEM TABLES
+// See docs/ai_content_development_system.md for full documentation
+// ============================================================================
+
+// Session types for content development
+export const contentSessionType = pgEnum("content_session_type", [
+  "discovery",
+  "development",
+  "outline",
+  "studio"
+]);
+
+// Session status
+export const contentSessionStatus = pgEnum("content_session_status", [
+  "active",
+  "paused",
+  "completed",
+  "abandoned"
+]);
+
+// Outline levels
+export const outlineLevel = pgEnum("outline_level", [
+  "story",
+  "book",
+  "act",
+  "chapter",
+  "scene"
+]);
+
+// Outline status
+export const outlineStatus = pgEnum("outline_status", [
+  "concept",
+  "draft",
+  "outlined",
+  "written",
+  "complete"
+]);
+
+// Profile update source types
+export const profileUpdateSource = pgEnum("profile_update_source", [
+  "conversation",
+  "writing",
+  "manual",
+  "extraction"
+]);
+
+// Development sessions - Discovery, Development, Outline, and Studio modes
+export const contentSessions = pgTable("content_sessions", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  projectId: text("project_id").notNull(),
+  sessionType: contentSessionType("session_type").notNull(),
+
+  // What's being developed
+  targetType: text("target_type"), // 'character', 'location', 'book_outline', etc.
+  targetId: uuid("target_id"), // Links to codex_entries or outlines table
+
+  // Session state
+  status: contentSessionStatus("status").notNull().default("active"),
+
+  // Conversation history (for resuming sessions)
+  // Array of { role: 'user' | 'assistant', content: string, timestamp: string }
+  conversation: jsonb("conversation").notNull().default([]),
+
+  // Extracted content pending approval
+  // Array of { field_path: string, value: any, approved: boolean }
+  pendingUpdates: jsonb("pending_updates").notNull().default([]),
+
+  // Completion tracking
+  // { field_name: 'complete' | 'partial' | 'incomplete', ... }
+  completionStatus: jsonb("completion_status").default({}),
+
+  // Current mode state (for Discovery: threads, concepts; for Development: questions remaining)
+  modeState: jsonb("mode_state").default({}),
+
+  // Metadata
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  completedAt: timestamp("completed_at", { withTimezone: true })
+});
+
+// Outline hierarchy - story, book, act, chapter, scene levels
+export const outlines = pgTable("outlines", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  projectId: text("project_id").notNull(),
+
+  // Hierarchy
+  outlineLevel: outlineLevel("outline_level").notNull(),
+  parentId: uuid("parent_id").references((): any => outlines.id, {
+    onDelete: "cascade",
+    onUpdate: "cascade"
+  }),
+  sequenceOrder: integer("sequence_order").notNull().default(0),
+
+  // Identity
+  title: text("title").notNull(),
+  subtitle: text("subtitle"),
+
+  // Content - Level-specific structure stored as JSON
+  // Story: { logline, core_themes, central_mystery, primary_characters, setting_summary, estimated_length, target_medium }
+  // Book: { acts: [...], premise, stakes }
+  // Act: { purpose, key_events, character_arcs, promises_established }
+  // Chapter: { purpose, chapter_goals, pov_character, scenes: [...] }
+  // Scene: { synopsis, scene_goals, beats: [...], promise_tracking, audio_notes }
+  content: jsonb("content").notNull().default({}),
+
+  // Narrative context for scenes
+  povCharacterId: uuid("pov_character_id").references(() => codexEntries.id, {
+    onDelete: "set null",
+    onUpdate: "cascade"
+  }),
+  locationId: uuid("location_id").references(() => codexEntries.id, {
+    onDelete: "set null",
+    onUpdate: "cascade"
+  }),
+  timeAnchor: timestamp("time_anchor", { withTimezone: true }),
+  timeDescription: text("time_description"),
+
+  // Characters present (for scenes)
+  // Array of { character_id: string, role: 'pov' | 'active' | 'background' | 'mentioned' }
+  charactersPresent: jsonb("characters_present").default([]),
+
+  // Pinned context entries
+  // Array of { codex_entry_id: string, reason: string, priority: number }
+  pinnedContext: jsonb("pinned_context").default([]),
+
+  // Estimated metrics
+  estimatedWords: integer("estimated_words"),
+  estimatedAudioMinutes: integer("estimated_audio_minutes"),
+
+  // Status
+  status: outlineStatus("status").notNull().default("draft"),
+  canonStatus: canonStatus("canon_status").notNull().default("draft"),
+
+  // Metadata
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow()
+});
+
+// Profile update history - tracks changes from content development sessions and writing
+export const profileUpdates = pgTable("profile_updates", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  entryId: uuid("entry_id")
+    .notNull()
+    .references(() => codexEntries.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  sessionId: uuid("session_id").references(() => contentSessions.id, {
+    onDelete: "set null",
+    onUpdate: "cascade"
+  }),
+
+  // What changed
+  fieldPath: text("field_path").notNull(), // e.g., 'personality.traits', 'voice.verbal_tics'
+  previousValue: jsonb("previous_value"),
+  newValue: jsonb("new_value").notNull(),
+
+  // Source
+  sourceType: profileUpdateSource("source_type").notNull(),
+  sourceReference: text("source_reference"), // scene_id, session_id, or extraction job id
+
+  // Approval
+  autoApplied: boolean("auto_applied").notNull().default(false),
+  approvedBy: text("approved_by"),
+  approvedAt: timestamp("approved_at", { withTimezone: true }),
+
+  // Status
+  status: text("status").notNull().default("pending"), // pending, approved, rejected
+
+  // Metadata
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+});
+
+// Discovery session artifacts - rough concepts captured during discovery mode
+export const discoveryArtifacts = pgTable("discovery_artifacts", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  sessionId: uuid("session_id")
+    .notNull()
+    .references(() => contentSessions.id, { onDelete: "cascade", onUpdate: "cascade" }),
+
+  // Artifact type
+  artifactType: text("artifact_type").notNull(), // 'character_sketch', 'setting_concept', 'plot_idea', 'question', 'thread'
+
+  // Content
+  name: text("name"),
+  notes: text("notes").notNull(),
+
+  // Questions to explore
+  openQuestions: text("open_questions").array().default([]),
+
+  // Potential connections to existing entries
+  potentialConnections: jsonb("potential_connections").default([]),
+
+  // Whether this has been developed into a full entry
+  developedIntoId: uuid("developed_into_id").references(() => codexEntries.id, {
+    onDelete: "set null",
+    onUpdate: "cascade"
+  }),
+
+  // Metadata
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+});
+
+// Studio writing sessions - tracks writing context and progress
+export const studioSessions = pgTable("studio_sessions", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  contentSessionId: uuid("content_session_id")
+    .notNull()
+    .references(() => contentSessions.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  outlineId: uuid("outline_id")
+    .notNull()
+    .references(() => outlines.id, { onDelete: "cascade", onUpdate: "cascade" }),
+
+  // Current position in the scene
+  currentBeat: integer("current_beat").notNull().default(0),
+  totalBeats: integer("total_beats").notNull().default(0),
+
+  // Written content
+  writtenProse: text("written_prose").default(""),
+
+  // Assembled context snapshot (for consistency checking)
+  contextSnapshot: jsonb("context_snapshot").default({}),
+
+  // Profile discoveries during writing
+  // Array of { character_id, field_path, value, type: 'discovery' | 'relationship' | 'knowledge' }
+  profileDiscoveries: jsonb("profile_discoveries").default([]),
+
+  // Consistency issues found
+  // Array of { type, description, suggestion, resolved }
+  consistencyIssues: jsonb("consistency_issues").default([]),
+
+  // Metadata
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow()
+});
+
+// Indexes for content development tables
+// Sessions
+export const idxContentSessionsProject = uniqueIndex("idx_content_sessions_project").on(
+  contentSessions.projectId
+);
+export const idxContentSessionsStatus = uniqueIndex("idx_content_sessions_status").on(
+  contentSessions.status
+);
+export const idxContentSessionsType = uniqueIndex("idx_content_sessions_type").on(
+  contentSessions.sessionType
+);
+
+// Outlines
+export const idxOutlinesProject = uniqueIndex("idx_outlines_project").on(outlines.projectId);
+export const idxOutlinesParent = uniqueIndex("idx_outlines_parent").on(outlines.parentId);
+export const idxOutlinesLevel = uniqueIndex("idx_outlines_level").on(outlines.outlineLevel);
+
+// Profile updates
+export const idxProfileUpdatesEntry = uniqueIndex("idx_profile_updates_entry").on(
+  profileUpdates.entryId
+);
+export const idxProfileUpdatesSession = uniqueIndex("idx_profile_updates_session").on(
+  profileUpdates.sessionId
+);
+
+// Discovery artifacts
+export const idxDiscoveryArtifactsSession = uniqueIndex("idx_discovery_artifacts_session").on(
+  discoveryArtifacts.sessionId
+);
