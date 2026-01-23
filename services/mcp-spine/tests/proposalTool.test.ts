@@ -40,10 +40,10 @@ const createInvalidInput = () => ({
   },
 });
 
-test("proposal tool response metadata is consistent", () => {
+test("proposal tool response metadata is consistent", async () => {
   const { logger } = createTestLogger();
   const tool = new ProposalTool(new ProposalStore(), logger);
-  const response = tool.createProposal(createValidInput());
+  const response = await tool.createProposal(createValidInput());
 
   assert.ok(response.proposal_id);
   assert.equal(response.scope, "proposal:create");
@@ -53,29 +53,29 @@ test("proposal tool response metadata is consistent", () => {
   assert.ok(response.updated_at);
 });
 
-test("proposal workflow end-to-end applies validated proposal", () => {
+test("proposal workflow end-to-end applies validated proposal", async () => {
   const { logger } = createTestLogger();
   const store = new ProposalStore();
   const tool = new ProposalTool(store, logger);
 
-  const created = tool.createProposal(createValidInput());
-  const applied = tool.applyProposal(created.proposal_id);
+  const created = await tool.createProposal(createValidInput());
+  const applied = await tool.applyProposal(created.proposal_id);
 
   assert.ok(applied);
   assert.equal(applied?.status, "applied");
   assert.equal(applied?.validation.status, "passed");
 });
 
-test("canon gate rejects invalid proposals", () => {
+test("canon gate rejects invalid proposals", async () => {
   const { logger } = createTestLogger();
   const store = new ProposalStore();
   const tool = new ProposalTool(store, logger);
 
-  const created = tool.createProposal(createInvalidInput());
+  const created = await tool.createProposal(createInvalidInput());
   assert.equal(created.validation.status, "failed");
   assert.equal(created.status, "submitted");
 
-  const applied = tool.applyProposal(created.proposal_id);
+  const applied = await tool.applyProposal(created.proposal_id);
   assert.ok(applied);
   assert.equal(applied?.status, "submitted");
   assert.equal(
@@ -84,13 +84,13 @@ test("canon gate rejects invalid proposals", () => {
   );
 });
 
-test("audit log entries are written for proposal lifecycle", () => {
+test("audit log entries are written for proposal lifecycle", async () => {
   const { logger, entries } = createTestLogger();
   const store = new ProposalStore();
   const tool = new ProposalTool(store, logger);
 
-  const created = tool.createProposal(createValidInput());
-  tool.applyProposal(created.proposal_id);
+  const created = await tool.createProposal(createValidInput());
+  await tool.applyProposal(created.proposal_id);
 
   const messages = entries.map((entry) => entry.message);
   assert.ok(messages.includes("proposal.created"));

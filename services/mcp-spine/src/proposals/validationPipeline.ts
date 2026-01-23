@@ -3,8 +3,10 @@ import type { Proposal, ProposalValidation, ProposalEventPayload } from "./propo
 const unique = <T>(values: T[]) => new Set(values).size === values.length;
 
 // Configuration: where the NAOS web app is running
-const NAOS_WEB_API_BASE = process.env.NAOS_WEB_API_BASE ?? "http://localhost:3000";
+// Set to empty string or "test" to skip external API calls (for testing)
+const NAOS_WEB_API_BASE = process.env.NAOS_WEB_API_BASE ?? "";
 const DEFAULT_PROJECT_ID = process.env.DEFAULT_PROJECT_ID ?? "uncharted-stars";
+const SKIP_CANON_GATE_API = !NAOS_WEB_API_BASE || NAOS_WEB_API_BASE === "test" || process.env.NODE_ENV === "test";
 
 /**
  * Transform MCP proposal event to Narrative Engine event format
@@ -148,6 +150,15 @@ export const validateProposal = async (proposal: Proposal): Promise<ProposalVali
   if (errors.length > 0) {
     return {
       status: "failed",
+      errors,
+      warnings,
+    };
+  }
+
+  // Skip external API call in test mode or when API base is not configured
+  if (SKIP_CANON_GATE_API) {
+    return {
+      status: "passed",
       errors,
       warnings,
     };

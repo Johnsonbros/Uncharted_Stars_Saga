@@ -2,10 +2,15 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockUpsertPlaybackPosition = vi.fn();
 const mockGetPlaybackPosition = vi.fn();
+const mockGetCurrentSession = vi.fn();
 
 vi.mock("@/lib/listenerPlaybackPositions", () => ({
   upsertPlaybackPosition: mockUpsertPlaybackPosition,
   getPlaybackPosition: mockGetPlaybackPosition
+}));
+
+vi.mock("@/lib/auth", () => ({
+  getCurrentSession: mockGetCurrentSession
 }));
 
 describe("playback position updates and retrieval", () => {
@@ -13,6 +18,9 @@ describe("playback position updates and retrieval", () => {
     vi.resetModules();
     mockUpsertPlaybackPosition.mockReset();
     mockGetPlaybackPosition.mockReset();
+    mockGetCurrentSession.mockReset();
+    // Default to no session (unauthenticated)
+    mockGetCurrentSession.mockResolvedValue(null);
   });
 
   it("persists playback positions via the playback endpoint", async () => {

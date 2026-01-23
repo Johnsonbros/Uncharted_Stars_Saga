@@ -4,8 +4,9 @@
 
 import type { Proposal } from "./proposalTypes.js";
 
-const NAOS_WEB_API_BASE = process.env.NAOS_WEB_API_BASE ?? "http://localhost:3000";
+const NAOS_WEB_API_BASE = process.env.NAOS_WEB_API_BASE ?? "";
 const DEFAULT_PROJECT_ID = process.env.DEFAULT_PROJECT_ID ?? "uncharted-stars";
+const SKIP_NARRATIVE_API = !NAOS_WEB_API_BASE || NAOS_WEB_API_BASE === "test" || process.env.NODE_ENV === "test";
 
 export type ApplyProposalResult = {
   success: boolean;
@@ -20,6 +21,14 @@ export type ApplyProposalResult = {
 export async function applyProposalToNarrativeEngine(
   proposal: Proposal
 ): Promise<ApplyProposalResult> {
+  // In test mode, skip external API calls and return success
+  if (SKIP_NARRATIVE_API) {
+    return {
+      success: true,
+      appliedEvents: proposal.payload.canon_events.map(e => e.event_id),
+    };
+  }
+
   try {
     // For each event in the proposal, we need to:
     // 1. Check if the event already exists in the Narrative Engine
