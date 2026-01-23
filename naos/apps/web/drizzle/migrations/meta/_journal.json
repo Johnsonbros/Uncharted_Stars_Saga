@@ -29,6 +29,13 @@
       "when": 1730000003000,
       "tag": "0003_anonymize_playback_positions",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "0004",
+      "when": 1737676800000,
+      "tag": "0004_dry_kronos",
+      "breakpoints": true
     }
   ]
 }
