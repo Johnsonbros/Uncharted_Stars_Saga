@@ -1,14 +1,19 @@
 import { z } from "zod";
 
 const EnvSchema = z.object({
-  DATABASE_URL: z.string().min(1),
+  // Database (required for runtime, but provide build-time default)
+  DATABASE_URL: z.string().min(1).default("postgresql://localhost:5432/naos"),
   NAOS_PROJECTS_ROOT: z.string().default("../../projects"),
-  STRIPE_SECRET_KEY: z.string().min(1),
-  STRIPE_WEBHOOK_SECRET: z.string().min(1),
-  STRIPE_PRICE_ID: z.string().min(1),
-  STRIPE_SUCCESS_URL: z.string().url(),
-  STRIPE_CANCEL_URL: z.string().url(),
-  ENTITLEMENTS_INTERNAL_TOKEN: z.string().min(1),
+
+  // Stripe (provide build-time defaults - Replit will override)
+  STRIPE_SECRET_KEY: z.string().default("sk_test_placeholder"),
+  STRIPE_WEBHOOK_SECRET: z.string().default("whsec_placeholder"),
+  STRIPE_PRICE_ID: z.string().default("price_placeholder"),
+  STRIPE_SUCCESS_URL: z.string().url().default("http://localhost:3000/checkout/success"),
+  STRIPE_CANCEL_URL: z.string().url().default("http://localhost:3000/checkout/cancel"),
+
+  // Internal auth
+  ENTITLEMENTS_INTERNAL_TOKEN: z.string().default("internal-token-placeholder"),
   SESSION_SECRET: z.string().min(32).default("default-session-secret-change-in-production-32chars"),
   APP_URL: z.string().url().default("http://localhost:3000"),
   REPLIT_OBJECT_STORAGE_BUCKET: z.string().optional()

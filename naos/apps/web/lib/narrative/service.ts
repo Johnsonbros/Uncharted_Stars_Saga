@@ -1,10 +1,11 @@
 import {
   checkContinuity,
+  type ContinuityReport,
   deriveKnowledgeState,
   splitByCanonStatus,
   validateCanonGate
 } from "./engine";
-import type { CanonValidationReport, ContinuityReport, Event, PromiseRecord } from "./models";
+import type { CanonValidationReport, Event, PromiseRecord } from "./models";
 import { fetchProjectEvents, fetchPromises } from "./repository";
 
 export type NarrativeStateSnapshot = {
@@ -36,7 +37,7 @@ export async function buildNarrativeStateSnapshot(
     [...canonBuckets.canon, ...canonBuckets.proposed],
     promises
   );
-  const knowledge = deriveKnowledgeState(events);
+  const knowledgeResult = deriveKnowledgeState(events);
 
   return {
     projectId,
@@ -46,6 +47,9 @@ export async function buildNarrativeStateSnapshot(
     continuity,
     canonGate,
     canonBuckets,
-    knowledge
+    knowledge: {
+      states: knowledgeResult.knowledge,
+      issues: knowledgeResult.issues
+    }
   };
 }

@@ -4,6 +4,7 @@ import {
   type AudioSceneValidationIssue,
   type AudioSceneValidationResult,
   type BeatMarker,
+  type BeatMarkerChannel,
   type BeatMarkerConflict,
   type BeatMarkerConflictResolution,
   type BeatMarkerInput,
@@ -215,7 +216,7 @@ export function authorBeatMarkers(
   options: BeatMarkerAuthoringOptions = {}
 ): BeatMarkerAuthoringResult {
   const normalized = inputs.map(normalizeBeatMarker);
-  const grouped = new Map<string, BeatMarker[]>();
+  const grouped = new Map<BeatMarkerChannel, BeatMarker[]>();
 
   for (const marker of normalized) {
     const bucket = grouped.get(marker.channel) ?? [];
