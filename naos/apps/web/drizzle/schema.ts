@@ -39,6 +39,22 @@ export const entitlementStatus = pgEnum("entitlement_status", [
   "revoked"
 ]);
 
+// Story Codex enums
+export const codexEntryType = pgEnum("codex_entry_type", [
+  "character",
+  "location",
+  "object",
+  "faction",
+  "lore",
+  "timeline"
+]);
+export const codexDetectionMode = pgEnum("codex_detection_mode", [
+  "include_when_detected",
+  "dont_include_when_detected",
+  "always_include",
+  "never_include"
+]);
+
 export const proposals = pgTable("proposals", {
   id: uuid("id").defaultRandom().primaryKey(),
   projectId: text("project_id").notNull(),
@@ -258,4 +274,134 @@ export const chapters = pgTable("chapters", {
   isPublished: boolean("is_published").notNull().default(false),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow()
+});
+
+// ============================================================================
+// STORY CODEX TABLES
+// See docs/story_codex_system.md for full documentation
+// ============================================================================
+
+// Core codex entries - characters, locations, objects, factions, lore, timelines
+export const codexEntries = pgTable("codex_entries", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  projectId: text("project_id").notNull(),
+  type: codexEntryType("type").notNull(),
+
+  // Names & Detection
+  name: text("name").notNull(),
+  aliases: text("aliases").array().notNull().default([]),
+  detectionMode: codexDetectionMode("detection_mode").notNull().default("include_when_detected"),
+
+  // Content
+  summary: text("summary").notNull(),
+  description: text("description").notNull(),
+  notes: text("notes").default(""),
+
+  // Type-specific data (JSON for flexibility)
+  // Character: { role, personality, goals, backstory, physical_description, voice_notes, pov_eligible, first_appearance, arc_stage }
+  // Location: { parent_location_id, atmosphere, features, typical_inhabitants, coordinates }
+  // Object: { significance_level, current_holder_id, location_id, properties, history }
+  // Faction: { ideology, structure, headquarters_id, leader_id, member_ids }
+  // Lore: { category, era, implications }
+  // Timeline: { date, era, impact, connected_entry_ids }
+  typeData: jsonb("type_data").notNull().default({}),
+
+  // Audio integration
+  // { voice_profile_id, ambient_profile, sound_effect_tags, pronunciation_guide }
+  audioContext: jsonb("audio_context").default({}),
+
+  // Organization
+  tags: text("tags").array().notNull().default([]),
+
+  // Canon status
+  canonStatus: canonStatus("canon_status").notNull().default("draft"),
+
+  // Metadata
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  createdBy: text("created_by").notNull().default("system")
+});
+
+// Relationships between codex entries
+export const codexRelationships = pgTable("codex_relationships", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  sourceId: uuid("source_id")
+    .notNull()
+    .references(() => codexEntries.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  targetId: uuid("target_id")
+    .notNull()
+    .references(() => codexEntries.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  // Relationship types:
+  // Character: family, romantic, friend, enemy, colleague, mentor, subordinate, custom
+  // Location: contains, adjacent, connected_via
+  // Faction: member_of, allied_with, opposed_to, subset_of
+  // General: related_to, mentioned_in
+  relationshipType: text("relationship_type").notNull(),
+  description: text("description").default(""),
+  bidirectional: boolean("bidirectional").notNull().default(false),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow()
+});
+
+// Manual context pinning - explicitly attach codex entries to scenes
+export const sceneCodexContext = pgTable(
+  "scene_codex_context",
+  {
+    sceneId: uuid("scene_id")
+      .notNull()
+      .references(() => scenes.id, { onDelete: "cascade", onUpdate: "cascade" }),
+    codexEntryId: uuid("codex_entry_id")
+      .notNull()
+      .references(() => codexEntries.id, { onDelete: "cascade", onUpdate: "cascade" }),
+    // Priority for context injection (lower = higher priority)
+    priority: integer("priority").notNull().default(0),
+    reason: text("reason").default("")
+  },
+  (table) => ({
+    pk: primaryKey({ columns: [table.sceneId, table.codexEntryId] })
+  })
+);
+
+// Extraction jobs - track auto-extraction from uploads
+export const codexExtractionJobs = pgTable("codex_extraction_jobs", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  projectId: text("project_id").notNull(),
+  status: text("status").notNull().default("pending"), // pending, processing, complete, failed
+  filesCount: integer("files_count").notNull().default(0),
+  wordsProcessed: integer("words_processed").notNull().default(0),
+  entriesGenerated: integer("entries_generated").notNull().default(0),
+  entriesApproved: integer("entries_approved").notNull().default(0),
+  errorMessage: text("error_message"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  completedAt: timestamp("completed_at", { withTimezone: true })
+});
+
+// Draft entries from extraction - pending human review
+export const codexDraftEntries = pgTable("codex_draft_entries", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  extractionJobId: uuid("extraction_job_id")
+    .notNull()
+    .references(() => codexExtractionJobs.id, { onDelete: "cascade", onUpdate: "cascade" }),
+  type: codexEntryType("type").notNull(),
+  name: text("name").notNull(),
+  aliases: text("aliases").array().notNull().default([]),
+  summary: text("summary").notNull(),
+  description: text("description").notNull(),
+  typeData: jsonb("type_data").notNull().default({}),
+  audioContext: jsonb("audio_context").default({}),
+
+  // Extraction metadata
+  confidence: integer("confidence").notNull().default(0), // 0-100
+  sources: jsonb("sources").notNull().default([]), // Array of { quote, file, position }
+  extractionNotes: text("extraction_notes").default(""),
+
+  // Review status
+  reviewStatus: text("review_status").notNull().default("pending"), // pending, approved, rejected, merged
+  reviewNotes: text("review_notes").default(""),
+  mergedIntoId: uuid("merged_into_id").references(() => codexEntries.id, {
+    onDelete: "set null",
+    onUpdate: "cascade"
+  }),
+
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  reviewedAt: timestamp("reviewed_at", { withTimezone: true })
 });
