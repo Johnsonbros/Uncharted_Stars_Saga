@@ -3,6 +3,10 @@ export type McpScope =
   | "audio:read"
   | "audio:generate"
   | "audio:audit"
+  | "audio:scene:create"
+  | "audio:scene:read"
+  | "audio:scene:update"
+  | "audio:scene:delete"
   | "listener:summary:read"
   | "proposal:create"
   | "proposal:validate"
@@ -29,6 +33,10 @@ export const ROLE_SCOPE_MAP_V1: RoleScopeMap[] = [
       "audio:read",
       "audio:generate",
       "audio:audit",
+      "audio:scene:create",
+      "audio:scene:read",
+      "audio:scene:update",
+      "audio:scene:delete",
       "listener:summary:read",
       "proposal:create",
       "proposal:validate",
@@ -41,6 +49,7 @@ export const ROLE_SCOPE_MAP_V1: RoleScopeMap[] = [
       "narrative:read",
       "audio:read",
       "audio:audit",
+      "audio:scene:read",
       "proposal:create",
       "proposal:validate",
     ],
@@ -58,6 +67,10 @@ export const ROLE_SCOPE_MAP_V1: RoleScopeMap[] = [
       "audio:read",
       "audio:generate",
       "audio:audit",
+      "audio:scene:create",
+      "audio:scene:read",
+      "audio:scene:update",
+      "audio:scene:delete",
       "listener:summary:read",
       "proposal:create",
       "proposal:validate",
@@ -67,7 +80,25 @@ export const ROLE_SCOPE_MAP_V1: RoleScopeMap[] = [
 ];
 
 export const MODEL_SCOPE_MAP_V1: Record<string, McpScope[]> = {
-  opus: ["narrative:read", "audio:read", "audio:generate", "audio:audit", "proposal:validate"],
-  sonnet: ["narrative:read", "audio:read", "audio:generate", "audio:audit", "proposal:create"],
-  haiku: ["narrative:read", "audio:audit"],
+  opus: [
+    "narrative:read",
+    "audio:read",
+    "audio:generate",
+    "audio:audit",
+    "audio:scene:create",
+    "audio:scene:read",
+    "audio:scene:update",
+    "proposal:validate",
+  ],
+  sonnet: [
+    "narrative:read",
+    "audio:read",
+    "audio:generate",
+    "audio:audit",
+    "audio:scene:create",
+    "audio:scene:read",
+    "audio:scene:update",
+    "proposal:create",
+  ],
+  haiku: ["narrative:read", "audio:audit", "audio:scene:read"],
 };
