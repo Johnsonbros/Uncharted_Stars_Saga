@@ -923,6 +923,7 @@ weight of the discovery.
 
 ## Related Documentation
 
+- [ai_content_development_system.md](./ai_content_development_system.md) - Interactive AI workflow for developing outlines through conversation
 - [story_codex_system.md](./story_codex_system.md) - Codex entry management
 - [character_profiles.md](./character_profiles.md) - Character profile specification
 - [auto_extraction_pipeline.md](./auto_extraction_pipeline.md) - Extracting from uploads

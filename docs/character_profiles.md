@@ -898,6 +898,7 @@ canon_status: draft
 
 ## Related Documentation
 
+- [ai_content_development_system.md](./ai_content_development_system.md) - Interactive AI workflow for building character profiles through conversation
 - [story_codex_system.md](./story_codex_system.md) - Overall codex architecture
 - [audio_engine_schema.md](./audio_engine_schema.md) - Voice profile specifications
 - [scene_outline_format.md](./scene_outline_format.md) - Scene outlines with character context
