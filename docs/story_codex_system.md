@@ -631,6 +631,7 @@ console.log(context.formatted);
 
 ## Related Documentation
 
+- [ai_content_development_system.md](./ai_content_development_system.md) - Interactive AI workflow for building profiles through conversation
 - [character_profiles.md](./character_profiles.md) - Detailed character profile specification
 - [scene_outline_format.md](./scene_outline_format.md) - Scene outline with context injection
 - [auto_extraction_pipeline.md](./auto_extraction_pipeline.md) - Automatic extraction from uploads

@@ -290,10 +290,14 @@ For network operations (push, fetch, pull):
 - SYSTEM_TODO.md - System-wide TODOs, tests, diagrams, and traceability
 - TESTING_STRATEGY.md - Testing approach and best practices
 - ARCHITECTURE.md - Detailed system design and roadmap
+- docs/ai_content_development_system.md - Interactive AI workflow for building profiles, outlines, and writing
 - docs/audio_storage_conventions.md - Audio storage paths, metadata, and CDN delivery contract
 - docs/error_taxonomy.md - Unified error taxonomy, severity table, and ownership rules
 - docs/incident_response_flow.md - Incident response flowchart for tracing and resolving errors
 - docs/narrative_engine_diagrams.md - Narrative event DAG and canon gate flow diagrams
+- docs/story_codex_system.md - Codex entries for characters, locations, factions, lore
+- docs/character_profiles.md - Character profile specification and templates
+- docs/scene_outline_format.md - Scene outline structure with beat system
 - CONTRIBUTING.md - Contribution guidelines (to be created)
 - CHANGELOG.md - Version history (to be created)
 - API.md - API documentation (to be created when applicable)
