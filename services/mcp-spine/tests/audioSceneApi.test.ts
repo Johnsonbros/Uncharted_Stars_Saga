@@ -508,12 +508,13 @@ describe("Audio Scene Scope Authorization", () => {
   });
 
   test("combined role and model permissions work correctly", () => {
-    // Creator role + opus model = should have create access
+    // Creator role + opus model = should have create access (both have it)
     assert.equal(isAuthorizedForScope("audio:scene:create", "creator", "opus"), true);
-    // Editor reviewer role + haiku model = should have read access
+    // Editor reviewer role + haiku model = should have read access (both have it)
     assert.equal(isAuthorizedForScope("audio:scene:read", "editor_reviewer", "haiku"), true);
-    // Listener support + any model = no audio scene access
-    assert.equal(isAuthorizedForScope("audio:scene:read", "listener_support", "opus"), true); // opus provides read
+    // Listener support + opus model = no audio scene access (role restriction takes precedence)
+    // With defense-in-depth, BOTH role AND model must have the scope
+    assert.equal(isAuthorizedForScope("audio:scene:read", "listener_support", "opus"), false);
     assert.equal(isAuthorizedForScope("audio:scene:create", "listener_support", "haiku"), false);
   });
 });

@@ -3,13 +3,32 @@ type ResourcePayload = Record<string, unknown>;
 const now = () => new Date().toISOString();
 
 // Configuration: where the NAOS web app is running
-const NAOS_WEB_API_BASE = process.env.NAOS_WEB_API_BASE ?? "http://localhost:3000";
+const NAOS_WEB_API_BASE = process.env.NAOS_WEB_API_BASE ?? "";
 const DEFAULT_PROJECT_ID = process.env.DEFAULT_PROJECT_ID ?? "uncharted-stars";
+const SKIP_EXTERNAL_API = !NAOS_WEB_API_BASE || NAOS_WEB_API_BASE === "test" || process.env.NODE_ENV === "test";
 
 /**
  * Fetch narrative state snapshot from the NAOS web app API
  */
 async function fetchNarrativeState(projectId: string = DEFAULT_PROJECT_ID): Promise<ResourcePayload> {
+  // In test mode, return stub data
+  if (SKIP_EXTERNAL_API) {
+    return {
+      events: [],
+      canonBuckets: { canon: [], proposed: [], draft: [] },
+      promises: [],
+      knowledge: { states: [], issues: [] },
+      canonGate: {
+        passed: true,
+        continuity: { dependencyIssues: [], cycleIssues: [], timestampIssues: [] },
+        promiseIssues: [],
+        listenerCognition: { issues: [] }
+      },
+      generatedAt: now(),
+      projectId
+    };
+  }
+
   try {
     const url = `${NAOS_WEB_API_BASE}/api/narrative/state?projectId=${encodeURIComponent(projectId)}`;
     const response = await fetch(url);

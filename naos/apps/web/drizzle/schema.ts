@@ -640,32 +640,10 @@ export const studioSessions = pgTable("studio_sessions", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow()
 });
 
-// Indexes for content development tables
-// Sessions
-export const idxContentSessionsProject = uniqueIndex("idx_content_sessions_project").on(
-  contentSessions.projectId
-);
-export const idxContentSessionsStatus = uniqueIndex("idx_content_sessions_status").on(
-  contentSessions.status
-);
-export const idxContentSessionsType = uniqueIndex("idx_content_sessions_type").on(
-  contentSessions.sessionType
-);
-
-// Outlines
-export const idxOutlinesProject = uniqueIndex("idx_outlines_project").on(outlines.projectId);
-export const idxOutlinesParent = uniqueIndex("idx_outlines_parent").on(outlines.parentId);
-export const idxOutlinesLevel = uniqueIndex("idx_outlines_level").on(outlines.outlineLevel);
-
-// Profile updates
-export const idxProfileUpdatesEntry = uniqueIndex("idx_profile_updates_entry").on(
-  profileUpdates.entryId
-);
-export const idxProfileUpdatesSession = uniqueIndex("idx_profile_updates_session").on(
-  profileUpdates.sessionId
-);
-
-// Discovery artifacts
-export const idxDiscoveryArtifactsSession = uniqueIndex("idx_discovery_artifacts_session").on(
-  discoveryArtifacts.sessionId
-);
+// Note: Indexes for content development tables are defined via SQL migrations
+// See migrations/ folder for CREATE INDEX statements for:
+// - idx_content_sessions_project, idx_content_sessions_status, idx_content_sessions_type
+// - idx_outlines_project, idx_outlines_parent, idx_outlines_level
+// - idx_profile_updates_entry, idx_profile_updates_session
+// - idx_discovery_artifacts_session
+// These were moved from standalone Drizzle index exports to migrations for better compatibility.

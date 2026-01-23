@@ -2,8 +2,8 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { resolveResource } from "../src/resources/resourceResolver.js";
 
-test("resource resolver allows authorized access", () => {
-  const result = resolveResource({
+test("resource resolver allows authorized access", async () => {
+  const result = await resolveResource({
     resourceId: "narrative.events",
     role: "creator",
     model: "haiku",
@@ -11,15 +11,19 @@ test("resource resolver allows authorized access", () => {
 
   assert.equal(result.resourceId, "narrative.events");
   assert.equal(result.version, "v1");
-  assert.deepEqual(result.data, { events: [] });
+  assert.ok(result.data);
+  assert.deepEqual(result.data.events, []);
 });
 
-test("resource resolver blocks unauthorized access", () => {
-  assert.throws(() => {
-    resolveResource({
-      resourceId: "narrative.events",
-      role: "listener_support",
-      model: undefined,
-    });
-  }, /Unauthorized/);
+test("resource resolver blocks unauthorized access", async () => {
+  await assert.rejects(
+    async () => {
+      await resolveResource({
+        resourceId: "narrative.events",
+        role: "listener_support",
+        model: undefined,
+      });
+    },
+    /Unauthorized/
+  );
 });
